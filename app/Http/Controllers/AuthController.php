@@ -21,7 +21,7 @@ class AuthController extends Controller
          $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:12',
+            'password' => 'required',
             'username' => 'required'
          ]);
 
@@ -45,12 +45,12 @@ class AuthController extends Controller
     public function signin(Request $request){
         $request->validate([
             'username' => 'required',
-            'password' => 'required|min:5|max:12'
+            'password' => 'required'
          ]);
 
-        
+
          $user = DB::table('users')->where("username", $request->username)->first();
-      
+
          if($user){
             if(Hash::check($request->password,$user->password)){
                 $request->session()->put('loginId',$user->id);

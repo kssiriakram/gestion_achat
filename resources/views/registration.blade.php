@@ -14,7 +14,8 @@
         <div class="col-md-4 col-md-offset-4">´
             <h4>Registration</h4>
             <hr>
-            <form action="/gestion_achat/public/register" method="post">
+           <!-- <form action="/gestion_achat/public/register" method="post"> -->
+            <form action="/register" method="post">
                 @if(Session::has('success'))
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif

@@ -15,7 +15,8 @@
 
             <h4>veuillez renseigner les champs suivant:</h4>
             <hr>
-            <form action="/gestion_achat/public/add_da" method="post">
+          <!--  <form action="/gestion_achat/public/add_da" method="post">-->
+            <form action="/add_da" method="post">
                 @if(Session::has('success'))
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
@@ -45,7 +46,7 @@
                                 <label for="acheteur" >L'acheteur</label>
                                 <select name="acheteur" id="acheteur" class="select form-control">
                                     @foreach ($acheteurs as $acheteur )
-                                    <option value={{ $acheteur->id }}>{{ $acheteur->name }}</option>
+                                    <option value={{ $acheteur->id }}>{{ $acheteur->username }}</option>
                                     @endforeach
                                 </select>
 
