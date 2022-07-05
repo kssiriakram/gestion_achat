@@ -56,7 +56,23 @@ class DaController extends Controller
              $user = DB::table('users')->where("id", '=',$request->session()->get('loginId'))->get()->first();
              $destinaire = DB::table('users')->where("type", "=","chef de service")->where("departement", "=",$user->departement)->get()->first();
 
-             Mail::to($destinaire->email)->send(new DAMail($user->username, $da_id->societe, $user->type,$user->email,"aaaa", "demande d'achat" , $da_id->id));
+            Mail::to($destinaire->email)->send(new DAMail($user->username, $da_id->societe, $user->type,$user->email,"", "demande d'achat" , $da_id->id));
+
+            /* $url = "https://script.google.com/macros/s/AKfycbwR-nRPHikbPTn_q6TiWSzV8TSfkfiXlBCLEiN9Ti7Nqks8OPS1j_dv7Oj15JsMWFtd/exec";
+             $ch = curl_init($url);
+             curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_POSTFIELDS => http_build_query([
+                   "recipient" => $destinaire->email,
+                   "subject"   => "demande d'achat",
+                   "body"      => " Une nouvelle demande d'achat est recu 
+                   "
+                ])
+             ]);
+             $result = curl_exec($ch);
+             echo $result;
+*/
              return back()->with('success', "you're demand is registered");
          }
          else

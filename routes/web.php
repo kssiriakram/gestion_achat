@@ -14,7 +14,7 @@ use App\Http\Controllers\DaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::view('/mail', 'trymail');
 Route::get('/', function () {
     return view('welcome');
 });

@@ -54,7 +54,7 @@ class DAMail extends  Mailable
      */
     public function build()
     {
-        return $this->from($this->email, $name = "Plateforme GINF de l'ENSAT")->
+        return $this->from($this->email, $name = "Plateforme de gestion des achat coficab")->
         subject($this->sujet)->markdown('mail');
     }
 }
