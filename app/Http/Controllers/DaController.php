@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\DaModel;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DAMail;
 class DaController extends Controller
 {
     function da(Request $request){
@@ -50,8 +51,14 @@ class DaController extends Controller
          $da->date_directeur = Carbon::now();
 
          $res = $da->save();
-         if($res)
-         return back()->with('success',"you're demand is registered");
+         $da_id = DB::table('da_models')->get()->last();
+         if($res) {
+             $user = DB::table('users')->where("id", '=',$request->session()->get('loginId'))->get()->first();
+             $destinaire = DB::table('users')->where("type", "=","chef de service")->where("departement", "=",$user->departement)->get()->first();
+
+             Mail::to($destinaire->email)->send(new DAMail($user->username, $da_id->societe, $user->type,$user->email,"aaaa", "demande d'achat" , $da_id->id));
+             return back()->with('success', "you're demand is registered");
+         }
          else
          return back()->with('fail',"some error occured at registring your demand");
       }

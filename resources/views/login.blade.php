@@ -14,7 +14,8 @@
         <div class="col-md-4 col-md-offset-4">´
             <h4>Login</h4>
             <hr>
-            <form action="/gestion_achat/public/signin" method="post">
+           <!-- <form action="/gestion_achat/public/signin" method="post"> -->
+            <form action="/signin" method="post">
                 @if(Session::has('success'))
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
@@ -23,14 +24,14 @@
                 @endif
                 @csrf
 
-                
+
             <div class="form-group">
                 <label for="username" >username</label>
                 <input type="text" class="text form-control" name="username" value="{{old('username')}}" placeholder="Enter username">
                 <span class="text-danger">@error('username'){{ $message }}@enderror</span>
                 </div>
 
-                
+
 
                 <div class="form-group">
                     <label for="password" >Password</label>
@@ -38,7 +39,7 @@
                     <span class="text-danger">@error('password'){{ $message }}@enderror</span>
                     </div>
 
-                     
+
 
                     <button  type="submit" class="btn btn-block btn-primary">Submit</button>
                     <br>
