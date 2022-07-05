@@ -25,6 +25,7 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/signin',[AuthController::class,'signin']);
 Route::get('/da',[DaController::class,'da']);
 Route::post('/add_da',[DaController::class,'add_da']);
+Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
 
 Route::get('/email', function(){
     return new \App\Mail\DAMail('fyrifik', 'gyg o', 'Capgemini', "chef", "kssiriakram@gmail.com" ,"jfioevjpo","demadnde d'achat" ,3);

@@ -45,17 +45,13 @@ class DaController extends Controller
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
          $da->date_emetteur = Carbon::now();
-         if($request->session()->get('type')=='chef de service')
-         $da->date_chef_service = Carbon::now();
-         if($request->session()->get('type')=='directeur')
-         $da->date_directeur = Carbon::now();
+
 
          $res = $da->save();
          $da_id = DB::table('da_models')->get()->last();
          if($res) {
              $user = DB::table('users')->where("id", '=',$request->session()->get('loginId'))->get()->first();
-             $destinaire = DB::table('users')->where("type", "=","chef de service")->where("departement", "=",$user->departement)->get()->first();
-
+             $destinaire = DB::table('users')->where("type", "=","manager")->where("departement", "=",$user->departement)->get()->first();
             Mail::to($destinaire->email)->send(new DAMail($user->username, $da_id->societe, $user->type,$user->email,"", "demande d'achat" , $da_id->id));
 
             /* $url = "https://script.google.com/macros/s/AKfycbwR-nRPHikbPTn_q6TiWSzV8TSfkfiXlBCLEiN9Ti7Nqks8OPS1j_dv7Oj15JsMWFtd/exec";
@@ -66,7 +62,7 @@ class DaController extends Controller
                 CURLOPT_POSTFIELDS => http_build_query([
                    "recipient" => $destinaire->email,
                    "subject"   => "demande d'achat",
-                   "body"      => " Une nouvelle demande d'achat est recu 
+                   "body"      => " Une nouvelle demande d'achat est recu
                    "
                 ])
              ]);
@@ -77,6 +73,13 @@ class DaController extends Controller
          }
          else
          return back()->with('fail',"some error occured at registring your demand");
+      }
+
+
+      function get_da_manager($id){
+        $da = DB::table('da_models')->where('id','=',$id)->get()->first();
+        $acheteur = DB::table('users')->where('id','=',$da->id_acheteur)->get()->first();
+        return view('da_manager' , ['da' => $da , 'acheteur' => $acheteur]);
       }
 
 }

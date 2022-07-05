@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'username' => 'kssiriakram',
             'password' => Hash::make('kssiriakram'),
             'type' => 'emetteur',
+            'societe' => 'COFMA',
             'departement' => 'IT'
         ]);
 
@@ -29,7 +30,8 @@ class UserSeeder extends Seeder
             'email'=> 'mohamedakram.kssiri@etu.uae.ac.ma',
             'username' => 'mohamedakram.kssiri',
             'password' => Hash::make('mohamedakram.kssiri'),
-            'type' => 'chef de service',
+            'type' => 'manager',
+            'societe' => 'COFMA',
             'departement' => 'IT'
         ]);
 
@@ -38,6 +40,45 @@ class UserSeeder extends Seeder
             'username' => 'test',
             'password' => Hash::make('test'),
             'type' => 'acheteur',
+            'societe' => 'COFMA',
+            'departement' => 'IT'
+        ]);
+
+        DB::table('users')->insert([
+            'email'=> 'abdelaziz.bekraoui@coficab.com',
+            'username' => 'abdelaziz.bekraoui',
+            'password' => Hash::make('abdelaziz.bekraoui'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
+            'departement' => 'IT'
+        ]);
+
+        DB::table('users')->insert([
+            'email'=> 'yacine.elyounoussi@coficab.com',
+            'username' => 'yacine.elyounoussi',
+            'password' => Hash::make('yacine.elyounoussi'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
+            'departement' => 'IT'
+        ]);
+
+        DB::table('users')->insert([
+            'email'=> 'reda.alaoui@coficab.com',
+            'username' => 'reda.alaoui',
+            'password' => Hash::make('reda.alaoui'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
+            'departement' => 'IT'
+        ]);
+
+
+
+        DB::table('users')->insert([
+            'email'=> 'monhem.amrani@coficab.com',
+            'username' => 'monhem.amrani',
+            'password' => Hash::make('monhem.amrani'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
             'departement' => 'IT'
         ]);
     }
