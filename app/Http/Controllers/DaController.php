@@ -11,35 +11,32 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\DAMail;
 class DaController extends Controller
 {
-    function da(Request $request){
-        if($request->session()->get('type') && $request->session()->get('loginId')){
+    function nouvelledm(){
 
         $user = DB::table('users')->where("type","acheteur")->get();
-        return view('/da',['acheteurs'=>$user]);
-        }else{
-            return abort('403');
-        }
+        $im = DB::table('da_models')->get()->last() ? DB::table('da_models')->get()->last() : 0;
+
+        return view('/nouvelledm',['acheteurs'=>$user,'im'=>$im]);
     }
 
-      function add_da(Request $request){
+      function add_dm(Request $request){
 
         $request->validate([
             'delai' => 'required',
             'reference' => 'required',
             'acheteur' => 'required',
-            'qte' => 'required|integer',
-            'code_CC' => 'required|integer',
-            'code_NE' => 'required|integer',
+            'quantite' => 'required|integer',
+            'ccout' => 'required|integer',
+            'cnecono' => 'required|integer',
             'societe' => 'required'
          ]);
-
 
          $da = new DaModel();
          $da->delai = $request->delai;
          $da->reference = $request->reference;
-         $da->qte= $request->qte;
-         $da->code_CC = $request->code_CC;
-         $da->code_NE = $request->code_NE;
+         $da->qte= $request->quantite;
+         $da->code_CC = $request->ccout;
+         $da->code_NE = $request->cnecono;
          $da->societe = $request->societe;
          $da->id_acheteur = $request->acheteur;
          $da->id_emetteur = $request->session()->get('loginId');

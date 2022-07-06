@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DaController;
+use App\Http\Middleware\Authorization;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,19 +15,23 @@ use App\Http\Controllers\DaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::view('/mail', 'trymail');
+//Route::view('/mail', 'trymail');
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/login',[AuthController::class,'login']);
-Route::get('/registration',[AuthController::class,'registration']);
-Route::post('/register',[AuthController::class,'register']);
 Route::post('/signin',[AuthController::class,'signin']);
-Route::get('/da',[DaController::class,'da']);
-Route::post('/add_da',[DaController::class,'add_da']);
+Route::post('/logout',[AuthController::class,'logout']);
+
+Route::middleware(Authorization::class)->namespace('\App\Http\Controllers\Api')->group(function(){
+Route::view('/dashboard','dashboard-blog');
+Route::get('/nouvelledm',[DaController::class,'nouvelledm']);
+Route::post('/add_dm',[DaController::class,'add_dm']);
 Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
 
-Route::get('/email', function(){
-    return new \App\Mail\DAMail('fyrifik', 'gyg o', 'Capgemini', "chef", "kssiriakram@gmail.com" ,"jfioevjpo","demadnde d'achat" ,3);
+
+//Route::get('/da',[DaController::class,'da']);
+/*Route::get('/registration',[AuthController::class,'registration']);*/
+//Route::post('/register',[AuthController::class,'register']);
+
 });

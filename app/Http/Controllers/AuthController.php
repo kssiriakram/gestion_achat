@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class AuthController extends Controller
 {
     public function login(){
-           return view("login");
+           return view("auth-login");
     }
 
     public function registration(){
@@ -55,7 +55,7 @@ class AuthController extends Controller
             if(Hash::check($request->password,$user->password)){
                 $request->session()->put('loginId',$user->id);
                 $request->session()->put('type',$user->type);
-                return redirect('/da');
+                return redirect('/dashboard');
             }else{
                 return back()->with('fail','passwords does not match');
             }
@@ -65,5 +65,10 @@ class AuthController extends Controller
          }
 
 
+    }
+
+    function logout(Request $request){
+        $request->session()->flush();
+        return view("auth-login");
     }
 }
