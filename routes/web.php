@@ -28,7 +28,8 @@ Route::view('/dashboard','dashboard-blog');
 Route::get('/nouvelledm',[DaController::class,'nouvelledm']);
 Route::post('/add_dm',[DaController::class,'add_dm']);
 Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
-
+Route::get('/encoursdm',[DaController::class,'get_encours_dm']);
+Route::get('/cloture',[DaController::class,'get_cloture_dm']);
 
 //Route::get('/da',[DaController::class,'da']);
 /*Route::get('/registration',[AuthController::class,'registration']);*/

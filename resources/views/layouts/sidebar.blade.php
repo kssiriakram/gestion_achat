@@ -32,7 +32,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="http://127.0.0.1:8000/nouvelledm"
+                            <a href="nouvelledm"
                                 key="t-vertical">Nouvelle </a>
 
                         </li>
@@ -43,7 +43,7 @@
 
                         </li>
                         <li>
-                            <a href="bureaux"
+                            <a href="cloture"
                                 key="t-horizontal"> Cloturé</a>
 
                         </li>

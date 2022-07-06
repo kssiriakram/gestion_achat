@@ -23,7 +23,6 @@
 
 
    ?>
-
     <form action="/add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -31,33 +30,36 @@
         @if(Session::has('fail'))
         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
         @endif
+
+
                         @csrf
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Numero Demande</label>
-                            <input type="text" class="form-control" id="formrow-f-input" name='numerodemande' value=<?php echo $im->id; ?> readonly='true'>
+                            <input type="text" class="form-control" id="formrow-f-input"  value="{{ $id->id }}" readonly="true">
 
                         </div>
 
+
                         <div class="mb-3">
                             <label for="formrow-designation-input" class="form-label">designation</label>
-                            <input type="text" class="form-control" id="formrow-fi-input" name='designation'>
+                            <input type="text" class="form-control" id="formrow-fi-input" name="designation">
 
                         </div>
                         <div class="mb-3">
                             <label for="formrow-reference-input" class="form-label">Reference</label>
-                            <input type="text" class="form-control" id="formrow-fir-input" name='reference'>
-                            <span class="text-danger">@error('reference'){{ $message }}@enderror</span>
+                            <input type="text" class="form-control" id="formrow-fir-input" name="reference">
+                            <span class="text-danger">@error("reference"){{ $message }}@enderror</span>
                         </div>
 
                         <div class="mb-3">
                             <label for="formrow-quantite-input" class="form-label">Quantité</label>
-                            <input type="number" class="form-control" id="formrow-firs-input" name='quantite'>
-                            <span class="text-danger">@error('quantite'){{ $message }}@enderror</span>
+                            <input type="number" class="form-control" id="formrow-firs-input" name="quantite">
+                            <span class="text-danger">@error("quantite"){{ $message }}@enderror</span>
                         </div>
                         <div class="mb-3">
                             <label for="formrow-delai-input" class="form-label">Délai Souhaité</label>
-                            <input type="date" class="form-control" id="formrow-firs-input" name='delai'>
-                            <span class="text-danger">@error('delai'){{ $message }}@enderror</span>
+                            <input type="date" class="form-control" id="formrow-firs-input" name="delai">
+                            <span class="text-danger">@error("delai"){{ $message }}@enderror</span>
                         </div>
                         <div class="row">
 
@@ -95,7 +97,7 @@
                             <div class="col-lg-4">
                                 <div class="mb-3">
                                     <label for="formrow-inputState" class="form-label">societe</label>
-                                    <select id="formrow-inputState" class="form-select" name='societe'>
+                                    <select id="formrow-inputState" class="form-select" name="societe">
                                         <option selected>Choose...</option>
                                                <option value="COFMA">Coficab maroc</option>
                                                <option value="COFINTER">Coficab international</option>

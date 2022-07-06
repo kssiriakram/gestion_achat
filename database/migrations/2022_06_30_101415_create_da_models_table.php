@@ -28,8 +28,8 @@ class CreateDaModelsTable extends Migration
             $table->date("delai");
             $table->integer("code_CC")->nullable();
             $table->integer("code_NE")->nullable();
-            $table->boolean('validation')->nullable()->default(false);
-            $table->enum('societe', ['coficab maroc', 'coficab international']);
+            $table->boolean('validation_manager')->nullable()->default(false);
+            $table->boolean('validation_directeur')->nullable()->default(false);
             $table->timestamps();
         });
     }
