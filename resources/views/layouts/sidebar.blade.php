@@ -22,7 +22,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-layout"></i>
-                        <span key="t-layouts">Emetteur</span>
+                        <span key="t-layouts">{{Session::get('type')}}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                 <li>
