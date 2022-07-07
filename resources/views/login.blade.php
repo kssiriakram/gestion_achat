@@ -15,8 +15,9 @@
             <h4>Login</h4>
             <hr>
            <!-- <form action="/signin" method="post"> -->
-           <form action="/gestion_achat/public/signin" method="post"> 
             
+           <form action="/gestion_achat/public/signin" method="post">
+
                 @if(Session::has('success'))
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif

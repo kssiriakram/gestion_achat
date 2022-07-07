@@ -24,7 +24,7 @@
 
 
    ?>
-    <form action="/gestion_achat/public/add_dm" method="post">
+    <form action="{{env('APP_URL')}}/add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif

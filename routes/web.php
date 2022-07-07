@@ -32,7 +32,7 @@ Route::get('/encoursdm',[DaController::class,'get_encours_dm']);
 Route::get('/cloture',[DaController::class,'get_cloture_dm']);
 Route::get('/manager/encoursdm',[DaController::class,'get_encours_dm_manager']);
 Route::get('/manager/nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_manager']);
-
+Route::view('/manager_cloture',"manager_cloture");
 //Route::get('/da',[DaController::class,'da']);
 /*Route::get('/registration',[AuthController::class,'registration']);*/
 //Route::post('/register',[AuthController::class,'register']);

@@ -12,6 +12,6 @@
     {{$description}}
 
 
-   Veuillez cliquez sur <a href="http://192.168.43.48/gestion_achat/public/da_manager/{{$idDA}}">ce lien </a> pour valider la demande .
+   Veuillez cliquez sur <a href="{{env('APP_URL')}}/manager/nouvelledm/{{$idDA}}">ce lien </a> pour valider la demande .
 
 @endcomponent

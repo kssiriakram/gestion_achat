@@ -397,7 +397,7 @@
                 <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">@lang('translation.Lock_screen')</span></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">@lang('translation.Logout')</span></a>
-                <form id="logout-form" action="/gestion_achat/public/logout" method="POST" style="display: none;">
+                <form id="logout-form" action="{{env('APP_URL')}}/logout" method="POST" style="display: none;">
                     @csrf
                 </form>
             </div>
