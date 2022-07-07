@@ -47,7 +47,7 @@
                                     </a>
                                 </div>
                                 <div class="p-2">
-                                    <form class="form-horizontal" method="POST"  action="/signin">
+                                    <form class="form-horizontal" method="POST"  action="/gestion_achat/public/signin">
 
                                          @if(Session::has('success'))
                                         <div class="alert alert-success">{{ Session::get('success') }}</div>

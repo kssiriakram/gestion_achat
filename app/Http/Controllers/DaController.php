@@ -14,8 +14,8 @@ class DaController extends Controller
     function nouvelledm(){
 
         $user = DB::table('users')->where("type","acheteur")->get();
-        $im = DB::table('da_models')->get()->last() ? DB::table('da_models')->get()->last() : 0;
-
+        $var = DB::table('da_models')->get()->last();
+        $im = $var ?  $var->id : 0;
         return view('/nouvelledm',['acheteurs'=>$user,'id'=>$im]);
     }
 
@@ -72,10 +72,28 @@ class DaController extends Controller
       }
 
 
-      function get_da_manager($id){
+  /*    function get_da_manager($id){
         $da = DB::table('da_models')->where('id','=',$id)->get()->first();
         $acheteur = DB::table('users')->where('id','=',$da->id_acheteur)->get()->first();
         return view('da_manager' , ['da' => $da , 'acheteur' => $acheteur]);
-      }
+      }*/
+
+      function get_encours_dm_manager(Request $request){
+       // dd(DB::table('users')->where('departement','=',$request->session()->get('departement'))->get());
+
+
+        $dm= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
+        ->where('users.departement','=',$request->session()->get('departement'))->get();
+
+         
+        return view('manager_encoursdm',['items'=>$dm]);
+    }
+
+    function get_nouvelle_dm_manager($id){
+        $dm=DB::table('da_models')->where('id',$id)->get()->first();
+        $user=DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+
+        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+     }
 
 }

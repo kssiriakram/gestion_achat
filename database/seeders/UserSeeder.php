@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('kssiriakram'),
             'type' => 'emetteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -30,8 +31,9 @@ class UserSeeder extends Seeder
             'email'=> 'mohamedakram.kssiri@etu.uae.ac.ma',
             'username' => 'mohamedakram.kssiri',
             'password' => Hash::make('mohamedakram.kssiri'),
-            'type' => 'manager',
+            'type' => 'emetteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('test'),
             'type' => 'acheteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -50,6 +53,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('abdelaziz.bekraoui'),
             'type' => 'emetteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -59,6 +63,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('yacine.elyounoussi'),
             'type' => 'emetteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -68,6 +73,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('reda.alaoui'),
             'type' => 'emetteur',
             'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
             'departement' => 'IT'
         ]);
 
@@ -77,7 +83,8 @@ class UserSeeder extends Seeder
             'email'=> 'monhem.amrani@coficab.com',
             'username' => 'monhem.amrani',
             'password' => Hash::make('monhem.amrani'),
-            'type' => 'emetteur',
+            'type' => 'manager',
+            'superieur' => 'monhem.amrani',
             'societe' => 'COFMA',
             'departement' => 'IT'
         ]);
