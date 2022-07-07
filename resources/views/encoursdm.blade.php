@@ -61,7 +61,7 @@
                                 <td>{{$item->code_NE}}</td>
 
                                 @if($item->date_chef_service)
-                                @if($item->validation_manager)
+                                @if(!$item->validation_manager)
                                 <td>demande refusee</td>
                                 @else
                                 <td>demande accepte</td>

@@ -19,12 +19,14 @@
                         <li><a href="dashboardsyndicat" key="t-default">@lang('translation.dashboardsyndicat')</a></li>
                     </ul>
                 </li>-->
+                @if(Session::get('type')=='emetteur')
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-layout"></i>
                         <span key="t-layouts">{{Session::get('type')}}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
+
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-layout"></i>
@@ -32,21 +34,50 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="nouvelledm"
+                            <a href="{{ env('APP_URL') }}/nouvelledm"
                                 key="t-vertical">Nouvelle </a>
 
                         </li>
 
                         <li>
-                            <a href="encoursdm"
+                            <a href="{{ env('APP_URL') }}/encoursdm"
                                 key="t-horizontal"> En cours</a>
 
                         </li>
                         <li>
-                            <a href="cloture"
+                            <a href="{{ env('APP_URL') }}/cloture"
                                 key="t-horizontal"> Cloturé</a>
 
                         </li>
+                        @endif
+
+                        @if(Session::get('type')=='manager')
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-layout"></i>
+                                <span key="t-layouts">{{Session::get('type')}}</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="true">
+
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-layout"></i>
+                                <span key="t-layouts">Demande d'achat</span>
+                            </a>
+                            <ul class="sub-menu" aria-expanded="true">
+
+
+                                <li>
+                                    <a href="{{ env('APP_URL') }}/manager_encoursdm"
+                                        key="t-horizontal"> En cours</a>
+
+                                </li>
+                                <li>
+                                    <a href="{{ env('APP_URL') }}/manager_cloture"
+                                        key="t-horizontal"> Cloturé</a>
+
+                                </li>
+                                @endif
                       <!--   <li>
                             <a href="propretaire"
                                 key="t-horizontal">@lang('translation.propretaire')</a>

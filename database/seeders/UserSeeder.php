@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'email'=> 'kssiriakram@gmail.com',
             'username' => 'kssiriakram',
             'password' => Hash::make('kssiriakram'),
-            'type' => 'emetteur',
+            'type' => 'directeur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'departement' => 'IT'
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'email'=> 'mohamedakram.kssiri@etu.uae.ac.ma',
             'username' => 'mohamedakram.kssiri',
             'password' => Hash::make('mohamedakram.kssiri'),
-            'type' => 'emetteur',
+            'type' => 'manager',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'departement' => 'IT'
@@ -41,6 +41,16 @@ class UserSeeder extends Seeder
             'email'=> 'test@gmail.com',
             'username' => 'test',
             'password' => Hash::make('test'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
+            'departement' => 'IT'
+        ]);
+
+        DB::table('users')->insert([
+            'email'=> '1234@gmail.com',
+            'username' => 'kssiri',
+            'password' => Hash::make('kssiri'),
             'type' => 'acheteur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
@@ -83,7 +93,7 @@ class UserSeeder extends Seeder
             'email'=> 'monhem.amrani@coficab.com',
             'username' => 'monhem.amrani',
             'password' => Hash::make('monhem.amrani'),
-            'type' => 'manager',
+            'type' => 'emetteur',
             'superieur' => 'monhem.amrani',
             'societe' => 'COFMA',
             'departement' => 'IT'

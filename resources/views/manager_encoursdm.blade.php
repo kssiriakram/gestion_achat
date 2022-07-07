@@ -63,7 +63,7 @@
                                 <td>{{$item->code_NE}}</td>
 
                                 @if($item->date_chef_service)
-                                @if($item->validation_manager)
+                                @if(!$item->validation_manager)
                                 <td>demande refusee</td>
                                 @else
                                 <td>demande accepte</td>
@@ -74,7 +74,7 @@
 
 
                                 <td>en cours de traitement</td>
-                                <td><a href='http://192.168.43.48/gestion_achat/public/manager/nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                <td><a href='{{ env('APP_URL')}}/manager_nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                             </tr>
                             @endif

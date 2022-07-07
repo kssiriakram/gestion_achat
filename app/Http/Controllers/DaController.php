@@ -85,7 +85,7 @@ class DaController extends Controller
         $dm= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
         ->where('users.departement','=',$request->session()->get('departement'))->get();
 
-         
+
         return view('manager_encoursdm',['items'=>$dm]);
     }
 
@@ -95,5 +95,48 @@ class DaController extends Controller
 
         return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
      }
+
+
+
+     function add_dm_manager(Request $request){
+
+        $request->validate([
+            'delai' => 'required',
+            'reference' => 'required',
+            'acheteur' => 'required',
+            'quantite' => 'required|integer',
+            'ccout' => 'required|integer',
+            'cnecono' => 'required|integer',
+            'observation' => 'required',
+            'validation' => 'required|in:yes,no'
+         ]);
+
+    // $da = DB::table('users')->where('id','=',$request->id)->get()->first();
+    $da = DaModel::find($request->id);
+      $da->commentaire = $request->observation;
+
+      if($request->validation=="yes"){   $da->validation_manager=true;}
+      else $da->validation_manager=false;
+
+     $da->date_chef_service = Carbon::now();
+
+      $da->save();
+
+     if($da->validation_manager){
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
+        $destinaire = DB::table('users')->where("type", "=","directeur")->get()->first();
+        Mail::to($destinaire->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
+     return back()->with('success', "you're demand is registered");
+     }
+    else
+    {
+
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
+        $destinaire= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')->get()->first();
+        Mail::to($destinaire->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
+    return back()->with('fail',"some error occured at registring your demand");
+
+    }
+    }
 
 }

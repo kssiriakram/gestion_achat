@@ -24,7 +24,7 @@
 
 
    ?>
-    <form action="{{env('APP_URL')}}/add_dm" method="post">
+    <form action="{{env('APP_URL')}}/manager_add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -34,9 +34,10 @@
 
 
                         @csrf
+
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Numero Demande</label>
-                            <input type="text" class="form-control" id="formrow-f-input"  value="{{ $dm->id }}" readonly="true">
+                            <input type="text" class="form-control" id="formrow-f-input" name="id" value="{{ $dm->id }}" readonly="true">
 
                         </div>
 
@@ -121,13 +122,13 @@
                         <div>
                         <label>validation</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="validation" id="flexCheckDefault">
+                            <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
                             <label class="form-check-label" for="flexCheckDefault">
                               Valider
                             </label>
                           </div>
                           <div class="form-check">
-                            <input class="form-check-input" type="radio"  name="validation"   id="flexCheckDefault">
+                            <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
                               Refuser
                             </label>
@@ -142,10 +143,10 @@
                     </form>
 @endsection
 @section('script')
-    <!-- Required datatable js -->
+    <!-- Required datatable js
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Datatable init js -->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>-->
+    <!-- Datatable init js
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>-->
 @endsection

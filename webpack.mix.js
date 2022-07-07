@@ -20,7 +20,7 @@ const folder = {
 
     var third_party_assets = {
         css_js: [
-            {"name": "jquery", "assets": ["./node_modules/jquery/dist/jquery.min.js"]},
+          //  {"name": "jquery", "assets": ["./node_modules/jquery/dist/jquery.min.js"]},
             {"name": "bootstrap", "assets": ["./node_modules/bootstrap/dist/js/bootstrap.bundle.js"]},
             {"name": "metismenu", "assets": ["./node_modules/metismenu/dist/metisMenu.js"]},
             {"name": "simplebar", "assets": ["./node_modules/simplebar/dist/simplebar.js"]},
@@ -63,7 +63,7 @@ const folder = {
             {"name": "leaflet", "assets": ["./node_modules/leaflet/dist/leaflet.js", "./node_modules/leaflet/dist/leaflet.css"]},
             {"name": "bootstrap-filestyle2", "assets": ["./node_modules/bootstrap-filestyle2/src/bootstrap-filestyle.min.js"]},
             {"name": "echarts", "assets": ["./node_modules/echarts/dist/echarts.min.js"]},
-            {"name": "owl.carousel", "assets": ["./node_modules/owl.carousel/dist/owl.carousel.min.js", "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css","./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"]},
+           // {"name": "owl.carousel", "assets": ["./node_modules/owl.carousel/dist/owl.carousel.min.js", "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css","./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css"]},
             {"name": "toastr", "assets": ["./node_modules/toastr/build/toastr.min.js", "./node_modules/toastr/build/toastr.min.css"]},
             {"name": "rwd-table", "assets": ["./node_modules/admin-resources/rwd-table/rwd-table.min.js", "./node_modules/admin-resources/rwd-table/rwd-table.min.css"]},
             {"name": "bootstrap-editable", "assets": ["./node_modules/bootstrap-editable/js/index.js", "./node_modules/bootstrap-editable/css/bootstrap-editable.css"]},
@@ -102,12 +102,12 @@ const folder = {
             {"name": "dropzone", "assets": ["./node_modules/dropzone/dist/min/dropzone.min.js", "./node_modules/dropzone/dist/min/dropzone.min.css"]},
             {"name": "dragula", "assets": ["./node_modules/dragula/dist/dragula.min.js", "./node_modules/dragula/dist/dragula.min.css"]},
             {"name": "jquery-countdown", "assets": ["./node_modules/jquery-countdown/dist/jquery.countdown.min.js"]},
-            {"name": "jquery.easing", "assets": ["./node_modules/jquery.easing/jquery.easing.min.js"]},
+            //{"name": "jquery.easing", "assets": ["./node_modules/jquery.easing/jquery.easing.min.js"]},
             {"name": "jquery-repeater", "assets": ["./node_modules/jquery.repeater/jquery.repeater.min.js"]},
             {"name": "inputmask", "assets": ["./node_modules/inputmask/dist/min/jquery.inputmask.bundle.min.js"]},
             {"name": "masonry-layout", "assets": ["./node_modules/masonry-layout/dist/masonry.pkgd.min.js"]},
             {"name": "table-edits", "assets": ["./node_modules/table-edits/build/table-edits.min.js"]},
-            {"name": "flot-curvedLines", "assets": ["./node_modules/flot.curvedlines/curvedLines.js"]},
+           // {"name": "flot-curvedLines", "assets": ["./node_modules/flot.curvedlines/curvedLines.js"]},
             {"name": "jquery-validation", "assets": ["./node_modules/jquery-validation/dist/jquery.validate.min.js"]},
             {"name": "spectrum-colorpicker", "assets": ["./node_modules/spectrum-colorpicker2/dist/spectrum.min.js", "./node_modules/spectrum-colorpicker2/dist/spectrum.min.css"]},
             {"name": "jquery-steps", "assets": ["./node_modules/jquery-steps/build/jquery.steps.min.js"]}
