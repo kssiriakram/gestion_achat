@@ -143,10 +143,11 @@
                     </form>
 @endsection
 @section('script')
-    <!-- Required datatable js
+    <!-- Required datatable js-->
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>-->
-    <!-- Datatable init js
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>-->
+    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+    <!-- Datatable init js-->
+    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 @endsection
