@@ -15,7 +15,7 @@ class DaController extends Controller
 
         $user = DB::table('users')->where("type","acheteur")->get();
         $var = DB::table('da_models')->get()->last();
-        $im = $var ?  $var->id : 0;
+        $im = $var ?  $var->id+1 : 1;
         return view('/nouvelledm',['acheteurs'=>$user,'id'=>$im]);
     }
 
@@ -91,7 +91,7 @@ class DaController extends Controller
 
     function get_nouvelle_dm_manager($id){
         $dm=DB::table('da_models')->where('id',$id)->get()->first();
-        $user=DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
 
         return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
      }
@@ -139,4 +139,62 @@ class DaController extends Controller
     }
     }
 
+
+    function get_encours_dm_directeur(){
+
+        $dm = DB::table('da_models')->where('validation_manager','=',true)->get();
+        return view('directeur_encoursdm',['items'=>$dm]);
+    }
+
+    function get_nouvelle_dm_directeur($id){
+        $dm=DB::table('da_models')->where('id',$id)->get()->first();
+        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+
+        return view('directeur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+     }
+
+     function add_dm_directeur(Request $request){
+
+        $request->validate([
+            'delai' => 'required',
+            'reference' => 'required',
+            'acheteur' => 'required',
+            'quantite' => 'required|integer',
+            'ccout' => 'required|integer',
+            'cnecono' => 'required|integer',
+            'observation' => 'required',
+            'validation' => 'required|in:yes,no'
+         ]);
+
+    // $da = DB::table('users')->where('id','=',$request->id)->get()->first();
+    $da = DaModel::find($request->id);
+      $da->commentaire = $request->observation;
+
+      if($request->validation=="yes"){   $da->validation_directeur=true;}
+      else $da->validation_directeur=false;
+
+     $da->date_directeur = Carbon::now();
+
+      $da->save();
+
+     if($da->validation_directeur){
+
+
+      /*  $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
+        $destinaire = DB::table('users')->where("type", "=","directeur")->get()->first();
+        Mail::to($destinaire->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));*/
+     return back()->with('success', "you're demand is registered");
+     }
+    else
+    {
+        $emetteur =User::find($da->id_emetteur)->get()->first();
+        $manager = User::where('departement','=',$emetteur->departement);
+        $user= DB::table('users')->where("type", "=","directeur")->get()->first();
+       
+        Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
+        Mail::to($manager->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
+    return back()->with('fail',"some error occured at registring your demand");
+
+    }
+    }
 }

@@ -70,6 +70,6 @@ class AuthController extends Controller
 
     function logout(Request $request){
         $request->session()->flush();
-        return view("auth-login");
+        return redirect("/login");
     }
 }

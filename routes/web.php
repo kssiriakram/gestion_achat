@@ -6,6 +6,7 @@ use App\Http\Controllers\DaController;
 use App\Http\Middleware\Authorization;
 use App\Http\Middleware\Emetteur;
 use  App\Http\Middleware\Manager;
+use  App\Http\Middleware\Directeur;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,15 @@ Route::post('/add_dm',[DaController::class,'add_dm']);
 Route::get('/encoursdm',[DaController::class,'get_encours_dm']);
 Route::get('/cloture',[DaController::class,'get_cloture_dm']);
 });
+
+Route::middleware(Directeur::class)->namespace('\App\Http\Controllers\Api')->group(function () {
+    Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);
+    Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
+    Route::view('/directeur_cloture',"directeur_cloture");
+    Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
+
+});
+
 
 
 
