@@ -25,7 +25,7 @@
     ?>
 
 
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
             <div class="card">
                 <div class="card-body">
@@ -68,7 +68,7 @@
 
                                 <td>en cours de traitement</td>
                                 <td><a href='{{ env('APP_URL')}}/directeur_nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
                             </tr>
                             @endif
                             @endforeach
