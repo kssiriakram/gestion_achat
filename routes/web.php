@@ -26,13 +26,13 @@ Route::post('/signin',[AuthController::class,'signin']);
 Route::post('/logout',[AuthController::class,'logout']);
 
 Route::middleware(Authorization::class)->namespace('\App\Http\Controllers\Api')->group(function(){
-Route::view('/dashboard','dashboard-blog');
+Route::get('/dashboard',[DaController::class,'get_dashboard']);
 
 
 Route::middleware(Manager::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/manager_encoursdm',[DaController::class,'get_encours_dm_manager']);
     Route::get('/manager_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_manager']);
-    Route::view('/manager_cloture',"manager_cloture");
+    Route::get('/manager_cloture',[DaController::class,'get_cloture_dm_manager']);
     Route::post('/manager_add_dm',[DaController::class,'add_dm_manager']);
 });
 
@@ -49,7 +49,7 @@ Route::get('/cloture',[DaController::class,'get_cloture_dm']);
 Route::middleware(Directeur::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);
     Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
-    Route::view('/directeur_cloture',"directeur_cloture");
+    Route::get('/directeur_cloture',[DaController::class,'get_cloture_dm_directeur']);
     Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
 
 });

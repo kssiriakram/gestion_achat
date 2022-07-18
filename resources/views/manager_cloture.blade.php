@@ -60,7 +60,7 @@
                                 <td>{{$item->code_CC}}</td>
                                 <td>{{$item->code_NE}}</td>
 
-                                @if($item->validation_manager)
+                                @if(!$item->validation_manager)
                                 <td>demande refusee</td>
                                 @else
                                 <td>demande accepte</td>
@@ -68,7 +68,7 @@
 
 
 
-                                @if($item->validation_directeur)
+                                @if(!$item->validation_directeur)
                                 <td>demande refusee</td>
                                 @else
                                 <td>demande accepte</td>
@@ -207,5 +207,5 @@
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Datatable init js -->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-   
+
 @endsection

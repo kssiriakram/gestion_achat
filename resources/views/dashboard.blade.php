@@ -6,9 +6,10 @@
 
     @component('components.breadcrumb')
         @slot('li_1') Dashboards @endslot
-        @slot('title') Blog @endslot
+        @slot('title') gestion d'achat @endslot
     @endcomponent
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <div class="row">
         <div class="col-xl-8">
             <div class="row">
@@ -18,8 +19,8 @@
 
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Total Post</p>
-                                    <h5 class="mb-0">120</h5>
+                                    <p class="text-muted mb-2">Total des demandes</p>
+                                    <h5 class="mb-0">{{ $total_demandes }}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -39,8 +40,8 @@
 
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Pages</p>
-                                    <h5 class="mb-0">86</h5>
+                                    <p class="text-muted mb-2">Total des demandes en cours</p>
+                                    <h5 class="mb-0">{{ $total_demandes_encours }}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -58,8 +59,8 @@
                         <div class="card-body">
                             <div class="d-flex flex-wrap">
                                 <div class="me-3">
-                                    <p class="text-muted mb-2">Comments</p>
-                                    <h5 class="mb-0">4,235</h5>
+                                    <p class="text-muted mb-2">Total des demandes cloture</p>
+                                    <h5 class="mb-0">{{ $total_demandes_cloture }}</h5>
                                 </div>
 
                                 <div class="avatar-sm ms-auto">
@@ -77,7 +78,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-wrap align-items-start">
-                        <h5 class="card-title me-2">Visitors</h5>
+                        <h5 class="card-title me-2">Demande d'achat par mois</h5>
                         <div class="ms-auto">
                             <div class="toolbar button-items text-end">
                                 <button type="button" class="btn btn-light btn-sm">
@@ -101,30 +102,56 @@
                         <div class="col-lg-4">
                             <div class="mt-4">
                                 <p class="text-muted mb-1">Today</p>
-                                <h5>1024</h5>
+                                <h5>{{ $total_demandes_jour }}</h5>
                             </div>
                         </div>
 
                         <div class="col-lg-4">
                             <div class="mt-4">
                                 <p class="text-muted mb-1">This Month</p>
-                                <h5>12356 <span class="text-success font-size-13">0.2 % <i
-                                            class="mdi mdi-arrow-up ms-1"></i></span></h5>
+                                <h5>{{ $total_demandes_month }}</h5>
                             </div>
                         </div>
 
                         <div class="col-lg-4">
                             <div class="mt-4">
                                 <p class="text-muted mb-1">This Year</p>
-                                <h5>102354 <span class="text-success font-size-13">0.1 % <i
-                                            class="mdi mdi-arrow-up ms-1"></i></span></h5>
+                                <h5>{{ $total_demandes_year }}</h5>
                             </div>
                         </div>
                     </div>
 
                     <hr class="mb-4">
 
-                    <div class="apex-charts" id="area-chart" dir="ltr"></div>
+                    <canvas id="myChart" dir="ltr"></canvas>
+                    <script>
+                        const ctx = document.getElementById('myChart').getContext('2d');
+
+                        const myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Jan', 'Fev', 'Mar', 'Avr', 'Ma', 'Jui','Jul','Auo','Sep','Oct','Nov','Dec'],
+                                datasets: [{
+                                    label: "les demandes d'achat par mois",
+                                    data: @json($total_demandes_per_month),
+                                    backgroundColor: [
+
+                                    ],
+                                    borderColor: [
+
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        </script>
                 </div>
             </div>
         </div>

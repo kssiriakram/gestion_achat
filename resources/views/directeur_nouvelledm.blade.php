@@ -24,7 +24,7 @@
 
 
    ?>
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  
     <form action="{{env('APP_URL')}}/directeur_add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -150,5 +150,5 @@
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Datatable init js-->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
-   
+
 @endsection
