@@ -7,6 +7,7 @@ use App\Http\Middleware\Authorization;
 use App\Http\Middleware\Emetteur;
 use  App\Http\Middleware\Manager;
 use  App\Http\Middleware\Directeur;
+use  App\Http\Middleware\Acheteur;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,15 @@ Route::post('/add_dm',[DaController::class,'add_dm']);
 Route::get('/encoursdm',[DaController::class,'get_encours_dm']);
 Route::get('/cloture',[DaController::class,'get_cloture_dm']);
 });
+
+Route::middleware(Acheteur::class)->namespace('\App\Http\Controllers\Api')->group(function(){
+    Route::get('/acheteur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_acheteur']);
+    Route::post('/acheteur_add_dm',[DaController::class,'add_dm_acheteur']);
+
+    //Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
+    Route::get('/acheteur_encoursdm',[DaController::class,'get_encours_dm_acheteur']);
+
+    });
 
 Route::middleware(Directeur::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);

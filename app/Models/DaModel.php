@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DaModel extends Model
 {
 
-    protected $dateFormat = 'd-m-Y H:i:s'; 
+  protected $dateFormat = 'd-m-Y H:i:s';
     use HasFactory;
 }

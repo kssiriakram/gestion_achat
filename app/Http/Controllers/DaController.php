@@ -186,8 +186,8 @@ class DaController extends Controller
 
         $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
         $destinaire= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')->get()->first();
-        Mail::to($destinaire->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
-    return back()->with('fail',"some error occured at registring your demand");
+        Mail::to($destinaire->email)->send(new DAMail_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
+        return back()->with('success', "you're demand is registered");
 
     }
     }
@@ -243,13 +243,30 @@ class DaController extends Controller
     else
     {
         $emetteur =User::find($da->id_emetteur)->get()->first();
-        $manager = User::where('departement','=',$emetteur->departement);
+
+        $manager = User::where('departement','=',$emetteur->departement)->where('type','=','manager')->get()->first();
+
         $user= DB::table('users')->where("type", "=","directeur")->get()->first();
 
        // Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
-        Mail::to($manager->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
-    return back()->with('fail',"some error occured at registring your demand");
+        Mail::to($manager->email)->send(new DAMail_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));
+        return back()->with('success', "you're demand is registered");
 
     }
     }
+
+    function get_encours_dm_acheteur(Request $request){
+        $dm= DB::table('da_models')->where('id_acheteur','=',$request->session()->get('loginId'))->get();
+
+
+        return view('acheteur_encours',['items'=>$dm]);
+    }
+
+    function get_nouvelle_dm_acheteur($id){
+        $dm=DB::table('da_models')->where('id',$id)->get()->first();
+        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+
+        return view('acheteur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+     }
+
 }

@@ -106,6 +106,31 @@
 
                                         </li>
                                         @endif
+
+
+                                        @if(Session::get('type')=='acheteur')
+                                        <li>
+                                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                <i class="bx bx-layout"></i>
+                                                <span key="t-layouts">{{Session::get('type')}}</span>
+                                            </a>
+                                            <ul class="sub-menu" aria-expanded="true">
+
+                                        <li>
+                                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                <i class="bx bx-layout"></i>
+                                                <span key="t-layouts">Demande d'achat</span>
+                                            </a>
+                                            <ul class="sub-menu" aria-expanded="true">
+
+
+                                                <li>
+                                                    <a href="{{ env('APP_URL') }}/acheteur_encoursdm"
+                                                        key="t-horizontal"> En cours</a>
+
+                                                </li>
+
+                                                @endif
                       <!--   <li>
                             <a href="propretaire"
                                 key="t-horizontal">@lang('translation.propretaire')</a>
