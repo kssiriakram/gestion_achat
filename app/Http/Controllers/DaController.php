@@ -235,8 +235,8 @@ class DaController extends Controller
      if($da->validation_directeur){
 
 
-        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
-        $destinaire = DB::table('users')->where("type", "=","directeur")->get()->first();
+        $user= DB::table('users')->where("type", "=","directeur")->get()->first();
+        $destinaire = DB::table('users')->where("type", "=","acheteur")->get()->first();
         Mail::to($destinaire->email)->send(new DAMail_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));
      return back()->with('success', "you're demand is registered");
      }
