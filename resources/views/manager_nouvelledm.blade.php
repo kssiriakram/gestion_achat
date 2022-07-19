@@ -97,6 +97,12 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="formrow-code-input" class="form-label">Afficher le fichier</label>
+                            <a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a>
+                        </div>
+
                         <!--
                         <div class="row">
                             <div class="col-lg-4">

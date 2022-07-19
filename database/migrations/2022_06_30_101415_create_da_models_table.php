@@ -18,7 +18,8 @@ class CreateDaModelsTable extends Migration
             $table->date("date_emetteur")->nullable();
             $table->date("date_chef_service")->nullable()->default(NULL);
             $table->date("date_directeur")->nullable()->default(NULL);
-            $table->text('commentaire')->nullable();
+            $table->text('commentaire_manager')->nullable()->default(NULL);
+            $table->text('commentaire_directeur')->nullable()->default(NULL);
             $table->string("reference");
             $table->integer("qte");
             $table->unsignedBigInteger("id_emetteur");
@@ -26,6 +27,7 @@ class CreateDaModelsTable extends Migration
             $table->foreign('id_emetteur')->references('id')->on('users');
             $table->foreign('id_acheteur')->references('id')->on('users');
             $table->date("delai");
+            $table->string("file")->nullable()->default(NULL);
             $table->integer("code_CC")->nullable();
             $table->integer("code_NE")->nullable();
             $table->boolean('validation_manager')->nullable()->default(false);

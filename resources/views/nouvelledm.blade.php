@@ -24,7 +24,7 @@
 
    ?>
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <form action="{{env('APP_URL')}}/add_dm" method="post">
+    <form action="{{env('APP_URL')}}/add_dm" method="post" enctype="multipart/form-data">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -108,8 +108,11 @@
                         </div>
 
                         <div class="mb-3">
-
+                            <label for="formrow-code-input" class="form-label">Joindre un fichier</label>
+                            <input type="file" class="form-control"  name='file'>
+                            <span class="text-danger">@error('file'){{ $message }}@enderror</span>
                         </div>
+
                         <div>
                             <button type="submit" class="btn btn-primary w-md" >Valider</button>
                         </div>

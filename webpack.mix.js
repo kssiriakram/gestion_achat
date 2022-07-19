@@ -102,7 +102,7 @@ const folder = {
             {"name": "dropzone", "assets": ["./node_modules/dropzone/dist/min/dropzone.min.js", "./node_modules/dropzone/dist/min/dropzone.min.css"]},
             {"name": "dragula", "assets": ["./node_modules/dragula/dist/dragula.min.js", "./node_modules/dragula/dist/dragula.min.css"]},
             {"name": "jquery-countdown", "assets": ["./node_modules/jquery-countdown/dist/jquery.countdown.min.js"]},
-            //{"name": "jquery.easing", "assets": ["./node_modules/jquery.easing/jquery.easing.min.js"]},
+            {"name": "jquery.easing", "assets": ["./node_modules/jquery.easing/jquery.easing.min.js"]},
             {"name": "jquery-repeater", "assets": ["./node_modules/jquery.repeater/jquery.repeater.min.js"]},
             {"name": "inputmask", "assets": ["./node_modules/inputmask/dist/min/jquery.inputmask.bundle.min.js"]},
             {"name": "masonry-layout", "assets": ["./node_modules/masonry-layout/dist/masonry.pkgd.min.js"]},
@@ -172,7 +172,7 @@ const folder = {
 
     mix.webpackConfig({
         plugins: [
-            //new WebpackRTLPlugin()
+           // new WebpackRTLPlugin()
         ]
     });
 
