@@ -1,5 +1,5 @@
 @component('mail::message')
-    # Nouvelle demande d'achat est recu
+    # Votre demande d'achat est refusee
 
     De la part de :
 
@@ -9,10 +9,10 @@
     email : {{$email}}
     observation du manager : {{$observation_manager}}
     observation du directeur : {{$observation_directeur}}
-
+    observation de l'acheteur : {{$observation_acheteur}}
     {{$description}}
 
 
-   Veuillez cliquez sur <a href="{{env('APP_URL')}}/acheteur_nouvelledm/{{$idDA}}">ce lien </a> pour valider la demande .
+   Veuillez cliquez sur <a href="{{env('APP_URL')}}/nouvelledm/{{$idDA}}">ce lien </a> pour modifier la demande .
 
 @endcomponent

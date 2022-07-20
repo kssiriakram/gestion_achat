@@ -45,7 +45,7 @@
 
                         <div class="mb-3">
                             <label for="formrow-designation-input" class="form-label">designation</label>
-                            <input type="text" class="form-control" id="formrow-fi-input" name="designation" value="designation">
+                            <input type="text" class="form-control" id="formrow-fi-input" name="designation" value="{{ $dm->designation }}">
 
                         </div>
                         <div class="mb-3">
