@@ -113,7 +113,7 @@ class DaController extends Controller
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
          $da->date_emetteur = Carbon::now();
-        
+
 
          $res = $da->save();
          $da_id = DB::table('da_models')->get()->last();
@@ -150,8 +150,9 @@ class DaController extends Controller
     function get_nouvelle_dm_manager($id){
         $dm=DB::table('da_models')->where('id',$id)->get()->first();
         $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
 
-        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur] );
      }
 
 
