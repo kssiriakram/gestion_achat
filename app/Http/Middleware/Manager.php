@@ -17,6 +17,7 @@ class Manager
     public function handle(Request $request, Closure $next)
     {
         if($request->session()->get('type')=='manager')
+        
         return $next($request);
         else
         return abort(404);

@@ -89,8 +89,8 @@ class DaController extends Controller
             'designation' => 'required',
             'acheteur' => 'required',
             'quantite' => 'required|integer',
-            'ccout' => 'required|integer',
-            'cnecono' => 'required|integer',
+            'ccout' => 'required',
+            'cnecono' => 'required',
             'societe' => 'required',
             'file' => 'required'
          ]);
@@ -113,7 +113,7 @@ class DaController extends Controller
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
          $da->date_emetteur = Carbon::now();
-        
+
 
          $res = $da->save();
          $da_id = DB::table('da_models')->get()->last();
@@ -150,8 +150,9 @@ class DaController extends Controller
     function get_nouvelle_dm_manager($id){
         $dm=DB::table('da_models')->where('id',$id)->get()->first();
         $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
 
-        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur] );
      }
 
 
@@ -159,12 +160,6 @@ class DaController extends Controller
      function add_dm_manager(Request $request){
 
         $request->validate([
-            'delai' => 'required',
-            'reference' => 'required',
-            'acheteur' => 'required',
-            'quantite' => 'required|integer',
-            'ccout' => 'required|integer',
-            'cnecono' => 'required|integer',
             'observation' => 'required',
             'validation' => 'required|in:yes,no',
 
@@ -172,6 +167,8 @@ class DaController extends Controller
 
     // $da = DB::table('users')->where('id','=',$request->id)->get()->first();
     $da = DaModel::find($request->id);
+    $departement = User::find($da->id_emetteur)->departement;
+
       $da->commentaire_manager = $request->observation;
 
       if($request->validation=="yes"){   $da->validation_manager=true;}
@@ -182,7 +179,7 @@ class DaController extends Controller
       $da->save();
 
      if($da->validation_manager){
-        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
         $destinaire = DB::table('users')->where("type", "=","directeur")->get()->first();
         Mail::to($destinaire->email)->send(new DAMail_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
      return back()->with('success', "you're demand is registered");
@@ -208,19 +205,17 @@ class DaController extends Controller
     function get_nouvelle_dm_directeur($id){
         $dm=DB::table('da_models')->where('id',$id)->get()->first();
         $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
 
-        return view('directeur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+
+        return view('directeur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur, 'manager'=> $manager]   );
      }
 
      function add_dm_directeur(Request $request){
 
         $request->validate([
-            'delai' => 'required',
-            'reference' => 'required',
-            'acheteur' => 'required',
-            'quantite' => 'required|integer',
-            'ccout' => 'required|integer',
-            'cnecono' => 'required|integer',
+
             'observation' => 'required',
             'validation' => 'required|in:yes,no',
 
@@ -228,6 +223,7 @@ class DaController extends Controller
 
     // $da = DB::table('users')->where('id','=',$request->id)->get()->first();
     $da = DaModel::find($request->id);
+
 
       $da->commentaire_directeur = $request->observation;
 
@@ -283,8 +279,8 @@ class DaController extends Controller
             'reference' => 'required',
             'acheteur' => 'required',
             'quantite' => 'required|integer',
-            'ccout' => 'required|integer',
-            'cnecono' => 'required|integer',
+            'ccout' => 'required',
+            'cnecono' => 'required',
             'observation' => 'required',
             'validation' => 'required|in:yes,no',
 

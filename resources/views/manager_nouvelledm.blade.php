@@ -35,73 +35,81 @@
 
 
                         @csrf
-
+                        <input type="text" name="id" value="{{ $dm->id }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero Demande</label>
-                            <input type="text" class="form-control" id="formrow-f-input" name="id" value="{{ $dm->id }}" readonly="true">
-
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="formrow-designation-input" class="form-label">designation</label>
-                            <input type="text" class="form-control" id="formrow-fi-input" name="designation" value="{{ $dm->designation }}">
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="formrow-reference-input" class="form-label">Reference</label>
-                            <input type="text" class="form-control" id="formrow-fir-input" name="reference" value="{{ $dm->reference }}">
-                            <span class="text-danger">@error("reference"){{ $message }}@enderror</span>
+                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm->id }}</label>
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-quantite-input" class="form-label">Quantité</label>
-                            <input type="number" class="form-control" id="formrow-firs-input" name="quantite" value="{{ $dm->qte }}">
-                            <span class="text-danger">@error("quantite"){{ $message }}@enderror</span>
+                            <label for="formrow-numero-input" class="form-label">Date d'emission : {{ $dm->date_emetteur}}</label>
                         </div>
+
                         <div class="mb-3">
-                            <label for="formrow-delai-input" class="form-label">Délai Souhaité</label>
-                            <input type="date" class="form-control" id="formrow-firs-input" name="delai" value="{{ $dm->delai }}">
-                            <span class="text-danger">@error("delai"){{ $message }}@enderror</span>
+                            <label for="formrow-numero-input" class="form-label">Emetteur : {{ $emetteur->username}}</label>
                         </div>
-                        <div class="row">
 
-                            <div >
-                                <div class="mb-3">
-                                    <label for="formrow-code-input" class="form-label">Code Centre de cout</label>
-                                    <input type="text" class="form-control" id="formrow-email-input" name='ccout' value="{{ $dm->code_CC }}">
-                                    <span class="text-danger">@error('ccout'){{ $message }}@enderror</span>
-                                </div>
 
-                                <div class="mb-3">
-                                    <label for="formrow-code-input" class="form-label">Code Nature écono</label>
 
-                                    <input type="text" class="form-control" id="formrow-email-input" name='cnecono' value="{{ $dm->code_NE }}">
-                                    <span class="text-danger">@error('cnecono'){{ $message }}@enderror</span>
-                                </div>
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="card-title">Les detailles de la demande</h4>
+                                <p class="card-title-desc">
+                                </p>
+
+                                <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>Numéro Demande</th>
+                                            <th>Designation</th>
+                                            <th>Quantité</th>
+                                            <th>Référence</th>
+                                            <th>Code Centre de cout</th>
+                                            <th>Code Nature écono</th>
+                                            <th>Nom de l'acheteur</th>
+                                            <th>Afficher le fichier</th>
+
+
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+
+                                        <tr>
+                                            <td>{{ $dm->id }}</td>
+                                            <td>{{ $dm->designation }}</td>
+                                            <td>{{ $dm->qte }}</td>
+                                            <td>{{ $dm->reference }}</td>
+                                            <td>{{ $dm->code_CC }}</td>
+                                            <td>{{ $dm->code_NE }}</td>
+                                            <td>{{ $acheteurs->username }}</td>
+                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a></td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+            <br/>
+            <br/>
+
+            <br/>
+            <br/>
+            <br/>
+
+            <br/>
+            <br/>
+            <br/>
+
+                                    </tbody>
+                                </table>
                             </div>
-
                         </div>
 
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">acheteur</label>
-                                    <select id="formrow-inputState" class="form-select" name='acheteur'>
 
 
 
-                                               <option value="{{ $acheteurs->id }}">{{ $acheteurs->username }}</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formrow-code-input" class="form-label">Afficher le fichier</label>
-                            <a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a>
-                        </div>
 
                         <!--
                         <div class="row">

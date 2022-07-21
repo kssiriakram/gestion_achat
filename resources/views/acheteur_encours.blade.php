@@ -56,7 +56,7 @@
                            @if($item->date_directeur && $item->date_chef_service && $item->validation_manager)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td>designation</td>
+                                <td>{{$item->designation}}</td>
                                 <td>{{$item->qte}}</td>
                                 <td>{{$item->reference}}</td>
                                 <td>{{$item->code_CC}}</td>

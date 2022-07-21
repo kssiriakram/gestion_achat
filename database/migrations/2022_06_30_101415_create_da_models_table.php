@@ -32,8 +32,8 @@ class CreateDaModelsTable extends Migration
             $table->foreign('id_acheteur')->references('id')->on('users');
             $table->date("delai");
             $table->string("file")->nullable()->default(NULL);
-            $table->integer("code_CC")->nullable();
-            $table->integer("code_NE")->nullable();
+            $table->string("code_CC")->nullable();
+            $table->string("code_NE")->nullable();
 
             $table->boolean('validation_manager')->nullable()->default(false);
             $table->boolean('validation_directeur')->nullable()->default(false);

@@ -67,12 +67,12 @@
                             <div >
                                 <div class="mb-3">
                                     <label for="formrow-code-input" class="form-label">Code Centre de cout</label>
-                                    <input type="number" class="form-control" id="formrow-email-input" name='ccout'>
+                                    <input type="text" class="form-control" id="formrow-email-input" name='ccout'>
                                     <span class="text-danger">@error('ccout'){{ $message }}@enderror</span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="formrow-code-input" class="form-label">Code Nature écono</label>
-                                    <input type="number" class="form-control" id="formrow-email-input" name='cnecono'>
+                                    <input type="text" class="form-control" id="formrow-email-input" name='cnecono'>
                                     <span class="text-danger">@error('cnecono'){{ $message }}@enderror</span>
                                 </div>
                             </div>

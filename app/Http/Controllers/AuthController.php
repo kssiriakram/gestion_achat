@@ -49,6 +49,7 @@ class AuthController extends Controller
          ]);
 
 
+
          $user = DB::table('users')->where("username", $request->username)->first();
 
          if($user){
@@ -56,7 +57,17 @@ class AuthController extends Controller
                 $request->session()->put('loginId',$user->id);
                 $request->session()->put('type',$user->type);
                 $request->session()->put('departement',$user->departement);
-                return redirect('/dashboard');
+
+                if($user->type=='emetteur')
+                return redirect('/encoursdm');
+                else if($user->type=='manager')
+                return redirect('/manager_encoursdm');
+                else if($user->type=='directeur')
+                return redirect('/directeur_encoursdm');
+                else if($user->type=='acheteur')
+                return redirect('/acheteur_encours');
+
+                
             }else{
                 return back()->with('fail','passwords does not match');
             }
