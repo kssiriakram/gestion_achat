@@ -115,6 +115,7 @@ class DaController extends Controller
          $da->date_emetteur = Carbon::now();
 
 
+
          $res = $da->save();
          $da_id = DB::table('da_models')->get()->last();
          if($res) {
@@ -267,20 +268,18 @@ class DaController extends Controller
     function get_nouvelle_dm_acheteur($id){
         $dm=DB::table('da_models')->where('id',$id)->get()->first();
         $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
 
-        return view('acheteur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm] );
+
+        return view('acheteur_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm,'emetteur' => $emetteur, 'manager'=> $manager]);
      }
 
 
      function add_dm_acheteur(Request $request){
 
         $request->validate([
-            'delai' => 'required',
-            'reference' => 'required',
-            'acheteur' => 'required',
-            'quantite' => 'required|integer',
-            'ccout' => 'required',
-            'cnecono' => 'required',
+            'fournisseur' => 'required',
             'observation' => 'required',
             'validation' => 'required|in:yes,no',
 
@@ -290,6 +289,7 @@ class DaController extends Controller
     $da = DaModel::find($request->id);
 
       $da->commentaire_acheteur = $request->observation;
+      $da->fournisseur = $request->fournisseur;
 
       if($request->validation=="yes"){   $da->validation_acheteur=true;}
       else $da->validation_acheteur=false;

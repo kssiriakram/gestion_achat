@@ -33,7 +33,7 @@ Route::get('/acheteur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_ach
 Route::post('/acheteur_add_dm',[DaController::class,'add_dm_acheteur']);
 
 Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
-Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);
+Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
 
 
 
@@ -66,8 +66,9 @@ Route::middleware(Acheteur::class)->namespace('\App\Http\Controllers\Api')->grou
 
 Route::middleware(Directeur::class)->namespace('\App\Http\Controllers\Api')->group(function () {
 
-    Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
+
     Route::get('/directeur_cloture',[DaController::class,'get_cloture_dm_directeur']);
+    Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);
 
 
 });

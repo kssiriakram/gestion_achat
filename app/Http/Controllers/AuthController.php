@@ -65,9 +65,9 @@ class AuthController extends Controller
                 else if($user->type=='directeur')
                 return redirect('/directeur_encoursdm');
                 else if($user->type=='acheteur')
-                return redirect('/acheteur_encours');
+                return redirect('/acheteur_encoursdm');
 
-                
+
             }else{
                 return back()->with('fail','passwords does not match');
             }

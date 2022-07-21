@@ -52,6 +52,10 @@
                             <label for="formrow-numero-input" class="form-label">Manager : {{ $manager->username }}</label>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm->commentaire_manager }}</label>
+                        </div>
+
 
 
 

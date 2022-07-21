@@ -15,10 +15,12 @@ class CreateDaModelsTable extends Migration
     {
         Schema::create('da_models', function (Blueprint $table) {
             $table->id();
-            $table->date("date_emetteur")->nullable();
-            $table->date("date_chef_service")->nullable()->default(NULL);
-            $table->date("date_directeur")->nullable()->default(NULL);
-            $table->date("date_acheteur")->nullable()->default(NULL);
+            $table->datetime("date_emetteur")->nullable();
+            $table->datetime("date_chef_service")->nullable()->default(NULL);
+            $table->datetime("date_directeur")->nullable()->default(NULL);
+            $table->datetime("date_acheteur")->nullable()->default(NULL);
+
+            $table->string("fournisseur")->nullable()->default(NULL);
 
             $table->text('commentaire_manager')->nullable()->default(NULL);
             $table->text('commentaire_directeur')->nullable()->default(NULL);
