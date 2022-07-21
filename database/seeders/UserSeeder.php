@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-       /* DB::table('users')->insert([
+       /*DB::table('users')->insert([
             'email'=> 'kssiriakram@gmail.com',
             'username' => 'kssiriakram',
             'password' => Hash::make('kssiriakram'),
-            'type' => 'directeur',
+            'type' => 'acheteur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'departement' => 'IT'
@@ -108,5 +108,16 @@ class UserSeeder extends Seeder
             'societe' => 'COFMA',
             'departement' => 'IT'
         ]);
+
+        DB::table('users')->insert([
+            'email'=> 'darhour.aicha@coficab.com',
+            'username' => 'darhour.aicha',
+            'password' => Hash::make('darhour.aicha'),
+            'type' => 'acheteur',
+            'superieur' => 'monhem.amrani',
+            'societe' => 'COFMA',
+            'departement' => 'IT'
+        ]);
+
     }
 }
