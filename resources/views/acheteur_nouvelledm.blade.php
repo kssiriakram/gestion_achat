@@ -206,7 +206,19 @@
 
 
         buttons: [  {
-
+            columnDefs: [
+                        {
+                             targets: 0,
+                             render: function (data, type, row, meta)
+                                            {
+                                                console.log(data);
+                                                /* if (type === 'display')
+                                                {
+                                                 data = '<a href="FormToEdit.php?everything=' + encodeURIComponent(data) + '">Edit</a>';
+                                                 }
+                                                 return data;*/
+                                            }
+                        }],
                 extend: 'pdfHtml5',
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
