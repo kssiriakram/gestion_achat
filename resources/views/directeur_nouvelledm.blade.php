@@ -17,6 +17,7 @@
     <?php
    Use App\Http\Controllers\HomeController;
    use App\Models\Da;
+   use Carbon\Carbon;
 
 
   // $im = DB::table('da')->get()->last() ;
@@ -41,7 +42,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Date de validation du manager : {{ $dm->date_chef_service}}</label>
+                            <label for="formrow-numero-input" class="form-label">Date de validation du manager : {{ Carbon::parse($dm->date_chef_service)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
                         <div class="mb-3">

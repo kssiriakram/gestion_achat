@@ -12,7 +12,6 @@
     "/assets/js/pages/crypto-wallet.init.js": "/assets/js/pages/crypto-wallet.init.js",
     "/assets/js/pages/dashboard.init.js": "/assets/js/pages/dashboard.init.js",
     "/assets/js/pages/dashboard-blog.init.js": "/assets/js/pages/dashboard-blog.init.js",
-    "/assets/js/pages/datatables.init.js": "/assets/js/pages/datatables.init.js",
     "/assets/js/pages/echarts.init.js": "/assets/js/pages/echarts.init.js",
     "/assets/js/pages/ecommerce-cart.init.js": "/assets/js/pages/ecommerce-cart.init.js",
     "/assets/js/pages/ecommerce-select2.init.js": "/assets/js/pages/ecommerce-select2.init.js",

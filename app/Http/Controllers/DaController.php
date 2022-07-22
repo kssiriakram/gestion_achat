@@ -112,8 +112,7 @@ class DaController extends Controller
 
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
-         $da->date_emetteur = Carbon::now();
-
+         $da->date_emetteur = Carbon::now()->format('Y-d-m H:i:s');
 
 
          $res = $da->save();
@@ -175,7 +174,7 @@ class DaController extends Controller
       if($request->validation=="yes"){   $da->validation_manager=true;}
       else $da->validation_manager=false;
 
-     $da->date_chef_service = Carbon::now();
+     $da->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');;
 
       $da->save();
 
@@ -231,7 +230,7 @@ class DaController extends Controller
       if($request->validation=="yes"){   $da->validation_directeur=true;}
       else $da->validation_directeur=false;
 
-     $da->date_directeur = Carbon::now();
+     $da->date_directeur = Carbon::now()->format('Y-d-m H:i:s');;
 
       $da->save();
 
@@ -294,7 +293,7 @@ class DaController extends Controller
       if($request->validation=="yes"){   $da->validation_acheteur=true;}
       else $da->validation_acheteur=false;
 
-     $da->date_acheteur = Carbon::now();
+     $da->date_acheteur = Carbon::now()->format('Y-d-m H:i:s');;
 
       $da->save();
 

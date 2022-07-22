@@ -193,7 +193,7 @@ const folder = {
             folder.src + "js/pages/crypto-wallet.init.js",
             folder.src + "js/pages/dashboard.init.js",
             folder.src + "js/pages/dashboard-blog.init.js",
-            folder.src + "js/pages/datatables.init.js",
+           folder.src + "js/pages/datatables.init.js",
             folder.src + "js/pages/echarts.init.js",
             folder.src + "js/pages/ecommerce-cart.init.js",
             folder.src + "js/pages/ecommerce-select2.init.js",

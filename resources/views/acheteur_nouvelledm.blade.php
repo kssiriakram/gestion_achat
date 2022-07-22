@@ -8,6 +8,8 @@
     <link href="{{ URL::asset('/assets/libs/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
+
+
 @section('content')
 
     @component('components.breadcrumb')
@@ -17,6 +19,7 @@
     <?php
    Use App\Http\Controllers\HomeController;
    use App\Models\Da;
+   use Carbon\Carbon;
 
 
   // $im = DB::table('da')->get()->last() ;
@@ -24,8 +27,12 @@
 
 
    ?>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <form action="{{env('APP_URL')}}/acheteur_add_dm" method="post">
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+
+  <form action="{{env('APP_URL')}}/acheteur_add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -43,7 +50,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Date de validation du directeur : {{ $dm->date_directeur}}</label>
+                            <label for="formrow-numero-input" class="form-label">Date de validation du directeur : {{ Carbon::parse($dm->date_directeur)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
                         <div class="mb-3">
@@ -73,6 +80,7 @@
                                 </p>
 
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
+
                                     <thead>
                                         <tr>
                                             <th>Numéro Demande</th>
@@ -93,7 +101,7 @@
 
                                         <tr>
                                             <td>{{ $dm->id }}</td>
-                                            <td>{{ $dm->designation }}</td>
+                                            <td><textarea type="text" class="form-control" id="formrow-email-input" name='observation'>{{ $dm->designation }}</textarea></td>
                                             <td>{{ $dm->qte }}</td>
                                             <td>{{ $dm->reference }}</td>
                                             <td>{{ $dm->code_CC }}</td>
@@ -118,6 +126,8 @@
 
                                     </tbody>
                                 </table>
+
+
                             </div>
                         </div>
 
@@ -177,13 +187,56 @@
                             <button type="submit" class="btn btn-primary w-md" >Valider</button>
                         </div>
                     </form>
-@endsection
-@section('script')
-    <!-- Required datatable js-->
-    <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-    <!-- Datatable init js-->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+
 
 @endsection
+
+
+@section('script')
+<!-- Required datatable js-->
+
+<script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
+<script >$(document).ready(function() {
+   console.log("hyize gu");
+
+    var table = $('#datatable-buttons').DataTable({
+        lengthChange: false,
+
+
+        buttons: [  {
+
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                customize:  function (doc) {
+                    doc.content[0].text="DEMANDE D'ACHAT";
+                    doc.layout = 'lightHorizotalLines;'
+                   doc.content[1].table.widths=[{width: 'auto', _minWidth: 51.052734375, _maxWidth: 97.001953125, _calcWidth: 51.052734375},
+                                        {width: '35%', _minWidth: 676.1240234375, _maxWidth: 676.1240234375, _calcWidth: 676.1240234375},
+                                         {width: 'auto', _minWidth: 45.568359375, _maxWidth: 45.568359375, _calcWidth: 45.568359375},
+                                        {width: 'auto', _minWidth: 54.43359375, _maxWidth: 54.43359375, _calcWidth: 54.43359375},
+                                         {width: 'auto', _minWidth: 44.193359375, _maxWidth: 109.20703125, _calcWidth: 44.193359375},
+                                         {width: 'auto', _minWidth: 50.37548828125, _maxWidth: 102.99609375, _calcWidth: 50.37548828125},
+                                         {width: 'auto', _minWidth: 51.943359375, _maxWidth: 96.873046875, _calcWidth: 51.943359375},
+                                         {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875}],
+                    doc.pageMargins = [30, 30, 30, 30];
+                    doc.defaultStyle.fontSize = 11;
+                    doc.styles.tableHeader.fontSize = 12;
+                    doc.styles.title.fontSize = 14;
+            }}
+            , 'colvis']
+    });
+
+    table.buttons().container()
+        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+    $(".dataTables_length select").addClass('form-select form-select-sm');
+});
+</script>
+<!-- Datatable init js-->
+
+
+@endsection
+

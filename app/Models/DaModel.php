@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DaModel extends Model
 {
+    protected $dateFormat = 'Y-d-m H:i:s';
+  use HasFactory;
 
-  protected $dateFormat = 'd-m-Y H:i:s';
-    use HasFactory;
+
+
 }

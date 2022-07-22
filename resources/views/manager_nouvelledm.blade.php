@@ -17,6 +17,7 @@
     <?php
    Use App\Http\Controllers\HomeController;
    use App\Models\Da;
+   use Carbon\Carbon;
 
 
   // $im = DB::table('da')->get()->last() ;
@@ -25,6 +26,7 @@
 
    ?>
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
     <form action="{{env('APP_URL')}}/manager_add_dm" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
@@ -41,7 +43,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Date d'emission : {{ $dm->date_emetteur}}</label>
+                            <label for="formrow-numero-input" class="form-label">Date d'emission : {{ Carbon::parse( $dm->date_emetteur)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
                         <div class="mb-3">
@@ -164,4 +166,5 @@
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Datatable init js-->
     <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+
 @endsection
