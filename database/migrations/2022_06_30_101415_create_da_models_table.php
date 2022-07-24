@@ -26,22 +26,20 @@ class CreateDaModelsTable extends Migration
             $table->text('commentaire_directeur')->nullable()->default(NULL);
             $table->text('commentaire_acheteur')->nullable()->default(NULL);
 
-            $table->string("reference");
-            $table->integer("qte");
+          
+
             $table->unsignedBigInteger("id_emetteur");
             $table->unsignedBigInteger("id_acheteur");
             $table->foreign('id_emetteur')->references('id')->on('users');
             $table->foreign('id_acheteur')->references('id')->on('users');
             $table->date("delai");
-            $table->string("file")->nullable()->default(NULL);
-            $table->string("code_CC")->nullable();
-            $table->string("code_NE")->nullable();
+
 
             $table->boolean('validation_manager')->nullable()->default(false);
             $table->boolean('validation_directeur')->nullable()->default(false);
             $table->boolean('validation_acheteur')->nullable()->default(false);
 
-            $table->string("designation")->nullable()->default(NULL);
+
 
             $table->timestamps();
         });

@@ -40,45 +40,85 @@
 
                         </div>
 
-
-                        <div class="mb-3">
-                            <label for="formrow-designation-input" class="form-label">designation</label>
-                            <input type="text" class="form-control" id="formrow-fi-input" name="designation">
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="formrow-reference-input" class="form-label">Reference</label>
-                            <input type="text" class="form-control" id="formrow-fir-input" name="reference">
-                            <span class="text-danger">@error("reference"){{ $message }}@enderror</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="formrow-quantite-input" class="form-label">Quantité</label>
-                            <input type="number" class="form-control" id="formrow-firs-input" name="quantite">
-                            <span class="text-danger">@error("quantite"){{ $message }}@enderror</span>
-                        </div>
                         <div class="mb-3">
                             <label for="formrow-delai-input" class="form-label">Délai Souhaité</label>
                             <input type="date" class="form-control" id="formrow-firs-input" name="delai">
                             <span class="text-danger">@error("delai"){{ $message }}@enderror</span>
                         </div>
-                        <div class="row">
 
-                            <div >
-                                <div class="mb-3">
-                                    <label for="formrow-code-input" class="form-label">Code Centre de cout</label>
-                                    <input type="text" class="form-control" id="formrow-email-input" name='ccout'>
-                                    <span class="text-danger">@error('ccout'){{ $message }}@enderror</span>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formrow-code-input" class="form-label">Code Nature écono</label>
-                                    <input type="text" class="form-control" id="formrow-email-input" name='cnecono'>
-                                    <span class="text-danger">@error('cnecono'){{ $message }}@enderror</span>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Nombre des lignes de la demande d'achat</label>
+                            <input type="text" class="form-control" id="Nb_ligne_da"  value="" >
 
                         </div>
 
+///////////////////////////////////////////////////////
+                    <div id="ligne_das">
+                        <div  class="accordion">
+                            <div class="accordion-item" id="ligne_da">
+                                <h2 class="accordion-header" id="1">
+                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Ligne de la demande d'achat Nº1
+                                  </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="mb-3">
+                                        <label for="formrow-designation-input" class="form-label">designation</label>
+                                        <input type="text" class="form-control" id="formrow-fi-input" name="designation[]">
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formrow-reference-input" class="form-label">Reference</label>
+                                        <input type="text" class="form-control" id="formrow-fir-input" name="reference[]">
+                                        <span class="text-danger">@error("reference[]"){{ $message }}@enderror</span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="formrow-quantite-input" class="form-label">Quantité</label>
+                                        <input type="number" class="form-control" id="formrow-firs-input" name="quantite[]">
+                                        <span class="text-danger">@error("quantite[]"){{ $message }}@enderror</span>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div >
+                                            <div class="mb-3">
+                                                <label for="formrow-code-input" class="form-label">Code Centre de cout</label>
+                                                <input type="text" class="form-control" id="formrow-email-input" name='ccout[]'>
+                                                <span class="text-danger">@error('ccout[]'){{ $message }}@enderror</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="formrow-code-input" class="form-label">Code Nature écono</label>
+                                                <input type="text" class="form-control" id="formrow-email-input" name='cnecono[]'>
+                                                <span class="text-danger">@error('cnecono[]'){{ $message }}@enderror</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="formrow-code-input" class="form-label">Joindre un fichier</label>
+                                        <input type="file" class="form-control"  name='file[]'>
+                                        <span class="text-danger">@error('file[]'){{ $message }}@enderror</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $('#Nb_ligne_da').change(function () {
+                            console.log($('#Nb_ligne_da').val());
+                            for(let i=0;i<$('#Nb_ligne_da').val()-1;i++){
+                            document.getElementById("ligne_das").innerHTML += document.getElementsByClassName("accordion")[0].innerHTML;
+                            }
+                            $('.accordion-button').map((index,e)=> e.textContent = "Ligne de la demande d'achat Nº"+(index+1));
+
+
+                        })
+                    </script>
+////////////////////////////////////
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">
@@ -107,10 +147,14 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="formrow-code-input" class="form-label">Joindre un fichier</label>
-                            <input type="file" class="form-control"  name='file'>
-                            <span class="text-danger">@error('file'){{ $message }}@enderror</span>
+
+
+                        <div>
+                            <div class="mb-3">
+                                <label for="formrow-code-input" class="form-label">Nom de fournisseur</label>
+                                <input type="text" class="form-control" id="formrow-email-input" name='fournisseur'>
+                                <span class="text-danger">@error('fournisseur'){{ $message }}@enderror</span>
+                            </div>
                         </div>
 
                         <div>

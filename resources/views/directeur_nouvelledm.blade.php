@@ -78,6 +78,8 @@
                                             <th>Code Nature écono</th>
                                             <th>Nom de l'acheteur</th>
                                             <th>Afficher le fichier</th>
+                                            <th>Observation du manager</th>
+                                            <th>Nom du fournisseur</th>
 
 
                                         </tr>
@@ -95,6 +97,8 @@
                                             <td>{{ $dm->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a></td>
+                                            <td>{{ $dm->commentaire_manager }}</td>
+                                            <td>{{ $dm->fournisseur }}
 
                                         </tr>
 

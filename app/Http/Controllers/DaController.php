@@ -14,6 +14,7 @@ use App\Mail\DAMail_directeur;
 use App\Mail\DAMail_acheteur_refus;
 use App\Mail\DAMail_directeur_refus;
 use App\Mail\DAMail_manager_refus;
+use App\Models\Ligne_da;
 
 class DaController extends Controller
 {
@@ -45,6 +46,8 @@ class DaController extends Controller
         'total_demandes_year' => $total_demandes_year,
         'total_demandes_per_month' =>  $total_demandes_per_month]);
     }
+
+
     function nouvelledm(){
 
         $user = DB::table('users')->where("type","acheteur")->get();
@@ -85,37 +88,50 @@ class DaController extends Controller
 
         $request->validate([
             'delai' => 'required',
-            'reference' => 'required',
-            'designation' => 'required',
+            'reference' => 'required|array',
+            'designation' => 'required|array',
             'acheteur' => 'required',
-            'quantite' => 'required|integer',
-            'ccout' => 'required',
-            'cnecono' => 'required',
+            'quantite' => 'required|array',
+            'quantite.*' => 'required|integer',
+            'ccout' => 'required|array',
+            'cnecono' => 'required|array',
             'societe' => 'required',
-            'file' => 'required'
+            'file' => 'required|array',
+            'fournisseur' => 'required'
          ]);
 
          $da = new DaModel();
 
          $da->delai =Carbon::parse($request->delai);
-         $da->reference = $request->reference;
-         $da->qte= $request->quantite;
-         $da->code_CC = $request->ccout;
-         $da->code_NE = $request->cnecono;
-         //$da->societe = $request->societe;
+         $da->fournisseur = $request->fournisseur;
          $da->id_acheteur = $request->acheteur;
-         $da->designation = $request->designation;
-
-         $image_name = time().'-logo.'.$request->file->getClientOriginalExtension();
-         $request->file->move(public_path('uploads'), $image_name);
-         $da->file = $image_name;
-
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
          $da->date_emetteur = Carbon::now()->format('Y-d-m H:i:s');
-
-
          $res = $da->save();
+         
+        for($i=0;$i<count($request->quantite);$i++){
+        $da_ligne=new Ligne_da();
+        $da_ligne->designation = $request->designation[$i];
+         $da_ligne->reference = $request->reference[$i];
+         $da_ligne->qte= $request->quantite[$i];
+         $da_ligne->code_CC = $request->ccout[$i];
+         $da_ligne->code_NE = $request->cnecono[$i];
+         $image_name = time().'-logo.'.$request->file[$i]->getClientOriginalExtension();
+         $request->file[$i]->move(public_path('uploads'), $image_name);
+         $da->file = $image_name;
+         $da_ligne->id_da = $da->id;
+          $da_ligne->save();
+        }
+         //$da->societe = $request->societe;
+
+
+
+
+
+
+
+
          $da_id = DB::table('da_models')->get()->last();
          if($res) {
              $user = DB::table('users')->where("id", '=',$request->session()->get('loginId'))->get()->first();
@@ -278,7 +294,7 @@ class DaController extends Controller
      function add_dm_acheteur(Request $request){
 
         $request->validate([
-            'fournisseur' => 'required',
+
             'observation' => 'required',
             'validation' => 'required|in:yes,no',
 
@@ -288,7 +304,7 @@ class DaController extends Controller
     $da = DaModel::find($request->id);
 
       $da->commentaire_acheteur = $request->observation;
-      $da->fournisseur = $request->fournisseur;
+
 
       if($request->validation=="yes"){   $da->validation_acheteur=true;}
       else $da->validation_acheteur=false;

@@ -91,6 +91,9 @@
                                             <th>Code Nature écono</th>
                                             <th>Nom de l'acheteur</th>
                                             <th>Afficher le fichier</th>
+                                           <th>Observation du manager</th>
+                                            <th>Observation du directeur</th>
+                                            <th>Nom du fournisseur</th>
 
 
                                         </tr>
@@ -108,6 +111,9 @@
                                             <td>{{ $dm->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a></td>
+                                            <td>{{ $dm->commentaire_manager }}</td>
+                                            <td>{{ $dm->commentaire_directeur }}</td>
+                                            <td>{{ $dm->fournisseur }}
 
                                         </tr>
 
@@ -149,13 +155,7 @@
                         </div>-->
 
 
-                        <div>
-                            <div class="mb-3">
-                                <label for="formrow-code-input" class="form-label">Nom de fournisseur</label>
-                                <input type="text" class="form-control" id="formrow-email-input" name='fournisseur'>
-                                <span class="text-danger">@error('fournisseur'){{ $message }}@enderror</span>
-                            </div>
-                        </div>
+
 
                         <div>
                             <div class="mb-3">
@@ -232,6 +232,9 @@
                                          {width: 'auto', _minWidth: 44.193359375, _maxWidth: 109.20703125, _calcWidth: 44.193359375},
                                          {width: 'auto', _minWidth: 50.37548828125, _maxWidth: 102.99609375, _calcWidth: 50.37548828125},
                                          {width: 'auto', _minWidth: 51.943359375, _maxWidth: 96.873046875, _calcWidth: 51.943359375},
+                                         {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                         {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                         {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
                                          {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875}],
                     doc.pageMargins = [30, 30, 30, 30];
                     doc.defaultStyle.fontSize = 11;
