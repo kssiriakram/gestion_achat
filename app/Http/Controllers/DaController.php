@@ -109,7 +109,7 @@ class DaController extends Controller
          if($request->session()->get('type')=='emetteur')
          $da->date_emetteur = Carbon::now()->format('Y-d-m H:i:s');
          $res = $da->save();
-         
+
         for($i=0;$i<count($request->quantite);$i++){
         $da_ligne=new Ligne_da();
         $da_ligne->designation = $request->designation[$i];
@@ -164,9 +164,10 @@ class DaController extends Controller
     }
 
     function get_nouvelle_dm_manager($id){
-        $dm=DB::table('da_models')->where('id',$id)->get()->first();
-        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
-        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
 
         return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur] );
      }
@@ -219,9 +220,11 @@ class DaController extends Controller
     }
 
     function get_nouvelle_dm_directeur($id){
-        $dm=DB::table('da_models')->where('id',$id)->get()->first();
-        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
-        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+
         $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
 
 
@@ -281,9 +284,10 @@ class DaController extends Controller
     }
 
     function get_nouvelle_dm_acheteur($id){
-        $dm=DB::table('da_models')->where('id',$id)->get()->first();
-        $user=DB::table('users')->where('id',$dm->id_acheteur)->get()->first();
-        $emetteur= DB::table('users')->where('id',$dm->id_emetteur)->get()->first();
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
         $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
 
 

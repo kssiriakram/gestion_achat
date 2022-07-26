@@ -38,15 +38,8 @@
                         <thead>
                             <tr>
                                 <th>Numéro Demande</th>
-                                <th>Designation</th>
-                                <th>Quantité</th>
-                                <th>Référence</th>
-                                <th>Code Centre de cout</th>
-                                <th>Code Nature écono</th>
                                 <th>Reponse manager</th>
-                                <th>Observation du manager</th>
                                 <th>Reponse directeur</th>
-                                <th>Observation du directeur</th>
                                 <th>Nom du fournisseur</th>
                                 <th>Action</th>
 
@@ -59,15 +52,8 @@
                            @if($item->date_directeur && $item->date_chef_service && $item->validation_manager)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td>{{$item->designation}}</td>
-                                <td>{{$item->qte}}</td>
-                                <td>{{$item->reference}}</td>
-                                <td>{{$item->code_CC}}</td>
-                                <td>{{$item->code_NE}}</td>
                                 <td>demande accepte</td>
-                                <td>{{ $item->commentaire_manager }}</td>
                                 <td>demande accepte</td>
-                                <td>{{ $item->commentaire_directeur }}</td>
                                 <td>{{ $item->fournisseur }}
 
                                 <td><a href='{{ env('APP_URL')}}/acheteur_nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>

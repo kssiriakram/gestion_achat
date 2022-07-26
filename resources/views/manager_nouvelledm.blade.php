@@ -37,13 +37,13 @@
 
 
                         @csrf
-                        <input type="text" name="id" value="{{ $dm->id }}" hidden>
+                        <input type="text" name="id" value="{{ $dm[0]->id }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm->id }}</label>
+                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm[0]->id }}</label>
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Date d'emission : {{ Carbon::parse( $dm->date_emetteur)->format('Y-d-m H:i:s')}}</label>
+                            <label for="formrow-numero-input" class="form-label">Date d'emission : {{ Carbon::parse( $dm[0]->date_emetteur)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
                         <div class="mb-3">
@@ -79,19 +79,21 @@
 
 
                                     <tbody>
+                                      @foreach ($dm as $dm_ligne )
+
 
                                         <tr>
-                                            <td>{{ $dm->id }}</td>
-                                            <td>{{ $dm->designation }}</td>
-                                            <td>{{ $dm->qte }}</td>
-                                            <td>{{ $dm->reference }}</td>
-                                            <td>{{ $dm->code_CC }}</td>
-                                            <td>{{ $dm->code_NE }}</td>
+                                            <td>{{ $dm_ligne->id }}</td>
+                                            <td>{{ $dm_ligne->designation }}</td>
+                                            <td>{{ $dm_ligne->qte }}</td>
+                                            <td>{{ $dm_ligne->reference }}</td>
+                                            <td>{{ $dm_ligne->code_CC }}</td>
+                                            <td>{{ $dm_ligne->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
-                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a></td>
-                                            <td>{{ $dm->fournisseur }}
+                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
 
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -167,6 +169,52 @@
     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
     <!-- Datatable init js-->
-    <script src="{{ URL::asset('/assets/js/pages/datatables.init.js') }}"></script>
+    <script >$(document).ready(function() {
+        console.log("hyize gu");
+
+         var table = $('#datatable-buttons').DataTable({
+             lengthChange: false,
+
+
+             buttons: [  'copy', 'excel',{
+
+                     extend: 'pdfHtml5',
+                     orientation: 'landscape',
+                     pageSize: 'LEGAL',
+                     title: "DEMANDE D'ACHAT",
+                     customize:  function (doc) {
+                        for (var row = 1; row < doc.content[1].table.body.length; row++) {
+                console.log(@json($dm));
+
+                doc.content[1].table.body[row][7] = {text: 'Cliquez ici', link: '{{ env('APP_URL') }}'+"/uploads/"+@json($dm)[row-1].file ,style: "tableBodyOdd"};
+              }
+
+                         doc.content[0].text="DEMANDE D'ACHAT";
+                         doc.layout = 'lightHorizotalLines;'
+                        doc.content[1].table.widths=[{width: 'auto', _minWidth: 51.052734375, _maxWidth: 97.001953125, _calcWidth: 51.052734375},
+                                             {width: '35%', _minWidth: 676.1240234375, _maxWidth: 676.1240234375, _calcWidth: 676.1240234375},
+                                              {width: 'auto', _minWidth: 45.568359375, _maxWidth: 45.568359375, _calcWidth: 45.568359375},
+                                             {width: 'auto', _minWidth: 54.43359375, _maxWidth: 54.43359375, _calcWidth: 54.43359375},
+                                              {width: 'auto', _minWidth: 44.193359375, _maxWidth: 109.20703125, _calcWidth: 44.193359375},
+                                              {width: 'auto', _minWidth: 50.37548828125, _maxWidth: 102.99609375, _calcWidth: 50.37548828125},
+                                              {width: 'auto', _minWidth: 51.943359375, _maxWidth: 96.873046875, _calcWidth: 51.943359375},
+                                              {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                              {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                              {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                              {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875}],
+                         doc.pageMargins = [30, 30, 30, 30];
+                         doc.defaultStyle.fontSize = 11;
+                         doc.styles.tableHeader.fontSize = 12;
+                         doc.styles.title.fontSize = 14;
+                 }}
+                 , 'colvis']
+         });
+
+         table.buttons().container()
+             .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+
+         $(".dataTables_length select").addClass('form-select form-select-sm');
+     });
+     </script>
 
 @endsection

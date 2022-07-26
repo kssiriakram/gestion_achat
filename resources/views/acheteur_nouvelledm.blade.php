@@ -44,13 +44,13 @@
                         @csrf
 
 
-                        <input type="text" name="id" value="{{ $dm->id }}" hidden>
+                        <input type="text" name="id" value="{{ $dm[0]->id }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm->id }}</label>
+                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm[0]->id }}</label>
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Date de validation du directeur : {{ Carbon::parse($dm->date_directeur)->format('Y-d-m H:i:s')}}</label>
+                            <label for="formrow-numero-input" class="form-label">Date de validation du directeur : {{ Carbon::parse($dm[0]->date_directeur)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
                         <div class="mb-3">
@@ -62,11 +62,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm->commentaire_manager }}</label>
+                            <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm[0]->commentaire_manager }}</label>
                         </div>
 
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Observation du directeur : {{ $dm->commentaire_directeur }}</label>
+                            <label for="formrow-numero-input" class="form-label">Observation du directeur : {{ $dm[0]->commentaire_directeur }}</label>
                         </div>
 
 
@@ -101,21 +101,24 @@
 
 
                                     <tbody>
+                                    @foreach ($dm as $dm_ligne )
+
 
                                         <tr>
-                                            <td>{{ $dm->id }}</td>
-                                            <td><textarea type="text" class="form-control" id="formrow-email-input" name='observation'>{{ $dm->designation }}</textarea></td>
-                                            <td>{{ $dm->qte }}</td>
-                                            <td>{{ $dm->reference }}</td>
-                                            <td>{{ $dm->code_CC }}</td>
-                                            <td>{{ $dm->code_NE }}</td>
+                                            <td>{{ $dm_ligne->id }}</td>
+                                            <td>{{ $dm_ligne->designation }}</td>
+                                            <td>{{ $dm_ligne->qte }}</td>
+                                            <td>{{ $dm_ligne->reference }}</td>
+                                            <td>{{ $dm_ligne->code_CC }}</td>
+                                            <td>{{ $dm_ligne->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
-                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm->file) }}> cliquez ici </a></td>
-                                            <td>{{ $dm->commentaire_manager }}</td>
-                                            <td>{{ $dm->commentaire_directeur }}</td>
-                                            <td>{{ $dm->fournisseur }}
+                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
+                                            <td>{{ $dm_ligne->commentaire_manager }}</td>
+                                            <td>{{ $dm_ligne->commentaire_directeur }}</td>
+                                            <td>{{ $dm_ligne->fournisseur }}
 
                                         </tr>
+                                        @endforeach
 
                                     </tbody>
                                 </table>
@@ -165,7 +168,7 @@
                             </div>
                         </div>
 
-                        <div>
+                      <!--  <div>
                         <label>validation</label>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
@@ -179,7 +182,7 @@
                               Refuser
                             </label>
                           </div>
-                        </div>
+                        </div>-->
 
 
 
@@ -199,30 +202,27 @@
 <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
 <script >$(document).ready(function() {
-   console.log("hyize gu");
+
 
     var table = $('#datatable-buttons').DataTable({
         lengthChange: false,
 
 
-        buttons: [  {
-            columnDefs: [
-                        {
-                             targets: 0,
-                             render: function (data, type, row, meta)
-                                            {
-                                                console.log(data);
-                                                /* if (type === 'display')
-                                                {
-                                                 data = '<a href="FormToEdit.php?everything=' + encodeURIComponent(data) + '">Edit</a>';
-                                                 }
-                                                 return data;*/
-                                            }
-                        }],
+        buttons: [  'copy', 'excel',{
+
                 extend: 'pdfHtml5',
+                title: "DEMANDE D'ACHAT",
                 orientation: 'landscape',
                 pageSize: 'LEGAL',
                 customize:  function (doc) {
+
+
+            for (var row = 1; row < doc.content[1].table.body.length; row++) {
+                console.log(@json($dm));
+
+                doc.content[1].table.body[row][7] = {text: 'Cliquez ici', link: '{{ env('APP_URL') }}'+"/uploads/"+@json($dm)[row-1].file ,style: "tableBodyOdd"};
+              }
+
                     doc.content[0].text="DEMANDE D'ACHAT";
                     doc.layout = 'lightHorizotalLines;'
                    doc.content[1].table.widths=[{width: 'auto', _minWidth: 51.052734375, _maxWidth: 97.001953125, _calcWidth: 51.052734375},

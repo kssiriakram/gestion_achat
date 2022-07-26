@@ -36,11 +36,7 @@
                         <thead>
                             <tr>
                                 <th>Numéro Demande</th>
-                                <th>Designation</th>
-                                <th>Quantité</th>
-                                <th>Référence</th>
-                                <th>Code Centre de cout</th>
-                                <th>Code Nature écono</th>
+                               <th>Nom de fournisseur</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
 
@@ -54,13 +50,7 @@
                            @if($item->date_directeur!=null)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td>designation</td>
-                                <td>{{$item->qte}}</td>
-                                <td>{{$item->reference}}</td>
-                                <td>{{$item->code_CC}}</td>
-                                <td>{{$item->code_NE}}</td>
-
-
+                                <td>{{ $item->fournisseur }}</td>
                                 <td>demande accepte</td>
 
 

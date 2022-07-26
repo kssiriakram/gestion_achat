@@ -37,13 +37,9 @@
                         <thead>
                             <tr>
                                 <th>Numéro Demande</th>
-                                <th>Designation</th>
-                                <th>Quantité</th>
-                                <th>Référence</th>
-                                <th>Code Centre de cout</th>
-                                <th>Code Nature écono</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
+                                <th>Nom de fournisseur</th>
                                 <th>Action</th>
 
                             </tr>
@@ -55,11 +51,6 @@
                            @if(!$item->date_directeur)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                <td>{{$item->designation}}</td>
-                                <td>{{$item->qte}}</td>
-                                <td>{{$item->reference}}</td>
-                                <td>{{$item->code_CC}}</td>
-                                <td>{{$item->code_NE}}</td>
 
                                 @if($item->date_chef_service)
                                 @if(!$item->validation_manager)
@@ -73,6 +64,7 @@
 
 
                                 <td>en cours de traitement</td>
+                                <td>{{ $item->fournisseur }}</td>
                                 <td><a href='{{ env('APP_URL')}}/manager_nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                             </tr>
