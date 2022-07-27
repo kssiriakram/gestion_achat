@@ -42,7 +42,7 @@
                             <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $dm[0]->id }}</label>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3">     
                             <label for="formrow-numero-input" class="form-label">Date d'emission : {{ Carbon::parse( $dm[0]->date_emetteur)->format('Y-d-m H:i:s')}}</label>
                         </div>
 
@@ -87,10 +87,28 @@
                                             <td>{{ $dm_ligne->designation }}</td>
                                             <td>{{ $dm_ligne->qte }}</td>
                                             <td>{{ $dm_ligne->reference }}</td>
+
+                                            @if($dm_ligne->code_CC)
                                             <td>{{ $dm_ligne->code_CC }}</td>
+                                            @else
+                                            <td>non determine</td>
+                                            @endif
+
                                             <td>{{ $dm_ligne->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
+                                            
+                                            @if($dm_ligne->file)
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
+                                            @else
+                                            <td>Aucun fichier</td>
+                                            @endif
+
+                                            @if($dm_ligne->fournisseur)
+                                            <td>{{ $dm_ligne->fournisseur }}</td>
+                                            @else
+                                            <td>non determine</td>
+                                            @endif
+
 
                                         </tr>
                                         @endforeach
@@ -131,6 +149,20 @@
                                 </div>
                             </div>
                         </div>-->
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="formrow-inputState" class="form-label">Directeur</label>
+                                    <select id="formrow-inputState" class="form-select" name="directeur">
+                                        <option selected>Choose...</option>
+                                               @foreach( $directeur as $dr)
+                                               <option value="{{ $dr->id}}">{{ $dr->username}}</option>
+                                               @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <div>
                             <div class="mb-3">

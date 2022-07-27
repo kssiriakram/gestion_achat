@@ -52,7 +52,7 @@
 
                         </div>
 
-///////////////////////////////////////////////////////
+
                     <div id="ligne_das">
                         <div  class="accordion">
                             <div class="accordion-item" id="ligne_da">
@@ -118,7 +118,7 @@
 
                         })
                     </script>
-////////////////////////////////////
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="mb-3">

@@ -92,7 +92,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'monentreprise12345684987@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'smtp.cofma@coficab.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 

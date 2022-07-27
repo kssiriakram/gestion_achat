@@ -55,7 +55,7 @@ class DAMail_manager_refus extends  Mailable
      */
     public function build()
     {
-        return $this->from($this->email, $name = "Plateforme de gestion des achat coficab")->
+        return $this->from($this->email, $name = "Gestion des achats COFMA")->
         subject($this->sujet)->markdown('mailManager_refus');
     }
 }

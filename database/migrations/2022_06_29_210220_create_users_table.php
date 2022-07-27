@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('matricule')->unique();
             $table->string('username')->unique();
             $table->enum('type', ['emetteur', 'acheteur','manager','directeur']);
             $table->string('email')->unique();
@@ -22,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('societe');
             $table->string('superieur');
+            $table->string('email_suprv');
+
             $table->timestamps();
         });
     }

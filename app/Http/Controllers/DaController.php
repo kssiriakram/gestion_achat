@@ -87,23 +87,27 @@ class DaController extends Controller
       function add_dm(Request $request){
 
         $request->validate([
-            'delai' => 'required',
+
             'reference' => 'required|array',
             'designation' => 'required|array',
             'acheteur' => 'required',
             'quantite' => 'required|array',
             'quantite.*' => 'required|integer',
-            'ccout' => 'required|array',
             'cnecono' => 'required|array',
             'societe' => 'required',
-            'file' => 'required|array',
-            'fournisseur' => 'required'
+
+
          ]);
+
 
          $da = new DaModel();
 
+         if($request->delai)
          $da->delai =Carbon::parse($request->delai);
+
+         if($request->fournisseur)
          $da->fournisseur = $request->fournisseur;
+
          $da->id_acheteur = $request->acheteur;
          $da->id_emetteur = $request->session()->get('loginId');
          if($request->session()->get('type')=='emetteur')
@@ -115,11 +119,21 @@ class DaController extends Controller
         $da_ligne->designation = $request->designation[$i];
          $da_ligne->reference = $request->reference[$i];
          $da_ligne->qte= $request->quantite[$i];
+
+         if($request->ccout[$i])
          $da_ligne->code_CC = $request->ccout[$i];
+
          $da_ligne->code_NE = $request->cnecono[$i];
+
+
+         if(isset($request->file[$i])){
+
          $image_name = time().'-logo.'.$request->file[$i]->getClientOriginalExtension();
          $request->file[$i]->move(public_path('uploads'), $image_name);
-         $da->file = $image_name;
+         $da_ligne->file = $image_name;
+
+         }
+
          $da_ligne->id_da = $da->id;
           $da_ligne->save();
         }
@@ -167,9 +181,10 @@ class DaController extends Controller
         $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
 
         $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $directeur = DB::table('users')->where("type", "=","directeur")->get();
         $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
 
-        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur] );
+        return view('manager_nouvelledm',['acheteurs'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur  ] );
      }
 
 
@@ -197,7 +212,7 @@ class DaController extends Controller
 
      if($da->validation_manager){
         $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
-        $destinaire = DB::table('users')->where("type", "=","directeur")->get()->first();
+        $destinaire = DB::table('users')->where("id", "=",$request->directeur)->get()->first();
         Mail::to($destinaire->email)->send(new DAMail_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
      return back()->with('success', "you're demand is registered");
      }

@@ -17,7 +17,7 @@ class CreateLigneDasTable extends Migration
             $table->id();
             $table->string("reference");
             $table->integer("qte");
-            $table->string("code_CC")->nullable();
+            $table->string("code_CC")->nullable()->default(NULL);
             $table->string("code_NE")->nullable();
             $table->string("file")->nullable()->default(NULL);
             $table->string("designation")->nullable()->default(NULL);
