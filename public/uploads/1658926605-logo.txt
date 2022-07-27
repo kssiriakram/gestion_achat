@@ -1,0 +1,11 @@
+
+email fixe : gmail
+
+emetteur : abdelaziz.bekraoui@coficab.com
+manager : monhem.amrani@coficab.com
+plant manager : iabdouene.youssef@coficab.com
+
+Achteur : darhour.aicha@coficab.com
+
+
+https://kinsta.com/fr/base-de-connaissances/office-365-smtp/
