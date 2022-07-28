@@ -46,7 +46,7 @@
                         </li>
                         <li>
                             <a href="{{ env('APP_URL') }}/cloture"
-                                key="t-horizontal"> Cloturé</a>
+                                key="t-horizontal"> Validé</a>
 
                         </li>
                         @endif
@@ -74,7 +74,7 @@
                                 </li>
                                 <li>
                                     <a href="{{ env('APP_URL') }}/manager_cloture"
-                                        key="t-horizontal"> Cloturé</a>
+                                        key="t-horizontal"> Validé</a>
 
                                 </li>
                                 @endif
@@ -102,7 +102,7 @@
                                         </li>
                                         <li>
                                             <a href="{{ env('APP_URL') }}/directeur_cloture"
-                                                key="t-horizontal"> Cloturé</a>
+                                                key="t-horizontal"> Validé</a>
 
                                         </li>
                                         @endif

@@ -35,8 +35,8 @@
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Numéro Demande</th>
-                               <th>Nom de fournisseur</th>
+                                <th>N° DA</th>
+                               <th>fournisseur souhaite</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
 

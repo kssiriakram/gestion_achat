@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+use Spatie\SimpleExcel\SimpleExcelWriter;
+use Spatie\SimpleExcel\SimpleExcelReader;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -65,7 +68,6 @@ class UserSeeder extends Seeder
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
         ]);*/
-
        DB::table('users')->insert([
             'email'=> 'abdelaziz.bekraoui@coficab.com',
             'username' => 'abdelaziz.bekraoui',
@@ -87,7 +89,7 @@ class UserSeeder extends Seeder
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
         ]);
-
+/*
         DB::table('users')->insert([
             'email'=> 'reda.alaoui@coficab.com',
             'username' => 'reda.alaoui',
@@ -97,7 +99,7 @@ class UserSeeder extends Seeder
             'superieur' => 'monhem.amrani',
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
-        ]);
+        ]);*/
 
 
 
@@ -231,8 +233,32 @@ DB::table('users')->insert([
 ]);
 
 
+  // 3. $reader : L'instance Spatie\SimpleExcel\SimpleExcelReader
+  $reader = SimpleExcelReader::create('C:\Users\Mohamed\Desktop\Personnes -département (1).xlsx');
+
+  // On récupère le contenu (les lignes) du fichier
+  $rows = $reader->getRows();
+
+  // $rows est une Illuminate\Support\LazyCollection
 
 
+
+  // 4. On insère toutes les lignes dans la base de données
+  foreach($rows->toArray() as $row){
+    DB::table('users')->insert([
+        'email'=> $row['E-Mail'],
+        'username' => $row['User Name'],
+        'password' => Hash::make('reda.alaoui'),
+        'type' => 'emetteur',
+        'societe' => 'COFMA',
+        'superieur' => $row['Manager Departement'],
+        'email_suprv' => $row['E-Mail Manager'],
+        'departement' => $row['Departement']
+    ]);
+  }
+
+  // Si toutes les lignes sont insérées
+  $reader->close(); // On ferme le $reader
 
 
 

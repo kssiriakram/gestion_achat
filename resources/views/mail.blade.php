@@ -5,7 +5,6 @@
 
     societe : {{$societe}}
     nom de l'utilisateur : {{$username}}
-    type : {{$type}}
     email : {{$email}}
 
 

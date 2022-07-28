@@ -35,7 +35,7 @@
 
                         @csrf
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero Demande</label>
+                            <label for="formrow-numero-input" class="form-label">N° DA</label>
                             <input type="text" class="form-control" id="formrow-f-input"  value="{{ $id }}" readonly="true">
 
                         </div>
@@ -85,12 +85,12 @@
 
                                         <div >
                                             <div class="mb-3">
-                                                <label for="formrow-code-input" class="form-label">Code Centre de cout</label>
+                                                <label for="formrow-code-input" class="form-label">Code Budget</label>
                                                 <input type="text" class="form-control" id="formrow-email-input" name='ccout[]'>
                                                 <span class="text-danger">@error('ccout[]'){{ $message }}@enderror</span>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="formrow-code-input" class="form-label">Code Nature écono</label>
+                                                <label for="formrow-code-input" class="form-label">Code Article</label>
                                                 <input type="text" class="form-control" id="formrow-email-input" name='cnecono[]'>
                                                 <span class="text-danger">@error('cnecono[]'){{ $message }}@enderror</span>
                                             </div>
@@ -99,7 +99,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="formrow-code-input" class="form-label">Joindre un fichier</label>
+                                        <label for="formrow-code-input" class="form-label">Jointure</label>
                                         <input type="file" class="form-control"  name='file[]'>
                                         <span class="text-danger">@error('file[]'){{ $message }}@enderror</span>
                                     </div>
@@ -151,7 +151,7 @@
 
                         <div>
                             <div class="mb-3">
-                                <label for="formrow-code-input" class="form-label">Nom de fournisseur</label>
+                                <label for="formrow-code-input" class="form-label">fournisseur souhaite</label>
                                 <input type="text" class="form-control" id="formrow-email-input" name='fournisseur'>
                                 <span class="text-danger">@error('fournisseur'){{ $message }}@enderror</span>
                             </div>

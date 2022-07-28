@@ -5,7 +5,6 @@
 
     societe : {{$societe}}
     nom de l'utilisateur : {{$username}}
-    type : {{$type}}
     email : {{$email}}
     observation du manager : {{$observation_manager}}
     observation du directeur : {{$observation_directeur}}

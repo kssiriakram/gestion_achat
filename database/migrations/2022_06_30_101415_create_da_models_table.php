@@ -25,13 +25,15 @@ class CreateDaModelsTable extends Migration
             $table->text('commentaire_manager')->nullable()->default(NULL);
             $table->text('commentaire_directeur')->nullable()->default(NULL);
             $table->text('commentaire_acheteur')->nullable()->default(NULL);
- 
-          
+
+
 
             $table->unsignedBigInteger("id_emetteur");
             $table->unsignedBigInteger("id_acheteur");
+            $table->unsignedBigInteger("id_directeur");
             $table->foreign('id_emetteur')->references('id')->on('users');
             $table->foreign('id_acheteur')->references('id')->on('users');
+            $table->foreign('id_directeur')->references('id')->on('users');
             $table->date("delai")->nullable()->default(NULL);
 
 

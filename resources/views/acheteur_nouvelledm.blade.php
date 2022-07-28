@@ -83,17 +83,17 @@
 
                                     <thead>
                                         <tr>
-                                            <th>Numéro Demande</th>
+                                            <th>N° DA</th>
                                             <th>Designation</th>
                                             <th>Quantité</th>
                                             <th>Référence</th>
-                                            <th>Code Centre de cout</th>
-                                            <th>Code Nature écono</th>
+                                            <th>Code Budget</th>
+                                            <th>Code Article</th>
                                             <th>Nom de l'acheteur</th>
-                                            <th>Afficher le fichier</th>
+                                            <th>Jointure</th>
                                            <th>Observation du manager</th>
                                             <th>Observation du directeur</th>
-                                            <th>Nom du fournisseur</th>
+                                            <th>fournisseur souhaite</th>
 
 
                                         </tr>

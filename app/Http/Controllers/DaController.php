@@ -79,7 +79,8 @@ class DaController extends Controller
     }
 
     function get_cloture_dm_directeur(Request $request){
-        $dm= DB::table('da_models')->where('validation_directeur','=',true)->get();
+        $dm= DB::table('da_models')->where('validation_directeur','=',true)
+        ->where('id_directeur','=',$request->session()->get('loginId'))->get();
 
         return view('directeur_cloture',['items'=>$dm]);
     }
@@ -203,10 +204,12 @@ class DaController extends Controller
 
       $da->commentaire_manager = $request->observation;
 
+      $da->id_directeur = $request->directeur;
+
       if($request->validation=="yes"){   $da->validation_manager=true;}
       else $da->validation_manager=false;
 
-     $da->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');;
+     $da->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');
 
       $da->save();
 
@@ -219,8 +222,8 @@ class DaController extends Controller
     else
     {
 
-        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$request->session()->get('departement'))->get()->first();
-        $destinaire= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')->get()->first();
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
+        $destinaire= User::find($da->id_emetteur)->get()->first();
         Mail::to($destinaire->email)->send(new DAMail_manager_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
         return back()->with('success', "you're demand is registered");
 
@@ -228,9 +231,10 @@ class DaController extends Controller
     }
 
 
-    function get_encours_dm_directeur(){
+    function get_encours_dm_directeur(Request $request){
 
-        $dm = DB::table('da_models')->where('validation_manager','=',true)->get();
+        $dm = DB::table('da_models')->where('validation_manager','=',true)
+        ->where('id_directeur','=',$request->session()->get('loginId'))->get();
         return view('directeur_encoursdm',['items'=>$dm]);
     }
 
@@ -271,8 +275,10 @@ class DaController extends Controller
      if($da->validation_directeur){
 
 
-        $user= DB::table('users')->where("type", "=","directeur")->get()->first();
-        $destinaire = DB::table('users')->where("type", "=","acheteur")->get()->first();
+        $user= User::find($da->id_directeur)->get()->first();
+
+        $destinaire = User::find($da->id_acheteur)->get()->first();
+
         Mail::to($destinaire->email)->send(new DAMail_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));
      return back()->with('success', "you're demand is registered");
      }
@@ -282,7 +288,7 @@ class DaController extends Controller
 
         $manager = User::where('departement','=',$emetteur->departement)->where('type','=','manager')->get()->first();
 
-        $user= DB::table('users')->where("type", "=","directeur")->get()->first();
+        $user= User::find($da->id_directeur)->get()->first();
 
        // Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
         Mail::to($manager->email)->send(new DAMail_directeur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));

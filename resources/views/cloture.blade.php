@@ -35,9 +35,10 @@
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Numéro Demande</th>
+                                <th>N° DA</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
+                                <th>fournisseur souhaite</th>
 
                             </tr>
                         </thead>
@@ -62,6 +63,8 @@
                                 @else
                                 <td>demande accepte</td>
                                 @endif
+
+                                <td>{{$item->fournisseur}}</td>
 
                             </tr>
                             @endif

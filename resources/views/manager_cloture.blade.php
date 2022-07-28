@@ -39,7 +39,7 @@
 
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
-                                <th>Nom de fournisseur</th>
+                                <th>fournisseur souhaite</th>
 
                             </tr>
                         </thead>

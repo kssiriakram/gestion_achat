@@ -37,10 +37,10 @@
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Numéro Demande</th>
+                                <th>N° DA</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
-                                <th>Nom du fournisseur</th>
+                                <th>fournisseur souhaite</th>
                                 <th>Action</th>
 
                             </tr>

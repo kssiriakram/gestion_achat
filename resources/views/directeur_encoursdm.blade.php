@@ -30,15 +30,15 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Demande d'achat en cours de traitement</h4>
+                    <h4 class="card-title">Demande d'achat en cours de validation par directeur </h4>
                     <p class="card-title-desc">
                     </p>
 
                     <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Numéro Demande</th>
-                                <th>Nom de fournisseur</th>
+                                <th>N° DA</th>
+                                <th>fournisseur souhaite</th>
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
                                 <th>Action</th>
