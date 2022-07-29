@@ -87,18 +87,23 @@ class DaController extends Controller
 
       function add_dm(Request $request){
 
-        $request->validate([
+       $request->validate([
 
-            'reference' => 'required|array',
-            'designation' => 'required|array',
+            'reference' => 'required|array|min:1',
+            'reference.*' => 'required',
+            'designation' => 'required|array|min:1',
+            'designation.*' => 'required',
             'acheteur' => 'required',
-            'quantite' => 'required|array',
+            'quantite' => 'required|array|min:1',
             'quantite.*' => 'required|integer',
-            'cnecono' => 'required|array',
+            'cnecono' => 'required|array|min:1',
+            'cnecono.*' => 'required',
             'societe' => 'required',
 
 
          ]);
+
+
 
 
          $da = new DaModel();

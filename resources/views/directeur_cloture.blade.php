@@ -50,7 +50,11 @@
                            @if($item->date_directeur!=null)
                             <tr>
                                 <td>{{$item->id}}</td>
+                                @if($item->fournisseur)
                                 <td>{{ $item->fournisseur }}</td>
+                                @else
+                                <td>non determine</td>
+                                @endif
                                 <td>demande accepte</td>
 
 

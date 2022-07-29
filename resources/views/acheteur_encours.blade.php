@@ -54,7 +54,11 @@
                                 <td>{{$item->id}}</td>
                                 <td>demande accepte</td>
                                 <td>demande accepte</td>
-                                <td>{{ $item->fournisseur }}
+                                @if($item->fournisseur)
+                                <td>{{ $item->fournisseur }}</td>
+                                @else
+                                <td>non determine</td>
+                                @endif
 
                                 <td><a href='{{ env('APP_URL')}}/acheteur_nouvelledm/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
 

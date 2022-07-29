@@ -109,13 +109,25 @@
                                             <td>{{ $dm_ligne->designation }}</td>
                                             <td>{{ $dm_ligne->qte }}</td>
                                             <td>{{ $dm_ligne->reference }}</td>
-                                            <td>{{ $dm_ligne->code_CC }}</td>
+                                            
+                                            @if($dm_ligne->code_CC )
+                                             @else
+                                            <td>non determine</td>
+                                            @endif
                                             <td>{{ $dm_ligne->code_NE }}</td>
                                             <td>{{ $acheteurs->username }}</td>
+                                            @if($dm_ligne->file)
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
+                                            @else
+                                            <td>Aucun fichier</td>
+                                            @endif
                                             <td>{{ $dm_ligne->commentaire_manager }}</td>
                                             <td>{{ $dm_ligne->commentaire_directeur }}</td>
-                                            <td>{{ $dm_ligne->fournisseur }}
+                                            @if($dm_ligne->fournisseur)
+                                            <td>{{ $dm_ligne->fournisseur }}</td>
+                                            @else
+                                            <td>non determine</td>
+                                            @endif
 
                                         </tr>
                                         @endforeach

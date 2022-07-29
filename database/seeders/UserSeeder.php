@@ -177,6 +177,15 @@ DB::table('users')->insert([
     'societe' => 'COFMA',
 ]);
 
+DB::table('users')->insert([
+    'email'=> 'laila.abdelouahab@coficab.com',
+    'username' => 'laila.abdelouahab',
+    'password' => Hash::make('laila.abdelouahab'),
+    'type' => 'acheteur',
+    
+    'societe' => 'COFMA',
+]);
+
 /////////////////////////////////////Managers/////////////////////////////////
 DB::table('users')->insert([
     'email'=> 'monhem.amrani@coficab.com',
@@ -248,7 +257,7 @@ DB::table('users')->insert([
     DB::table('users')->insert([
         'email'=> $row['E-Mail'],
         'username' => $row['User Name'],
-        'password' => Hash::make('reda.alaoui'),
+        'password' => Hash::make($row['User Name']),
         'type' => 'emetteur',
         'societe' => 'COFMA',
         'superieur' => $row['Manager Departement'],

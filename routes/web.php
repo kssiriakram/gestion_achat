@@ -35,10 +35,10 @@ Route::post('/acheteur_add_dm',[DaController::class,'add_dm_acheteur']);
 Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
 Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
 
+Route::get('/dashboard',[DaController::class,'get_dashboard']);
 
 
 Route::middleware(Authorization::class)->namespace('\App\Http\Controllers\Api')->group(function(){
-Route::get('/dashboard',[DaController::class,'get_dashboard']);
 
 Route::middleware(Manager::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/manager_encoursdm',[DaController::class,'get_encours_dm_manager']);

@@ -58,12 +58,15 @@ class AuthController extends Controller
                 $request->session()->put('type',$user->type);
                 $request->session()->put('departement',$user->departement);
 
+            
+
                 if($user->type=='emetteur')
                 return redirect('/encoursdm');
                 else if($user->type=='manager')
                 return redirect('/manager_encoursdm');
                 else if($user->type=='directeur')
                 return redirect('/directeur_encoursdm');
+
                 else if($user->type=='acheteur')
                 return redirect('/acheteur_encoursdm');
 

@@ -52,7 +52,12 @@
                            @if(!$item->date_directeur)
                             <tr>
                                 <td>{{$item->id}}</td>
-                               <td>{{ $item->fournisseur }}</td>
+                                
+                                @if($item->fournisseur)
+                                <td>{{ $item->fournisseur }}</td>
+                                @else
+                                <td>non determine</td>
+                                @endif
 
                                 @if($item->date_chef_service && $item->validation_manager)
                                 <td>demande accepte</td>

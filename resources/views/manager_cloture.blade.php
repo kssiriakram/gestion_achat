@@ -66,7 +66,11 @@
                                 <td>demande accepte</td>
                                 @endif
 
+                                @if($item->fournisseur)
                                 <td>{{ $item->fournisseur }}</td>
+                                @else
+                                <td>non determine</td>
+                                @endif
 
                             </tr>
                             @endif

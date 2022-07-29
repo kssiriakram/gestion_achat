@@ -16,7 +16,7 @@ class Authorization
      */
     public function handle(Request $request, Closure $next)
     {
-        if(($request->session()->get('type') && $request->session()->get('loginId')) && $request->session()->get('departement'))
+        if(($request->session()->get('type') && $request->session()->get('loginId')))
         return $next($request);
         else
         return redirect('login')->with('fail',"you are not logged in!!");

@@ -30,10 +30,9 @@ class CreateDaModelsTable extends Migration
 
             $table->unsignedBigInteger("id_emetteur");
             $table->unsignedBigInteger("id_acheteur");
-            $table->unsignedBigInteger("id_directeur");
+            $table->unsignedBigInteger("id_directeur")->nullable()->default(NULL);
             $table->foreign('id_emetteur')->references('id')->on('users');
             $table->foreign('id_acheteur')->references('id')->on('users');
-            $table->foreign('id_directeur')->references('id')->on('users');
             $table->date("delai")->nullable()->default(NULL);
 
 
