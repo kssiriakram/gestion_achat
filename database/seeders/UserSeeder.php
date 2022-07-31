@@ -20,33 +20,30 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-      /* DB::table('users')->insert([
-            'matricule' => '1000000000',
+       DB::table('users')->insert([
             'email'=> 'kssiriakram@gmail.com',
             'username' => 'kssiriakram',
             'password' => Hash::make('kssiriakram'),
-            'type' => 'directeur',
-            'societe' => 'COFMA',
-            'superieur' => 'monhem.amrani',
-            'email_suprv' => 'monhem.amrani@coficab.com',
-            'departement' => 'IT'
-
-        ]);
-
-        DB::table('users')->insert([
-            'matricule' => '1100000000',
-            'email'=> 'mohamedakram.kssiri@etu.uae.ac.ma',
-            'username' => 'mohamedakram.kssiri',
-            'password' => Hash::make('mohamedakram.kssiri'),
             'type' => 'manager',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
+
         ]);
 
         DB::table('users')->insert([
-            'matricule' => '1110000000',
+            'email'=> 'mohamedakram.kssiri@etu.uae.ac.ma',
+            'username' => 'mohamedakram.kssiri',
+            'password' => Hash::make('mohamedakram.kssiri'),
+            'type' => 'emetteur',
+            'societe' => 'COFMA',
+            'superieur' => 'monhem.amrani',
+            'email_suprv' => 'monhem.amrani@coficab.com',
+            'departement' => 'IT'
+        ]);
+
+        DB::table('users')->insert([
             'email'=> 'test@gmail.com',
             'username' => 'test',
             'password' => Hash::make('test'),
@@ -57,18 +54,20 @@ class UserSeeder extends Seeder
             'departement' => 'IT'
         ]);
 
+
         DB::table('users')->insert([
-            'matricule' => '1111000000',
             'email'=> 'ayakssiri@gmail.com',
             'username' => 'ayakssiri',
             'password' => Hash::make('ayakssiri'),
-            'type' => 'acheteur',
+            'type' => 'directeur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
-        ]);*/
-       DB::table('users')->insert([
+        ]);
+
+
+         /*DB::table('users')->insert([
             'email'=> 'abdelaziz.bekraoui@coficab.com',
             'username' => 'abdelaziz.bekraoui',
             'password' => Hash::make('abdelaziz.bekraoui'),
@@ -99,7 +98,7 @@ class UserSeeder extends Seeder
             'superieur' => 'monhem.amrani',
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
-        ]);*/
+        ]);
 
 
 
@@ -182,7 +181,7 @@ DB::table('users')->insert([
     'username' => 'laila.abdelouahab',
     'password' => Hash::make('laila.abdelouahab'),
     'type' => 'acheteur',
-    
+
     'societe' => 'COFMA',
 ]);
 
@@ -269,14 +268,7 @@ DB::table('users')->insert([
   // Si toutes les lignes sont insérées
   $reader->close(); // On ferme le $reader
 
-
-
-
-
-
-
-
-
+*/
 
 
     }

@@ -205,7 +205,7 @@ class DaController extends Controller
 
     // $da = DB::table('users')->where('id','=',$request->id)->get()->first();
     $da = DaModel::find($request->id);
-    $departement = User::find($da->id_emetteur)->departement;
+    $departement = DB::table('users')->where('id',$da->id_emetteur)->get()->first()->departement;
 
       $da->commentaire_manager = $request->observation;
 
@@ -228,7 +228,7 @@ class DaController extends Controller
     {
 
         $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
-        $destinaire= User::find($da->id_emetteur)->get()->first();
+        $destinaire=  DB::table('users')->where("id", "=",$da->id_emetteur)->get()->first();
         Mail::to($destinaire->email)->send(new DAMail_manager_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
         return back()->with('success', "you're demand is registered");
 
@@ -280,20 +280,21 @@ class DaController extends Controller
      if($da->validation_directeur){
 
 
-        $user= User::find($da->id_directeur)->get()->first();
+        $user=DB::table('users')->where('id',$da->id_directeur)->get()->first();
 
-        $destinaire = User::find($da->id_acheteur)->get()->first();
+        $destinaire=DB::table('users')->where('id',$da->id_acheteur)->get()->first();
+
 
         Mail::to($destinaire->email)->send(new DAMail_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));
      return back()->with('success', "you're demand is registered");
      }
     else
     {
-        $emetteur =User::find($da->id_emetteur)->get()->first();
+        $emetteur =DB::table('users')->where('id',$da->id_emetteur)->get()->first();
 
         $manager = User::where('departement','=',$emetteur->departement)->where('type','=','manager')->get()->first();
 
-        $user= User::find($da->id_directeur)->get()->first();
+        $user= DB::table('users')->where('id',$da->id_directeur)->get()->first();
 
        // Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
         Mail::to($manager->email)->send(new DAMail_directeur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));
@@ -326,7 +327,6 @@ class DaController extends Controller
         $request->validate([
 
             'observation' => 'required',
-            'validation' => 'required|in:yes,no',
 
          ]);
 
@@ -336,8 +336,7 @@ class DaController extends Controller
       $da->commentaire_acheteur = $request->observation;
 
 
-      if($request->validation=="yes"){   $da->validation_acheteur=true;}
-      else $da->validation_acheteur=false;
+     $da->validation_acheteur=false;
 
      $da->date_acheteur = Carbon::now()->format('Y-d-m H:i:s');;
 
@@ -353,8 +352,8 @@ class DaController extends Controller
      }
     else
     {
-        $emetteur =User::find($da->id_emetteur)->get()->first();
-        $user= User::find($da->id_acheteur)->get()->first();
+        $emetteur =DB::table('users')->where('id',$da->id_emetteur)->get()->first();
+        $user= DB::table('users')->where('id',$da->id_acheteur)->get()->first();
 
        // Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
         Mail::to($emetteur->email)->send(new DAMail_acheteur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$da->commentaire_directeur,$request->observation));

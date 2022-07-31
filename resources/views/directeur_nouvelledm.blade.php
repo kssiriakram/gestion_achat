@@ -46,6 +46,14 @@
                         </div>
 
                         <div class="mb-3">
+                            @if($dm[0]->delai)
+                            <label for="formrow-numero-input" class="form-label">Delai souhaite : {{ $dm[0]->delai}}</label>
+                            @else
+                            <label for="formrow-numero-input" class="form-label">Delai souhaite : non determine</label>
+                            @endif
+                        </div>
+
+                        <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Emetteur : {{ $emetteur->username}}</label>
                         </div>
 

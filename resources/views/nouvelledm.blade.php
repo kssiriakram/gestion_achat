@@ -67,7 +67,7 @@
                                         <label for="formrow-designation-input" class="form-label">designation</label>
                                         <input type="text" class="form-control" id="formrow-fi-input" name="designation[]">
                                         <span class="text-danger">@error('designation.*'){{ $message }}@enderror</span>
-                                       
+
 
                                     </div>
                                     <div class="mb-3">
@@ -109,7 +109,9 @@
                         </div>
                     </div>
                     <script>
+                        var initialState = $(document.getElementById("ligne_das")).clone();
                         $('#Nb_ligne_da').change(function () {
+                            $(document.getElementById("ligne_das")).replaceWith(initialState);
                             console.log($('#Nb_ligne_da').val());
                             for(let i=0;i<$('#Nb_ligne_da').val()-1;i++){
                             document.getElementById("ligne_das").innerHTML += document.getElementsByClassName("accordion")[0].innerHTML;
@@ -120,6 +122,7 @@
                         })
 
                         $('#Nb_ligne_da').ready(function () {
+                            $(document.getElementById("ligne_das")).replaceWith(initialState);
                             console.log($('#Nb_ligne_da').val());
                             for(let i=0;i<$('#Nb_ligne_da').val()-1;i++){
                             document.getElementById("ligne_das").innerHTML += document.getElementsByClassName("accordion")[0].innerHTML;

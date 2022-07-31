@@ -28,7 +28,7 @@
 
    ?>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
 
 
@@ -51,6 +51,14 @@
 
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Date de validation du directeur : {{ Carbon::parse($dm[0]->date_directeur)->format('Y-d-m H:i:s')}}</label>
+                        </div>
+
+                        <div class="mb-3">
+                            @if($dm[0]->delai)
+                            <label for="formrow-numero-input" class="form-label">Delai souhaite : {{ $dm[0]->delai}}</label>
+                            @else
+                            <label for="formrow-numero-input" class="form-label">Delai souhaite : non determine</label>
+                            @endif
                         </div>
 
                         <div class="mb-3">
@@ -109,8 +117,9 @@
                                             <td>{{ $dm_ligne->designation }}</td>
                                             <td>{{ $dm_ligne->qte }}</td>
                                             <td>{{ $dm_ligne->reference }}</td>
-                                            
+
                                             @if($dm_ligne->code_CC )
+                                            <td>{{ $dm_ligne->code_CC }}</td>
                                              @else
                                             <td>non determine</td>
                                             @endif
