@@ -20,6 +20,7 @@ class DAMail_acheteur_refus extends  Mailable
     public $destinataire;
     public $observation_manager;
     public $observation_directeur;
+    public $observation_acheteur;
     /**
      * @param $societe
      * @param $type
