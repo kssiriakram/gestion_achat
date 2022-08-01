@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Data_Tables') @endsection
 
 @section('css')
     <!-- DataTables -->
@@ -40,6 +39,7 @@
                                 <th>Reponse manager</th>
                                 <th>Reponse directeur</th>
                                 <th>fournisseur souhaite</th>
+                                <th>Action</th>
 
                             </tr>
                         </thead>
@@ -71,6 +71,8 @@
                                 @else
                                 <td>non determine</td>
                                 @endif
+
+                                <td><a href='{{ env('APP_URL')}}/valide/{{$item->id}}'><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                             </tr>
                             @endif

@@ -1,6 +1,5 @@
 @extends('layouts.master')
 
-@section('title') @lang('translation.Data_Tables') @endsection
 
 @section('css')
     <!-- DataTables -->
@@ -52,7 +51,7 @@
                            @if(!$item->date_directeur)
                             <tr>
                                 <td>{{$item->id}}</td>
-                                
+
                                 @if($item->fournisseur)
                                 <td>{{ $item->fournisseur }}</td>
                                 @else

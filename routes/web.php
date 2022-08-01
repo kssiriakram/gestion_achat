@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DaController;
+use App\Http\Controllers\Tab_comparatifController;
 use App\Http\Middleware\Authorization;
 use App\Http\Middleware\Emetteur;
 use  App\Http\Middleware\Manager;
@@ -31,6 +32,8 @@ Route::post('/manager_add_dm',[DaController::class,'add_dm_manager']);
 
 Route::get('/acheteur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_acheteur']);
 Route::post('/acheteur_add_dm',[DaController::class,'add_dm_acheteur']);
+Route::get('/nouveau_tab_comparatif/{id}',[Tab_comparatifController::class,'get_nouveau_tab_comparatif']);
+Route::post('/add_tab_comparatif',[Tab_comparatifController::class,'add_tab_comparatif']);
 
 Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
 Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
@@ -39,6 +42,8 @@ Route::get('/dashboard',[DaController::class,'get_dashboard']);
 
 
 Route::middleware(Authorization::class)->namespace('\App\Http\Controllers\Api')->group(function(){
+
+    Route::get('/valide/{id}',[DaController::class,'get_valide_dm']);
 
 Route::middleware(Manager::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/manager_encoursdm',[DaController::class,'get_encours_dm_manager']);

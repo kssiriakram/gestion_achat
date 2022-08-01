@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 
 
@@ -67,6 +66,8 @@
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Manager : {{ $manager->username }}</label>
                         </div>
+
+                       
 
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm[0]->commentaire_manager }}</label>
@@ -159,72 +160,6 @@
 
                             </div>
                         </div>
-
-
-
-                        <!--
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">societe</label>
-                                    <select id="formrow-inputState" class="form-select" name="societe">
-                                        <option selected>Choose...</option>
-
-                                               <option value=""></option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>-->
-
-
-
-
-                        <div>
-                            <div class="mb-3">
-                                <label for="formrow-code-input" class="form-label">Observation</label>
-                                <textarea type="text" class="form-control" id="formrow-email-input" name='observation'></textarea>
-                                <span class="text-danger">@error('observation'){{ $message }}@enderror</span>
-                            </div>
-                        </div>
-
-                      <!--  <div>
-                        <label>validation</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Valider
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Refuser
-                            </label>
-                          </div>
-                        </div>-->
-
-                        <div>
-                            <label>validation</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  Creer le tableau comparatif
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  Refuser
-                                </label>
-                              </div>
-                            </div>
-
-
-
-                        <div>
-                            <button type="submit" class="btn btn-primary w-md" >Valider</button>
-                        </div>
                     </form>
 
 
@@ -290,4 +225,3 @@
 
 
 @endsection
-

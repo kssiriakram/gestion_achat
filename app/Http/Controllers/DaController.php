@@ -336,19 +336,19 @@ class DaController extends Controller
       $da->commentaire_acheteur = $request->observation;
 
 
+      if($request->validation == 'yes')
+
+     $da->validation_acheteur=true;
+     else
      $da->validation_acheteur=false;
+
 
      $da->date_acheteur = Carbon::now()->format('Y-d-m H:i:s');;
 
       $da->save();
 
      if($da->validation_acheteur){
-
-
-       /* $user= DB::table('users')->where("type", "=","directeur")->get()->first();
-        $destinaire = DB::table('users')->where("type", "=","acheteur")->get()->first();
-        Mail::to($destinaire->email)->send(new DAMail_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$request->observation));*/
-     return back()->with('success', "you're demand is registered");
+     return redirect('/nouveau_tab_comparatif/'.$da->id);
      }
     else
     {
@@ -360,6 +360,17 @@ class DaController extends Controller
         return back()->with('success', "you're demand is registered");
 
     }
+    }
+
+    function get_valide_dm($id) {
+
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+        $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
+
+        return view('/valide' ,['acheteurs'=>$user , 'dm'=>$dm,'emetteur' => $emetteur, 'manager'=> $manager]);
     }
 
 }

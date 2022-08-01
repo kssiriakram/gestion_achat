@@ -130,25 +130,25 @@
 
                                                 </li>
 
+
+
                                                 @endif
-                      <!--   <li>
-                            <a href="propretaire"
-                                key="t-horizontal">@lang('translation.propretaire')</a>
 
-                        </li>
-                        <li>
-                            <a href="cotisation"
-                                key="t-horizontal">@lang('translation.cotisation')</a>
-
-                        </li>
-                        <li>
-                            <a href="depense"
-                                key="t-horizontal">@lang('translation.depense')</a>
-
-                        </li>
- -->
 
                     </ul>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="bx bx-layout"></i>
+                            <span key="t-layouts">Tableau comparatif</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="true">
+
+
+                            <li>
+                                <a href="{{ env('APP_URL') }}/acheteur_encoursdm"
+                                    key="t-horizontal"> En cours</a>
+
+                            </li>
                     </ul>
                 </li>
                 </li>
