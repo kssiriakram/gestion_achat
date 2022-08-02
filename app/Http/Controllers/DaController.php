@@ -180,6 +180,7 @@ class DaController extends Controller
 
          $da = DaModel::find($request->id);
          $da->date_emetteur = Carbon::now()->format('Y-d-m H:i:s');
+         $da->date_acheteur = NULL;
          $res = $da->save();
 
 
@@ -211,8 +212,9 @@ class DaController extends Controller
             }
 
             $da_id = DAModel::find($request->id);
-        
 
+
+           
             if($res) {
                 $user = DB::table('users')->where("id", '=',$da_id->id_emetteur)->get()->first();
 
