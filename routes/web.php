@@ -27,6 +27,9 @@ Route::get('/login',[AuthController::class,'login']);
 Route::post('/signin',[AuthController::class,'signin']);
 Route::post('/logout',[AuthController::class,'logout']);
 
+Route::get('/retourne_acheteur/{id}', [DaController::class,'get_retourne_acheteur']);
+Route::post('/acheteur_edit_dm', [DaController::class,'acheteur_edit_dm']);
+
 Route::get('/manager_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_manager']);
 Route::post('/manager_add_dm',[DaController::class,'add_dm_manager']);
 
@@ -59,6 +62,9 @@ Route::middleware(Emetteur::class)->namespace('\App\Http\Controllers\Api')->grou
 //Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
 Route::get('/encoursdm',[DaController::class,'get_encours_dm']);
 Route::get('/cloture',[DaController::class,'get_cloture_dm']);
+Route::get('/retourne_acheteurs', [DaController::class,'get_retourne_acheteurs']);
+
+
 });
 
 Route::middleware(Acheteur::class)->namespace('\App\Http\Controllers\Api')->group(function(){

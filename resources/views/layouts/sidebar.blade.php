@@ -49,6 +49,14 @@
                                 key="t-horizontal"> Validé</a>
 
                         </li>
+
+                        <li>
+                            <a href="{{ env('APP_URL') }}/retourne_acheteurs"
+                                key="t-horizontal"> Retourne par l'acheteur</a>
+
+                        </li>
+                    </ul>
+
                         @endif
 
                         @if(Session::get('type')=='manager')
@@ -77,6 +85,24 @@
                                         key="t-horizontal"> Validé</a>
 
                                 </li>
+                            </ul>
+
+                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                <i class="bx bx-layout"></i>
+                                <span key="t-layouts">Tableaux comparatifs</span>
+                            </a>
+                            <ul class="sub-menu mm-show" aria-expanded="true">
+                                <li>
+                                    <a href="{{ env('APP_URL') }}/#"
+                                        key="t-horizontal"> En cours</a>
+
+                                </li>
+                            </ul>
+                        </li>
+                            </ul>
+                        </li>
+
+
                                 @endif
 
                                 @if(Session::get('type')=='directeur')
@@ -105,6 +131,25 @@
                                                 key="t-horizontal"> Validé</a>
 
                                         </li>
+                                    </ul>
+
+
+                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                        <i class="bx bx-layout"></i>
+                                        <span key="t-layouts">Tableaux comparatifs</span>
+                                    </a>
+                                    <ul class="sub-menu mm-show" aria-expanded="true">
+                                        <li>
+                                            <a href="{{ env('APP_URL') }}/#"
+                                                key="t-horizontal"> En cours</a>
+
+                                        </li>
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </li>
+
                                         @endif
 
 
@@ -121,37 +166,37 @@
                                                 <i class="bx bx-layout"></i>
                                                 <span key="t-layouts">Demande d'achat</span>
                                             </a>
-                                            <ul class="sub-menu" aria-expanded="true">
-
-
+                                            <ul class="sub-menu"  aria-expanded="true">
                                                 <li>
                                                     <a href="{{ env('APP_URL') }}/acheteur_encoursdm"
                                                         key="t-horizontal"> En cours</a>
 
                                                 </li>
+                                            </ul>
+
+                                            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                                <i class="bx bx-layout"></i>
+                                                <span key="t-layouts">Tableaux comparatifs</span>
+                                            </a>
+                                            <ul class="sub-menu mm-show" aria-expanded="true">
+                                                <li>
+                                                    <a href="{{ env('APP_URL') }}/#"
+                                                        key="t-horizontal"> En cours</a>
+
+                                                </li>
+                                            </ul>
 
 
 
-                                                @endif
+                                        </li>
+
+                                     </ul>
+                                </li>
+
+                                        @endif
 
 
-                    </ul>
-                    <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-layout"></i>
-                            <span key="t-layouts">Tableau comparatif</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="true">
 
-
-                            <li>
-                                <a href="{{ env('APP_URL') }}/acheteur_encoursdm"
-                                    key="t-horizontal"> En cours</a>
-
-                            </li>
-                    </ul>
-                </li>
-                </li>
                 <!-- <li class="menu-title" key="t-apps">@lang('translation.Apps')</li> -->
  <!--
                 <li>

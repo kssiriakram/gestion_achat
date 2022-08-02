@@ -31,7 +31,7 @@
 
 
 
-  <form action="{{env('APP_URL')}}/acheteur_add_dm" method="post">
+  <form action="{{env('APP_URL')}}/acheteur_edit_dm" method="post" enctype="multipart/form-data" >
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -69,11 +69,19 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Acheteur : {{ $acheteurs->username }}</label>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm[0]->commentaire_manager }}</label>
                         </div>
 
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Observation du directeur : {{ $dm[0]->commentaire_directeur }}</label>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Motif du retour : {{ $dm[0]->commentaire_acheteur }}</label>
                         </div>
 
 
@@ -91,16 +99,17 @@
                                     <thead>
                                         <tr>
                                             <th>N° DA</th>
-                                            <th>Designation</th>
+                                            <th style="width:200px;">Designation</th>
                                             <th>Quantité</th>
                                             <th>Référence</th>
                                             <th>Code Budget</th>
                                             <th>Code Article</th>
                                             <th>Nom de l'acheteur</th>
-                                            <th>Jointure</th>
+                                            <th style="width:300px;">Jointure</th>
                                            <th>Observation du manager</th>
                                             <th>Observation du directeur</th>
-                                            <th>fournisseur souhaite</th>
+                                            <th>Motif du retour</th>
+
 
 
                                         </tr>
@@ -112,30 +121,46 @@
 
 
                                         <tr>
-                                            <td>{{ $dm_ligne->id }}</td>
-                                            <td>{{ $dm_ligne->designation }}</td>
-                                            <td>{{ $dm_ligne->qte }}</td>
-                                            <td>{{ $dm_ligne->reference }}</td>
+                                            <td>
+                                                <input type="text" class="form-control" id="formrow-f-input"  value="{{ $dm_ligne->id }}" readonly="true">
+                                            </td>
 
-                                            @if($dm_ligne->code_CC )
-                                            <td>{{ $dm_ligne->code_CC }}</td>
-                                             @else
-                                            <td>non determine</td>
-                                            @endif
-                                            <td>{{ $dm_ligne->code_NE }}</td>
+                                            <td>
+                                                <input type="text" class="form-control" id="formrow-fi-input" name="designation[]" value="{{ $dm_ligne->designation }}">
+                                                <span class="text-danger">@error('designation.*'){{ $message }}@enderror</span>
+                                            </td>
+
+                                            <td>
+                                                <input type="number" class="form-control" id="formrow-firs-input" name="quantite[]" value="{{ $dm_ligne->qte }}">
+                                                <span class="text-danger">@error("quantite.*"){{ $message }}@enderror</span>
+                                            </td>
+
+                                            <td>
+                                                <input type="text" class="form-control" id="formrow-fir-input" name="reference[]" value="{{ $dm_ligne->reference }}">
+                                                 <span class="text-danger">@error("reference.*"){{ $message }}@enderror</span>
+                                            </td>
+
+
+                                            <td>
+                                                <input type="text" class="form-control" id="formrow-email-input" name='ccout[]' value="{{ $dm_ligne->code_CC }}">
+                                            </td>
+
+
+                                            <td>
+                                                 <input type="text" class="form-control" id="formrow-email-input" name='cnecono[]' value="{{ $dm_ligne->code_NE }}">
+                                                <span class="text-danger">@error('cnecono.*'){{ $message }}@enderror</span>
+                                            </td>
+
                                             <td>{{ $acheteurs->username }}</td>
-                                            @if($dm_ligne->file)
-                                            <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
-                                            @else
-                                            <td>Aucun fichier</td>
-                                            @endif
+
+                                            <td>
+                                                <input style="width:300px;" type="file" class="form-control"  name='file[]'>
+                                            </td>
+
                                             <td>{{ $dm_ligne->commentaire_manager }}</td>
                                             <td>{{ $dm_ligne->commentaire_directeur }}</td>
-                                            @if($dm_ligne->fournisseur)
-                                            <td>{{ $dm_ligne->fournisseur }}</td>
-                                            @else
-                                            <td>non determine</td>
-                                            @endif
+                                            <td>{{ $dm_ligne->commentaire_acheteur }}</td>
+
 
                                         </tr>
                                         @endforeach
@@ -162,65 +187,13 @@
 
 
 
-                        <!--
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label for="formrow-inputState" class="form-label">societe</label>
-                                    <select id="formrow-inputState" class="form-select" name="societe">
-                                        <option selected>Choose...</option>
-
-                                               <option value=""></option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>-->
-
-
-
-
                         <div>
                             <div class="mb-3">
-                                <label for="formrow-code-input" class="form-label">Observation</label>
-                                <textarea type="text" class="form-control" id="formrow-email-input" name='observation'></textarea>
-                                <span class="text-danger">@error('observation'){{ $message }}@enderror</span>
+                                <label for="formrow-code-input" class="form-label">fournisseur souhaite</label>
+                                <input type="text" class="form-control" id="formrow-email-input" name='fournisseur' value="{{$dm[0]->fournisseur}}">
+                                <span class="text-danger">@error('fournisseur'){{ $message }}@enderror</span>
                             </div>
                         </div>
-
-                      <!--  <div>
-                        <label>validation</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Valider
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Refuser
-                            </label>
-                          </div>
-                        </div>-->
-
-                        <div>
-                            <label>validation</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  Creer le tableau comparatif
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                  Retourner 
-                                </label>
-                              </div>
-                            </div>
-
-
 
                         <div>
                             <button type="submit" class="btn btn-primary w-md" >Valider</button>
@@ -271,6 +244,7 @@
                                          {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
                                          {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
                                          {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
+                                         {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875},
                                          {width: 'auto', _minWidth: 42.29296875,_maxWidth: 91.41796875,_calcWidth: 42.29296875}],
                     doc.pageMargins = [30, 30, 30, 30];
                     doc.defaultStyle.fontSize = 11;
@@ -290,4 +264,3 @@
 
 
 @endsection
-

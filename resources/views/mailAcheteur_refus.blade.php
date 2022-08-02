@@ -12,6 +12,6 @@
     {{$description}}
 
 
-   Veuillez cliquez sur <a href="{{env('APP_URL')}}/nouvelledm/{{$idDA}}">ce lien </a> pour modifier la demande .
+   Veuillez cliquez sur <a href="{{env('APP_URL')}}/retourne_acheteur/{{$idDA}}">ce lien </a> pour modifier la demande .
 
 @endcomponent
