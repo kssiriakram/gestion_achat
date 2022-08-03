@@ -27,7 +27,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Demande d'achat retourne par le manager </h4>
+                    <h4 class="card-title">Demande d'achat retourne par les directeurs </h4>
                     <p class="card-title-desc">
                     </p>
 
