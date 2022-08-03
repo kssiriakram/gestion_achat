@@ -15,7 +15,10 @@ use App\Mail\DAMail_acheteur_refus;
 use App\Mail\DAMail_directeur_refus;
 use App\Mail\DAMail_edit_acheteur;
 use App\Mail\DAMail_manager_refus;
+use App\Mail\DAMail_edit_manager;
 use App\Models\Ligne_da;
+use App\Mail\DAMail_edit_directeur;
+
 
 class DaController extends Controller
 {
@@ -165,6 +168,54 @@ class DaController extends Controller
 
        function acheteur_edit_dm(Request $request){
 
+        if(isset($request->file)){
+        $files=[];
+        $i=0;
+        $keys = array_keys($request->file);
+
+        while($i<count($keys)){
+            if($i==0){
+                for($j=0;$j<$keys[0]-1;$j++)
+                $files[$j]=NULL;
+
+                $files[$keys[0]-1]=$request->file[$keys[0]];
+            }
+
+            else{
+                $n=$keys[$i]-$keys[$i-1];
+                if($n==1)
+                {
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=NULL;
+
+                }
+                if($n==2)
+                {
+                end($files);
+                $key=key($files);
+                $files[$key+1]=$request->file[$keys[$i]];
+                }
+                else{
+
+                    for($j=0;$j<$n-2;$j++){
+                        end($files);
+                        $key=key($files);
+                        $files[$key+1]=NULL;
+                    }
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=$request->file[$keys[$i]];
+                }
+            }
+
+
+        $i++;
+        }
+    }
+
         $request->validate([
 
             'reference' => 'required|array|min:1',
@@ -199,12 +250,12 @@ class DaController extends Controller
              $da_ligne[$i]->code_NE = $request->cnecono[$i];
 
 
-             if(isset($request->file[$i+1])){
+             if(isset($files[$i]) && $files[$i]!==NULL){
 
 
 
-             $image_name = time().'-logo.'.$request->file[$i+1]->getClientOriginalExtension();
-             $request->file[$i+1]->move(public_path('uploads'), $image_name);
+             $image_name = time().'-logo.'.$files[$i]->getClientOriginalExtension();
+             $files[$i]->move(public_path('uploads'), $image_name);
              $da_ligne[$i]->file = $image_name;
 
              }
@@ -214,7 +265,7 @@ class DaController extends Controller
             $da_id = DAModel::find($request->id);
 
 
-           
+
             if($res) {
                 $user = DB::table('users')->where("id", '=',$da_id->id_emetteur)->get()->first();
 
@@ -229,9 +280,311 @@ class DaController extends Controller
             return back()->with('fail',"some error occured at registring your demand");
 
        }
+
+
+       function get_retourne_managers(Request $request){
+
+        $dm= DB::table('da_models')->where('id_emetteur','=',$request->session()->get('loginId'))
+        ->where('validation_manager','=',false)
+        ->where('date_chef_service','<>',NULL)
+        ->get();
+
+
+        return view('retourner_managers',['items'=>$dm]);
+    }
+
+    function get_retourne_manager($id){
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+        $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
+
+
+        return view('retourner_manager',['acheteurs'=>$user , 'dm'=>$dm,'emetteur' => $emetteur, 'manager'=> $manager]);
+
+    }
+
+
+    function manager_edit_dm(Request $request){
+        if(isset($request->file)){
+        $files=[];
+        $i=0;
+        $keys = array_keys($request->file);
+
+        while($i<count($keys)){
+            if($i==0){
+                for($j=0;$j<$keys[0]-1;$j++)
+                $files[$j]=NULL;
+
+                $files[$keys[0]-1]=$request->file[$keys[0]];
+            }
+
+            else{
+                $n=$keys[$i]-$keys[$i-1];
+                if($n==1)
+                {
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=NULL;
+
+                }
+                if($n==2)
+                {
+                end($files);
+                $key=key($files);
+                $files[$key+1]=$request->file[$keys[$i]];
+                }
+                else{
+
+                    for($j=0;$j<$n-2;$j++){
+                        end($files);
+                        $key=key($files);
+                        $files[$key+1]=NULL;
+                    }
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=$request->file[$keys[$i]];
+                }
+            }
+
+
+        $i++;
+        }
+    }
+
+
+
+
+
+
+
+        $request->validate([
+
+            'reference' => 'required|array|min:1',
+            'reference.*' => 'required',
+            'designation' => 'required|array|min:1',
+            'designation.*' => 'required',
+            'quantite' => 'required|array|min:1',
+            'quantite.*' => 'required|integer',
+            'cnecono' => 'required|array|min:1',
+            'cnecono.*' => 'required',
+         ]);
+
+
+         $da = DaModel::find($request->id);
+         $da->date_emetteur = Carbon::now()->format('Y-d-m H:i:s');
+         $da->date_chef_service = NULL;
+         $res = $da->save();
+
+
+         $da_ligne=Ligne_da::where("id_da", '=',$request->id)->get();
+         //DB::table('ligne_das')->where("id_da", '=',$request->id)->get();
+
+         for($i=0;$i<count($request->quantite);$i++){
+
+            $da_ligne[$i]->designation = $request->designation[$i];
+             $da_ligne[$i]->reference = $request->reference[$i];
+             $da_ligne[$i]->qte= $request->quantite[$i];
+
+             if($request->ccout[$i])
+             $da_ligne[$i]->code_CC = $request->ccout[$i];
+
+             $da_ligne[$i]->code_NE = $request->cnecono[$i];
+
+
+             if(isset($files[$i]) && $files[$i]!==NULL){
+             $image_name = time().'-logo.'.$files[$i]->getClientOriginalExtension();
+             $files[$i]->move(public_path('uploads'), $image_name);
+             $da_ligne[$i]->file = $image_name;
+
+             }
+              $da_ligne[$i]->save();
+            }
+
+            $da_id = DAModel::find($request->id);
+
+
+
+            if($res) {
+                $user = DB::table('users')->where("id", '=',$da_id->id_emetteur)->get()->first();
+
+                $destinaire = DB::table('users')
+                ->where("departement", '=',$user->departement)
+                ->where("type", '=',"manager")
+                ->get()->first();
+
+
+
+               Mail::to($destinaire->email)->send(new DAMail_edit_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $da_id->id));
+
+
+                return back()->with('success', "you're demand is registered");
+            }
+            else
+            return back()->with('fail',"some error occured at registring your demand");
+
+       }
+
+
+
        ////////////////////////////////////////////////////////////////////////////////////
 
+
+       function directeur_edit_dm(Request $request){
+
+        if(isset($request->file)){
+        $files=[];
+        $i=0;
+        $keys = array_keys($request->file);
+
+        while($i<count($keys)){
+            if($i==0){
+                for($j=0;$j<$keys[0]-1;$j++)
+                $files[$j]=NULL;
+
+                $files[$keys[0]-1]=$request->file[$keys[0]];
+            }
+
+            else{
+                $n=$keys[$i]-$keys[$i-1];
+                if($n==1)
+                {
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=NULL;
+
+                }
+                if($n==2)
+                {
+                end($files);
+                $key=key($files);
+                $files[$key+1]=$request->file[$keys[$i]];
+                }
+                else{
+
+                    for($j=0;$j<$n-2;$j++){
+                        end($files);
+                        $key=key($files);
+                        $files[$key+1]=NULL;
+                    }
+
+                    end($files);
+                    $key=key($files);
+                    $files[$key+1]=$request->file[$keys[$i]];
+                }
+            }
+
+
+        $i++;
+        }
+    }
+
+
+
+
+
+
+
+        $request->validate([
+
+            'reference' => 'required|array|min:1',
+            'reference.*' => 'required',
+            'designation' => 'required|array|min:1',
+            'designation.*' => 'required',
+            'quantite' => 'required|array|min:1',
+            'quantite.*' => 'required|integer',
+            'cnecono' => 'required|array|min:1',
+            'cnecono.*' => 'required',
+         ]);
+
+
+         $da = DaModel::find($request->id);
+         $da->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');
+         $da->date_directeur = NULL;
+         $res = $da->save();
+
+
+         $da_ligne=Ligne_da::where("id_da", '=',$request->id)->get();
+         //DB::table('ligne_das')->where("id_da", '=',$request->id)->get();
+
+         for($i=0;$i<count($request->quantite);$i++){
+
+            $da_ligne[$i]->designation = $request->designation[$i];
+             $da_ligne[$i]->reference = $request->reference[$i];
+             $da_ligne[$i]->qte= $request->quantite[$i];
+
+             if($request->ccout[$i])
+             $da_ligne[$i]->code_CC = $request->ccout[$i];
+
+             $da_ligne[$i]->code_NE = $request->cnecono[$i];
+
+
+             if(isset($files[$i]) && $files[$i]!==NULL){
+             $image_name = time().'-logo.'.$files[$i]->getClientOriginalExtension();
+             $files[$i]->move(public_path('uploads'), $image_name);
+             $da_ligne[$i]->file = $image_name;
+
+             }
+              $da_ligne[$i]->save();
+            }
+
+            $da_id = DAModel::find($request->id);
+
+
+
+            if($res) {
+                $emetteur= DB::table('users')->where("id", '=',$da_id->id_emetteur)->get()->first();
+
+                $user= DB::table('users')->where("type", '=','manager')
+                ->where("departement", '=',$emetteur->departement)
+                ->get()->first();
+
+                $destinaire = DB::table('users')
+                ->where("id", '=',$da_id->id_directeur)
+                ->get()->first();
+
+
+
+               Mail::to($destinaire->email)->send(new DAMail_edit_directeur($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $da_id->id,$da_id->commentaire_manager));
+
+
+                return back()->with('success', "you're demand is registered");
+            }
+            else
+            return back()->with('fail',"some error occured at registring your demand");
+
+       }
+
+       function get_retourne_directeurs(Request $request){
+
+        $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
+        ->where('users.departement','=',$request->session()->get('departement'))->
+        where('da_models.validation_directeur','=',false)
+        ->where('date_directeur','<>',NULL)->get();
+
+
+
+        return view('retourner_directeurs',['items'=>$dm]);
+    }
+
+
+    function get_retourne_directeur($id){
+        $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$id)->get();
+        $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+        $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+        $manager= DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
+
+
+        return view('retourner_directeur',['acheteurs'=>$user , 'dm'=>$dm,'emetteur' => $emetteur, 'manager'=> $manager]);
+
+    }
+
+
     function get_cloture_dm_manager(Request $request){
+
         $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
         ->where('users.departement','=',$request->session()->get('departement'))->
         where('da_models.validation_directeur','=',true)->get();

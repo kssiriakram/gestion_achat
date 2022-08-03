@@ -55,6 +55,12 @@
                                 key="t-horizontal"> Retourne par l'acheteur</a>
 
                         </li>
+
+                        <li>
+                            <a href="{{ env('APP_URL') }}/retourne_managers"
+                                key="t-horizontal"> Retourne par le manager</a>
+
+                        </li>
                     </ul>
 
                         @endif
@@ -83,6 +89,11 @@
                                 <li>
                                     <a href="{{ env('APP_URL') }}/manager_cloture"
                                         key="t-horizontal"> Validé</a>
+
+                                </li>
+                                <li>
+                                    <a href="{{ env('APP_URL') }}/retourne_directeurs"
+                                        key="t-horizontal"> Retourne par les directeurs</a>
 
                                 </li>
                             </ul>
