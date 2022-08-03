@@ -98,7 +98,7 @@
                                             <th>Code Budget</th>
                                             <th>Code Article</th>
                                             <th>Nom de l'acheteur</th>
-                                            <th style="width:300px;">Jointure</th>
+                                            <th style="width:1000px;">Jointure</th>
                                             <th>Motif du retour</th>
 
 
@@ -145,7 +145,7 @@
                                             <td>{{ $acheteurs->username }}</td>
 
                                             <td>
-                                                <input style="width:300px;" type="file" class="form-control"  name='file[]'>
+                                                <input style="width:1000px;" type="file" class="form-control"  name='file[]'>
                                             </td>
 
                                             <td>{{ $dm_ligne->commentaire_manager }}</td>

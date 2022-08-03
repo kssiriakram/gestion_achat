@@ -18,7 +18,7 @@ class CreateTabComparatifsTable extends Migration
 
 
 
-            $table->text('commentaire_manager')->nullable()->default(NULL);
+            $table->text('commentaire_acheteur')->nullable()->default(NULL);
             $table->text('commentaire_manager')->nullable()->default(NULL);
             $table->text('commentaire_directeur')->nullable()->default(NULL);
 

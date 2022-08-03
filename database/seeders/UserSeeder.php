@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
             'email'=> 'test@gmail.com',
             'username' => 'test',
             'password' => Hash::make('test'),
-            'type' => 'emetteur',
+            'type' => 'acheteur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
             'email_suprv' => 'monhem.amrani@coficab.com',

@@ -306,8 +306,10 @@ class DaController extends Controller
 
 
     function manager_edit_dm(Request $request){
-        if(isset($request->file)){
         $files=[];
+        if(isset($request->file)){
+
+
         $i=0;
         $keys = array_keys($request->file);
 
@@ -352,11 +354,11 @@ class DaController extends Controller
 
         $i++;
         }
+
+
     }
 
-
-
-
+   
 
 
 
