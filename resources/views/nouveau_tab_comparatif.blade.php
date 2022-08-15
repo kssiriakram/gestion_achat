@@ -34,6 +34,12 @@
                         <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">N° table comparatif</label>
                             <input type="text" class="form-control" id="formrow-f-input" name="id" value="{{ $id }}" readonly="true">
+                            @foreach ( $id_das as $id_da )
+                            <input  class="form-control" id="formrow-f-input" name="id_das[]" value={{ $id_da->id }} hidden>
+                            @endforeach
+
+
+
 
                         </div>
 
@@ -46,12 +52,12 @@
                         </div>
 
 
-                    <div id="ligne_das">
 
+                    <div id="ligne_das">
                         <div  class="accordion">
                             <div class="accordion-item" id="ligne_da">
                                 <h2 class="accordion-header" id="1">
-                                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <button class="accordion-button fournisseur-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" >
                                     Fournisseur Nº1
                                   </button>
                                 </h2>
@@ -62,42 +68,58 @@
                                         <label for="formrow-designation-input" class="form-label">nom fournisseur</label>
                                         <input type="text" class="form-control" id="formrow-fi-input" name="fournisseur[]">
                                         <span class="text-danger">@error('fournisseur.*'){{ $message }}@enderror</span>
-
-
                                     </div>
+                                    @for($i=0;$i<$count;$i++)
+                                    <div  class="accordion">
+                                        <div class="accordion-item" id="produit">
+                                            <h2 class="accordion-header" id="2">
+                                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                Produit Nº{{$i+1}}
+                                              </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
                                     <div class="mb-3">
                                         <label for="formrow-reference-input" class="form-label">Prix</label>
-                                        <input type="text" class="form-control" id="formrow-fir-input" name="prix[]">
+                                        <input type="text" class="form-control" id="formrow-fir-input" name="prix[{{$i}}][]">
                                         <span class="text-danger">@error("prix.*"){{ $message }}@enderror</span>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="formrow-reference-input" class="form-label">Remise</label>
-                                        <input type="text" class="form-control" id="formrow-fir-input" name="remise[]">
+                                        <input type="text" class="form-control" id="formrow-fir-input" name="remise[{{$i}}][]">
                                         <span class="text-danger">@error("remise.*"){{ $message }}@enderror</span>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="formrow-inputState" class="form-label">devise</label>
-                                        <select id="formrow-inputState" class="form-select" name='devise[]'>
+                                        <select id="formrow-inputState" class="form-select" name="devise[{{$i}}][]">
                                             <option selected>Choose...</option>
                                             <option value="EUR">EUR</option>
                                             <option value="DH">DH</option>
                                         </select>
                                     </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                    @endfor
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <script>
                         var initialState = $(document.getElementById("ligne_das")).clone();
                         $('#Nb_ligne_da').change(function () {
                             $(document.getElementById("ligne_das")).replaceWith(initialState);
-                            console.log($('#Nb_ligne_da').val());
+
                             for(let i=0;i<$('#Nb_ligne_da').val()-1;i++){
                             document.getElementById("ligne_das").innerHTML += document.getElementsByClassName("accordion")[0].innerHTML;
                             }
-                            $('.accordion-button').map((index,e)=> e.textContent = "Fournisseur Nº"+(index+1));
+
+                            $('.accordion-button.fournisseur-button').map((index,e)=> e.textContent = "Fournisseur Nº"+(index+1));
 
 
                         })
@@ -108,7 +130,8 @@
                             for(let i=0;i<$('#Nb_ligne_da').val()-1;i++){
                             document.getElementById("ligne_das").innerHTML += document.getElementsByClassName("accordion")[0].innerHTML;
                             }
-                            $('.accordion-button').map((index,e)=> e.textContent = "Fournisseur Nº"+(index+1));
+
+                            $('.accordion-button.fournisseur-button').map((index,e)=> e.textContent = "Fournisseur Nº"+(index+1));
 
 
                         })

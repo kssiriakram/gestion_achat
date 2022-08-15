@@ -55,6 +55,6 @@ class Tab_comparatif_mail extends  Mailable
     public function build()
     {
         return $this->from($this->email, $name = "Gestion des achats COFMA")->
-        subject($this->sujet)->markdown('mail');
+        subject($this->sujet)->markdown('mail_tab_comparatif');
     }
 }

@@ -15,11 +15,9 @@ class CreateFournisseursTable extends Migration
     {
         Schema::create('fournisseurs', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_fournisseur')->unique();
-            $table->double('prix')->default(0);
-            $table->enum('devise', ['EUR','DH']);
-            $table->double('remise')->default(0);
+            $table->string('nom_fournisseur');
             $table->double('prix_total')->default(0);
+
 
             $table->unsignedBigInteger("id_tab_comparatif");
             $table->foreign('id_tab_comparatif')->references('id')->on('tab_comparatifs');
