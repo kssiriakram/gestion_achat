@@ -25,6 +25,12 @@ class CreateTabComparatifsTable extends Migration
             $table->datetime("date_chef_service")->nullable()->default(NULL);
             $table->datetime("date_directeur")->nullable()->default(NULL);
 
+            $table->boolean('validation_manager')->nullable()->default(false);
+            $table->boolean('validation_directeur')->nullable()->default(false);
+           
+
+
+
             $table->foreign('id')->references('id')->on('da_models');
 
             $table->timestamps();

@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-      /* DB::table('users')->insert([
+       DB::table('users')->insert([
             'email'=> 'kssiriakram@gmail.com',
             'username' => 'kssiriakram',
             'password' => Hash::make('kssiriakram'),
@@ -44,9 +44,9 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'email'=> 'test@gmail.com',
-            'username' => 'test',
-            'password' => Hash::make('test'),
+            'email'=> 'serencatabiniar@gmail.com',
+            'username' => 'serencatabiniar',
+            'password' => Hash::make('serencatabiniar'),
             'type' => 'acheteur',
             'societe' => 'COFMA',
             'superieur' => 'monhem.amrani',
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'email_suprv' => 'monhem.amrani@coficab.com',
             'departement' => 'IT'
         ]);
-*/
+/*
 
          DB::table('users')->insert([
             'email'=> 'abdelaziz.bekraoui@coficab.com',
@@ -279,6 +279,8 @@ DB::table('users')->insert([
     'societe' => 'COFMA',
     'departement' => 'Maintenance'
 ]);
-
+*/
     }
+
+
 }

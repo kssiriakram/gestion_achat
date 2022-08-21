@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tab_comparatif;
+use App\Models\DaModel;
 use App\Models\Fournisseur;
 use App\Models\Ligne_da;
 use App\Models\ligne_da_fournisseur;
 use App\Mail\Tab_comparatif_mail;
+use App\Mail\Tab_comparatif_manager;
+use App\Mail\Tab_comparatif_manager_refus;
+use App\Mail\Tab_comparatif_directeur_refus;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -125,5 +129,190 @@ for($i=0;$i<count($fournisseurs);$i++){
     return back()->with('fail',"some error occured at registring your demand");
  }
 
+
+
+ function get_encours_tab_manager(Request $request){
+    // dd(DB::table('users')->where('departement','=',$request->session()->get('departement'))->get());
+
+
+     $dm= DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
+     ->where('users.departement','=',$request->session()->get('departement'))->
+     join('tab_comparatifs','tab_comparatifs.id','=','da_models.id')->get();
+
+
+     return view('manager_encourstab',['items'=>$dm]);
+ }
+
+ function get_nouvelle_tab_manager($id){
+    $dm=DB::table('da_models')->join('ligne_das','da_models.id','=','ligne_das.id_da')
+    ->join('tab_comparatifs','tab_comparatifs.id','=','da_models.id')
+    ->join('fournisseurs','tab_comparatifs.id','=','fournisseurs.id_tab_comparatif')
+    ->where('da_models.id',$id)->get();
+
+
+
+
+
+
+   $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->count();
+
+   $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id_da)->count();
+
+    $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+    $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
+    $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+
+    return view('manager_nouvelletab',['acheteur'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
+    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
+ }
+
+ function manager_add_tab(Request $request){
+
+    $request->validate(
+        [
+
+            'observation' => 'required',
+            'validation' => 'required|in:yes,no'
+
+         ]
+        );
+
+    $tab = Tab_comparatif::find($request->id);
+    $tab->commentaire_manager=$request->observation;
+    $tab->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');
+
+    if($request->validation=="yes"){   $tab->validation_manager=true;}
+      else $tab->validation_manager=false;
+
+      $tab->save();
+      $da = DaModel::find($request->id);
+      $departement = DB::table('users')->where('id',$da->id_emetteur)->get()->first()->departement;
+
+    if($request->validation=="yes"){
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
+        $destinaire = DB::table('users')->where("id", "=",$da->id_directeur)->get()->first();
+        Mail::to($destinaire->email)->send(new Tab_comparatif_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
+     return back()->with('success', "you're demand is registered");
+    }
+    else{
+        $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
+        $destinaire=  DB::table('users')->where("id", "=",$da->id_acheteur)->get()->first();
+        Mail::to($destinaire->email)->send(new Tab_comparatif_manager_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
+        return back()->with('success', "you're demand is registered");
+    }
+
+ }
+
+ function get_encours_tab_directeur(Request $request){
+    // dd(DB::table('users')->where('departement','=',$request->session()->get('departement'))->get());
+
+
+     $dm= DB::table('users')->join('da_models','users.id','=','da_models.id_directeur')
+     ->where('users.id','=',$request->session()->get('loginId'))->
+     join('tab_comparatifs','tab_comparatifs.id','=','da_models.id')->get();
+
+
+     return view('directeur_encourstab',['items'=>$dm]);
+ }
+
+ function get_nouvelle_tab_directeur($id){
+    $dm=DB::table('da_models')->join('ligne_das','da_models.id','=','ligne_das.id_da')
+    ->join('tab_comparatifs','tab_comparatifs.id','=','da_models.id')
+    ->join('fournisseurs','tab_comparatifs.id','=','fournisseurs.id_tab_comparatif')
+    ->where('da_models.id',$id)->get();
+
+
+
+
+
+
+   $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->count();
+
+   $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id_da)->count();
+
+    $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+    $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
+    $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+
+    return view('directeur_nouvelletab',['acheteur'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
+    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
+ }
+
+ function directeur_add_tab(Request $request){
+
+    $request->validate(
+        [
+
+            'observation' => 'required',
+            'validation' => 'required|in:yes,no'
+
+         ]
+        );
+
+    $tab = Tab_comparatif::find($request->id);
+    $tab->commentaire_manager=$request->observation;
+    $tab->date_directeur = Carbon::now()->format('Y-d-m H:i:s');
+
+    if($request->validation=="yes"){   $tab->validation_directeur=true;}
+      else $tab->validation_directeur=false;
+
+      $tab->save();
+      $da = DaModel::find($request->id);
+      $departement = DB::table('users')->where('id',$da->id_emetteur)->get()->first()->departement;
+
+    if($request->validation=="yes"){
+       /* $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
+        $destinaire = DB::table('users')->where("id", "=",$da->id_directeur)->get()->first();
+        Mail::to($destinaire->email)->send(new Tab_comparatif_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
+     return back()->with('success', "you're demand is registered");*/
+    }
+    else{
+        $destinaire= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
+        $user =  DB::table('users')->where("id", "=",$da->id_directeur)->get()->first();
+        Mail::to($destinaire->email)->send(new Tab_comparatif_directeur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
+        return back()->with('success', "you're demand is registered");
+    }
+
+ }
+
+ function get_retourne_managers(Request $request){
+    $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
+        ->where('users.departement','=',$request->session()->get('departement'))->get('da_models.id');
+
+
+    $tab = [];
+
+    for($i=0;$i<count($dm);$i++)
+    {
+          $tab[$i]=DB::table('tab_comparatifs')->where('id','=',$dm[$i]->id)
+          ->where('validation_manager','=',false)
+          ->where('date_chef_service','<>',NULL)
+          ->get()->first();
+    }
+    return view('retourner_managers_tab',['items'=>$tab]);
+}
+
+
+function get_retourne_tab_manager($id){
+    $dm=DB::table('da_models')->where('da_models.id',$id)->get();
+
+
+$tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisseurs.id_fournisseur','=','fournisseurs.id')
+->join('ligne_das','ligne_da_fournisseurs.id_ligne_da','=','ligne_das.id')->where('ligne_das.id_da',$id)->get();
+
+
+
+
+   $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id)->count();
+
+   $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id)->count();
+
+    $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
+    $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
+    $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+
+    return view('retourner_manager_tab',['acheteur'=>$user ,'tab'=>$dm, 'dm'=>$tab , 'emetteur' => $emetteur , 'directeur' => $directeur
+    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
+ }
 
 }

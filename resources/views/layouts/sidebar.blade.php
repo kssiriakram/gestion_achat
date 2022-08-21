@@ -104,10 +104,11 @@
                             </a>
                             <ul class="sub-menu mm-show" aria-expanded="true">
                                 <li>
-                                    <a href="{{ env('APP_URL') }}/#"
+                                    <a href="{{ env('APP_URL') }}/manager_encourstab"
                                         key="t-horizontal"> En cours</a>
 
                                 </li>
+
                             </ul>
                         </li>
                             </ul>
@@ -151,7 +152,7 @@
                                     </a>
                                     <ul class="sub-menu mm-show" aria-expanded="true">
                                         <li>
-                                            <a href="{{ env('APP_URL') }}/#"
+                                            <a href="{{ env('APP_URL') }}/directeur_encourstab"
                                                 key="t-horizontal"> En cours</a>
 
                                         </li>
@@ -193,6 +194,11 @@
                                                 <li>
                                                     <a href="{{ env('APP_URL') }}/#"
                                                         key="t-horizontal"> En cours</a>
+
+                                                </li>
+                                                <li>
+                                                    <a href="{{ env('APP_URL') }}/retourne_managerstab"
+                                                        key="t-horizontal">retourne par le manager</a>
 
                                                 </li>
                                             </ul>

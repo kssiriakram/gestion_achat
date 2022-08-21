@@ -34,7 +34,9 @@ Route::post('/manager_edit_dm', [DaController::class,'manager_edit_dm']);
 
 
 Route::get('/manager_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_manager']);
+Route::get('/manager_nouvelletab/{id}',[Tab_comparatifController::class,'get_nouvelle_tab_manager']);
 Route::post('/manager_add_dm',[DaController::class,'add_dm_manager']);
+Route::post('/manager_add_tab',[Tab_comparatifController::class,'manager_add_tab']);
 Route::get('/retourne_directeur/{id}', [DaController::class,'get_retourne_directeur']);
 Route::post('/directeur_edit_dm', [DaController::class,'directeur_edit_dm']);
 
@@ -42,8 +44,10 @@ Route::get('/acheteur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_ach
 Route::post('/acheteur_add_dm',[DaController::class,'add_dm_acheteur']);
 Route::get('/nouveau_tab_comparatif/{id}',[Tab_comparatifController::class,'get_nouveau_tab_comparatif']);
 Route::post('/add_tab_comparatif',[Tab_comparatifController::class,'add_tab_comparatif']);
+Route::get('/retourne_managers_tab/{id}',[Tab_comparatifController::class,'get_retourne_tab_manager']);
 
 Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
+Route::get('/directeur_nouvelletab/{id}',[Tab_comparatifController::class,'get_nouvelle_tab_directeur']);
 Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
 
 Route::get('/dashboard',[DaController::class,'get_dashboard']);
@@ -55,6 +59,8 @@ Route::middleware(Authorization::class)->namespace('\App\Http\Controllers\Api')-
 
 Route::middleware(Manager::class)->namespace('\App\Http\Controllers\Api')->group(function () {
     Route::get('/manager_encoursdm',[DaController::class,'get_encours_dm_manager']);
+    Route::get('/manager_encourstab',[Tab_comparatifController::class,'get_encours_tab_manager']);
+
     Route::get('/manager_cloture',[DaController::class,'get_cloture_dm_manager']);
     Route::get('/retourne_directeurs', [DaController::class,'get_retourne_directeurs']);
 
@@ -78,6 +84,7 @@ Route::middleware(Acheteur::class)->namespace('\App\Http\Controllers\Api')->grou
 
     //Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
     Route::get('/acheteur_encoursdm',[DaController::class,'get_encours_dm_acheteur']);
+    Route::get('/retourne_managerstab',[Tab_comparatifController::class,'get_retourne_managers']);
 
     });
 
@@ -86,6 +93,7 @@ Route::middleware(Directeur::class)->namespace('\App\Http\Controllers\Api')->gro
 
     Route::get('/directeur_cloture',[DaController::class,'get_cloture_dm_directeur']);
     Route::get('/directeur_encoursdm',[DaController::class,'get_encours_dm_directeur']);
+    Route::get('/directeur_encourstab',[Tab_comparatifController::class,'get_encours_tab_directeur']);
 
 
 });
