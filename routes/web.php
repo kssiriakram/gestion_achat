@@ -47,6 +47,7 @@ Route::post('/add_tab_comparatif',[Tab_comparatifController::class,'add_tab_comp
 Route::get('/retourne_managers_tab/{id}',[Tab_comparatifController::class,'get_retourne_tab_manager']);
 
 Route::post('/directeur_add_dm',[DaController::class,'add_dm_directeur']);
+Route::post('/directeur_add_tab',[Tab_comparatifController::class,'directeur_add_tab']);
 Route::get('/directeur_nouvelletab/{id}',[Tab_comparatifController::class,'get_nouvelle_tab_directeur']);
 Route::get('/directeur_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_directeur']);
 
@@ -63,6 +64,7 @@ Route::middleware(Manager::class)->namespace('\App\Http\Controllers\Api')->group
 
     Route::get('/manager_cloture',[DaController::class,'get_cloture_dm_manager']);
     Route::get('/retourne_directeurs', [DaController::class,'get_retourne_directeurs']);
+    Route::get('/retourne_directeurs_tab', [Tab_comparatifController::class,'get_retourne_directeurs']);
 
 });
 

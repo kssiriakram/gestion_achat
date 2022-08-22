@@ -38,7 +38,7 @@
                         @csrf
                         <input type="text" name="id" value="{{ $dm[0]->id_tab_comparatif }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero Demande : {{ $tab[0]->id }}</label>
+                            <label for="formrow-numero-input" class="form-label">Numero du tableau comparatif : {{ $dm[0]->id }}</label>
                         </div>
 
                         <div class="mb-3">
@@ -68,24 +68,24 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h4 class="card-title">Les detailles de la demande</h4>
+                                <h4 class="card-title">Les detailles du  tableau comparatif </h4>
                                 <p class="card-title-desc">
                                 </p>
 
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th>N° DA</th>
+
                                             <th>Designation</th>
-                                            <th>Quantité</th>
-                                            <th>Référence</th>
-                                            <th>Code Budget</th>
-                                            <th>Code Article</th>
-                                            <th>Nom de l'acheteur</th>
+                                            <th>Qte</th>
+                                            <th>Ref</th>
+                                            <th>C.B</th>
+                                            <th>C.Art</th>
+
                                             <th>Jointure</th>
                                             @for ($i=0;$i<$fournisseur;$i++)
                                             <th>fournisseur Nº{{ $i+1 }}</th>
-                                            <th>prix de fournisseur Nº{{ $i+1 }}</th>
+                                            <th>prix Nº{{ $i+1 }}</th>
                                             @endfor
 
 
@@ -98,7 +98,7 @@
                                         <?php $i=0  ; $j=0;?>
                                       @while ($i<count($dm))
                                         <tr>
-                                            <td>{{ $dm[$i]->id }}</td>
+
                                             <td>{{ $dm[$i]->designation }}</td>
                                             <td>{{ $dm[$i]->qte }}</td>
                                             <td>{{ $dm[$i]->reference }}</td>
@@ -110,7 +110,7 @@
                                             @endif
 
                                             <td>{{ $dm[$i]->code_NE }}</td>
-                                            <td>{{ $acheteur->username }}</td>
+
 
                                             @if($dm[$i]->file)
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm[$i]->file) }}> cliquez ici </a></td>
@@ -120,7 +120,7 @@
 
                                             @while($j<$fournisseur)
                                                  <td>{{ $dm[$i+$j]->nom_fournisseur }}</td>
-                                                 <td>{{ $dm[$i+$j]->prix }}</td>
+                                                 <td>{{ $dm[$i+$j]->prix }} {{$dm[$i+$j]->devise }}</td>
                                                  <?php $j++; ?>
                                             @endwhile
                                             <?php $i=$i+$j;
@@ -131,7 +131,7 @@
 
                                         </tr>
                                         @endwhile
-                                       
+
                                     </tbody>
                                 </table>
             <br/>

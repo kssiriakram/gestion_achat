@@ -151,6 +151,9 @@ for($i=0;$i<count($fournisseurs);$i++){
 
 
 
+    $tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisseurs.id_fournisseur','=','fournisseurs.id')
+->join('ligne_das','ligne_da_fournisseurs.id_ligne_da','=','ligne_das.id')->where('ligne_das.id_da',$id)->get();
+
 
 
 
@@ -162,7 +165,7 @@ for($i=0;$i<count($fournisseurs);$i++){
     $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
     $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
 
-    return view('manager_nouvelletab',['acheteur'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
+    return view('manager_nouvelletab',['acheteur'=>$user , 'dm'=>$tab,'tab'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
     , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
  }
 
@@ -177,6 +180,11 @@ for($i=0;$i<count($fournisseurs);$i++){
          ]
         );
 
+        if($request->fournisseur){
+            $fournisseur=Fournisseur::find($request->fournisseur);
+            $fournisseur->fournisseur_souhaite=true;
+            $fournisseur->save();
+        }
     $tab = Tab_comparatif::find($request->id);
     $tab->commentaire_manager=$request->observation;
     $tab->date_chef_service = Carbon::now()->format('Y-d-m H:i:s');
@@ -224,9 +232,16 @@ for($i=0;$i<count($fournisseurs);$i++){
 
 
 
+    $tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisseurs.id_fournisseur','=','fournisseurs.id')
+->join('ligne_das','ligne_da_fournisseurs.id_ligne_da','=','ligne_das.id')->where('ligne_das.id_da',$id)->get();
+
 
 
    $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->count();
+
+   $fournisseur_souhaite = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->
+   where('fournisseur_souhaite','=',true)->get()->first();
+
 
    $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id_da)->count();
 
@@ -234,8 +249,8 @@ for($i=0;$i<count($fournisseurs);$i++){
     $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
     $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
 
-    return view('directeur_nouvelletab',['acheteur'=>$user , 'dm'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
-    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
+    return view('directeur_nouvelletab',['acheteur'=>$user , 'dm'=>$tab,'tab'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
+    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ,'fournisseur_souhaite'=>$fournisseur_souhaite] );
  }
 
  function directeur_add_tab(Request $request){
@@ -276,25 +291,35 @@ for($i=0;$i<count($fournisseurs);$i++){
  }
 
  function get_retourne_managers(Request $request){
-    $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
-        ->where('users.departement','=',$request->session()->get('departement'))->get('da_models.id');
+    $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_acheteur')
+        ->get('da_models.id');
 
 
     $tab = [];
 
     for($i=0;$i<count($dm);$i++)
     {
+        if(DB::table('tab_comparatifs')->where('id','=',$dm[$i]->id)
+        ->where('validation_manager','=',false)
+        ->where('date_chef_service','<>',NULL)
+        ->get()->first()!=NULL)
+
           $tab[$i]=DB::table('tab_comparatifs')->where('id','=',$dm[$i]->id)
           ->where('validation_manager','=',false)
           ->where('date_chef_service','<>',NULL)
           ->get()->first();
     }
+
+
     return view('retourner_managers_tab',['items'=>$tab]);
 }
 
 
 function get_retourne_tab_manager($id){
-    $dm=DB::table('da_models')->where('da_models.id',$id)->get();
+    $dm=DB::table('tab_comparatifs')->where('id',$id)->get();
+
+
+    $e = DB::table('da_models')->where('id',$id)->get();
 
 
 $tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisseurs.id_fournisseur','=','fournisseurs.id')
@@ -303,16 +328,42 @@ $tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisse
 
 
 
-   $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id)->count();
+   $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$e[0]->id)->count();
 
-   $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id)->count();
+   $ligne_da = DB::table('ligne_das')->where('id_da','=',$e[0]->id)->count();
 
-    $user=DB::table('users')->where('id',$dm[0]->id_acheteur)->get()->first();
-    $directeur = DB::table('users')->where('id',$dm[0]->id_directeur)->get()->first();
-    $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
+    $user=DB::table('users')->where('id',$e[0]->id_acheteur)->get()->first();
+    $directeur = DB::table('users')->where('id',$e[0]->id_directeur)->get()->first();
+    $emetteur= DB::table('users')->where('id',$e[0]->id_emetteur)->get()->first();
 
     return view('retourner_manager_tab',['acheteur'=>$user ,'tab'=>$dm, 'dm'=>$tab , 'emetteur' => $emetteur , 'directeur' => $directeur
     , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
  }
+
+
+ function get_retourne_directeurs(Request $request){
+    $dm=  DB::table('users')->join('da_models','users.id','=','da_models.id_emetteur')
+    ->where('users.departement','=',$request->session()->get('departement'))
+        ->get('da_models.id');
+
+
+    $tab = [];
+
+    for($i=0;$i<count($dm);$i++)
+    {
+        if(DB::table('tab_comparatifs')->where('id','=',$dm[$i]->id)
+        ->where('validation_directeur','=',false)
+        ->where('date_directeur','<>',NULL)
+        ->get()->first()!=NULL)
+
+          $tab[$i]=DB::table('tab_comparatifs')->where('id','=',$dm[$i]->id)
+          ->where('validation_directeur','=',false)
+          ->where('date_directeur','<>',NULL)
+          ->get()->first();
+    }
+
+
+    return view('retourner_directeurs_tab',['items'=>$tab]);
+}
 
 }

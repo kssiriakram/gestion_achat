@@ -108,6 +108,11 @@
                                         key="t-horizontal"> En cours</a>
 
                                 </li>
+                                <li>
+                                    <a href="{{ env('APP_URL') }}/retourne_directeurs_tab"
+                                        key="t-horizontal"> Retourne par le directeur</a>
+
+                                </li>
 
                             </ul>
                         </li>

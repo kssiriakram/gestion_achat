@@ -1,0 +1,12 @@
+192.168.122.8
+webmail.coficab.com
+
+
+MAIL_HOST=192.168.122.8
+
+MAIL_PORT=25
+MAIL_USERNAME="smtp.cofma@coficab.com"
+MAIL_PASSWORD="Cofm@2022"
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"

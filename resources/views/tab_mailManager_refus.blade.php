@@ -11,6 +11,6 @@
     {{$description}}
 
 
-   Veuillez cliquez sur <a href="{{env('APP_URL')}}/retourne_directeur/{{$idDA}}">ce lien </a> pour modifier la demande .
+   Veuillez cliquez sur <a href="{{env('APP_URL')}}/retourne_managers_tab/{{$idDA}}">ce lien </a> pour modifier la demande .
 
 @endcomponent
