@@ -18,7 +18,10 @@ class CreateLigneDaFournisseursTable extends Migration
             $table->double('prix')->default(0);
             $table->enum('devise', ['EUR','DH']);
             $table->double('remise')->default(0);
+            $table->boolean('fournisseur_souhaite')->nullable()->default(false);
 
+
+           
 
             $table->unsignedBigInteger("id_ligne_da");
             $table->foreign('id_ligne_da')->references('id')->on('ligne_das');

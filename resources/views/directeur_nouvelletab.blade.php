@@ -59,9 +59,7 @@
                             <label for="formrow-numero-input" class="form-label">Acheteur: {{ $acheteur->username}}</label>
                         </div>
 
-                        <div class="mb-3">
-                            <label style="color:red" for="formrow-numero-input" class="form-label">Fournisseur souhaite: {{ $fournisseur_souhaite->nom_fournisseur}}</label>
-                        </div>
+
 
 
 
@@ -77,7 +75,7 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-
+                                            <th></th>
                                             <th>Designation</th>
                                             <th>Qte</th>
                                             <th>Ref</th>
@@ -87,7 +85,9 @@
                                             @for ($i=0;$i<$fournisseur;$i++)
                                             <th>fournisseur Nº{{ $i+1 }}</th>
                                             <th>prix Nº{{ $i+1 }}</th>
+                                            <th>remise Nº{{ $i+1 }}</th>
                                             @endfor
+                                            <th>fournisseur souhaite</th>
 
 
 
@@ -96,10 +96,10 @@
 
 
                                     <tbody>
-                                        <?php $i=0  ; $j=0;?>
+                                        <?php $i=0  ; $j=0; $k=0?>
                                       @while ($i<count($dm))
                                         <tr>
-
+                                            <td></td>
                                             <td>{{ $dm[$i]->designation }}</td>
                                             <td>{{ $dm[$i]->qte }}</td>
                                             <td>{{ $dm[$i]->reference }}</td>
@@ -122,10 +122,13 @@
                                             @while($j<$fournisseur)
                                                  <td>{{ $dm[$i+$j]->nom_fournisseur }}</td>
                                                  <td>{{ $dm[$i+$j]->prix }} {{$dm[$i+$j]->devise }}</td>
+                                                 <td>{{ $dm[$i+$j]->remise }} {{$dm[$i+$j]->devise }}</td>
                                                  <?php $j++; ?>
                                             @endwhile
+
+                                            <td>{{$fournisseur_souhaite[$k]->nom_fournisseur}}</td>
                                             <?php $i=$i+$j;
-                                            $j=0; ?>
+                                            $j=0; $k++; ?>
 
 
 
@@ -141,37 +144,19 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
 
                                             @for ($i=0;$i<count($tab);)
                                             <td></td>
                                             <td>{{ $tab[$i]->prix_total }} {{$dm[$i]->devise }} </td>
+                                            <td></td>
                                             <?php $i+=$ligne_da; ?>
                                             @endfor
+                                            <td></td>
 
                                         </tr>
 
-                                        <tr>
-                                            <td>fournisseur</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
 
-                                            @for ($i=0;$i<$fournisseur;$i++)
-
-                                            <td>
-                                                @if($dm[$i]->fournisseur_souhaite)
-                                                <input class="form-check-input" type="radio" name="fournisseur" value="{{$dm[$i]->id_fournisseur}}" id="flexCheckDefault" checked disabled>
-                                                @else
-                                                <input class="form-check-input" type="radio" name="fournisseur" value="{{$dm[$i]->id_fournisseur}}" id="flexCheckDefault" disabled>
-                                                @endif
-
-                                            </td>
-                                            <td></td>
-                                            @endfor
-
-                                        </tr>
 
 
                                     </tbody>

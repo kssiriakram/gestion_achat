@@ -72,19 +72,21 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-
+                                           <th></th>
                                             <th>Designation</th>
                                             <th>Qte</th>
                                             <th>Ref</th>
                                             <th>C.B</th>
                                             <th>C.Art</th>
+
                                             <th>Jointure</th>
                                             @for ($i=0;$i<$fournisseur;$i++)
                                             <th>fournisseur Nº{{ $i+1 }}</th>
                                             <th>prix Nº{{ $i+1 }}</th>
+                                            <th>Remise Nº{{ $i+1 }}</th>
                                             @endfor
 
-
+                                              <th>fournisseur souhaite</th>
 
                                         </tr>
                                     </thead>
@@ -94,7 +96,7 @@
                                         <?php $i=0  ; $j=0;?>
                                       @while ($i<count($dm))
                                         <tr>
-
+                                             <td></td>
                                             <td>{{ $dm[$i]->designation }}</td>
                                             <td>{{ $dm[$i]->qte }}</td>
                                             <td>{{ $dm[$i]->reference }}</td>
@@ -117,37 +119,44 @@
                                             @while($j<$fournisseur)
                                                  <td>{{ $dm[$i+$j]->nom_fournisseur }}</td>
                                                  <td>{{ $dm[$i+$j]->prix }} {{$dm[$i+$j]->devise }}</td>
+                                                 <td>{{ $dm[$i+$j]->remise }} {{$dm[$i+$j]->devise }}</td>
                                                  <?php $j++; ?>
                                             @endwhile
+
+
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+
+
+
+
+
+                                                                       @foreach( $liste_fournisseur as $e)
+                                                                        <label>{{$e->nom_fournisseur}}</label>
+                                                                        <input type="radio" name="fournisseur[{{$dm[$i]->id_ligne_da}}]" value="{{$e->id}}">
+                                                                       @endforeach
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+
                                             <?php $i=$i+$j;
                                             $j=0; ?>
-
-
 
 
                                         </tr>
                                         @endwhile
 
-                                        <tr>
-                                            <td>fournisseur</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
 
-                                            @for ($i=0;$i<$fournisseur;$i++)
-
-                                            <td>
-                                                <input class="form-check-input" type="radio" name="fournisseur" value="{{$dm[$i]->id_fournisseur}}" id="flexCheckDefault">
-                                            </td>
-                                            <td></td>
-                                            @endfor
-
-                                        </tr>
-                                        
                                         <tr>
                                             <td>prix total</td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -157,9 +166,11 @@
                                             @for ($i=0;$i<count($tab);)
                                             <td></td>
                                             <td>{{ $tab[$i]->prix_total }} {{$dm[$i]->devise }} </td>
+                                            <td></td>
                                             <?php $i+=$ligne_da; ?>
                                             @endfor
 
+                                            <td></td>
                                         </tr>
 
 
@@ -184,7 +195,24 @@
 
 
 
+            <script>
+                var k = "The respective values are :";
+            $(".option").change(function() {
 
+                 console.log(alert('haloo'));
+                var input = document.getElementsByName('fournisseur[]');
+
+
+                for (var i = 0; i < input.length; i++) {
+                    if(true)
+                    var a = input[i];
+                    k = k + "array[" + i + "].value= "
+                                        + a.value + " ";
+                }
+
+
+            })
+            </script>
 
                         <!--
                         <div class="row">
@@ -240,9 +268,10 @@
     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
      Datatable init js
-    <script >$(document).ready(function() {
-        console.log("hyize gu");
+    <script >
 
+
+    $(document).ready(function() {
          var table = $('#datatable-buttons').DataTable({
              lengthChange: false,
 

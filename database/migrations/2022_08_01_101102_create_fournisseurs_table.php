@@ -17,7 +17,7 @@ class CreateFournisseursTable extends Migration
             $table->id();
             $table->string('nom_fournisseur');
             $table->double('prix_total')->default(0);
-            $table->boolean('fournisseur_souhaite')->nullable()->default(false);
+        
 
 
             $table->unsignedBigInteger("id_tab_comparatif");

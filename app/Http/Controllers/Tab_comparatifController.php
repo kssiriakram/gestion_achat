@@ -156,6 +156,8 @@ for($i=0;$i<count($fournisseurs);$i++){
 
 
 
+$liste_fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$id)->get();
+
 
    $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->count();
 
@@ -166,7 +168,7 @@ for($i=0;$i<count($fournisseurs);$i++){
     $emetteur= DB::table('users')->where('id',$dm[0]->id_emetteur)->get()->first();
 
     return view('manager_nouvelletab',['acheteur'=>$user , 'dm'=>$tab,'tab'=>$dm , 'emetteur' => $emetteur , 'directeur' => $directeur
-    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da ] );
+    , 'fournisseur' => $fournisseur , 'ligne_da' => $ligne_da  , 'liste_fournisseur' => $liste_fournisseur] );
  }
 
  function manager_add_tab(Request $request){
@@ -175,15 +177,24 @@ for($i=0;$i<count($fournisseurs);$i++){
         [
 
             'observation' => 'required',
-            'validation' => 'required|in:yes,no'
+            'validation' => 'required|in:yes,no',
+            'fournisseur' => 'required|array',
+            'fournisseur.*' => 'required'
 
          ]
         );
 
+
+
         if($request->fournisseur){
-            $fournisseur=Fournisseur::find($request->fournisseur);
-            $fournisseur->fournisseur_souhaite=true;
-            $fournisseur->save();
+            $key=array_keys($request->fournisseur);
+
+            for($i=0;$i<count($key);$i++){
+                $produit = ligne_da_fournisseur::where('id_fournisseur','=',$request->fournisseur[$key[$i]])
+                ->where('id_ligne_da','=',$key[$i])->get()->first();
+                $produit->fournisseur_souhaite=true;
+                $produit->save();
+            }
         }
     $tab = Tab_comparatif::find($request->id);
     $tab->commentaire_manager=$request->observation;
@@ -239,8 +250,11 @@ for($i=0;$i<count($fournisseurs);$i++){
 
    $fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->count();
 
-   $fournisseur_souhaite = DB::table('fournisseurs')->where('id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->
-   where('fournisseur_souhaite','=',true)->get()->first();
+   $fournisseur_souhaite = DB::table('fournisseurs')
+   ->join('ligne_da_fournisseurs','fournisseurs.id','=','ligne_da_fournisseurs.id_fournisseur')
+   ->where('fournisseurs.id_tab_comparatif','=',$dm[0]->id_tab_comparatif)->
+   where('ligne_da_fournisseurs.fournisseur_souhaite','=',true)->get();
+
 
 
    $ligne_da = DB::table('ligne_das')->where('id_da','=',$dm[0]->id_da)->count();
@@ -364,6 +378,57 @@ $tab=DB::table('fournisseurs')->join('ligne_da_fournisseurs','ligne_da_fournisse
 
 
     return view('retourner_directeurs_tab',['items'=>$tab]);
+}
+
+
+function manager_edit_tab(Request $request){
+
+    $request->validate(
+        [
+
+            'fournisseur.*.*' => 'required',
+            'prix.*.*' => 'required',
+            'remise.*.*' => 'required'
+        ]
+        );
+
+       $keys_fournisseur=array_keys($request->fournisseur);
+       $keys_prix=array_keys($request->prix);
+       $keys_remise=array_keys($request->remise);
+
+
+       for($i=0;$i<count($keys_fournisseur);$i++){
+        $values_fournisseur = array_keys($request->fournisseur[$keys_fournisseur[$i]]);
+
+        $values_prix = array_keys($request->prix[$keys_prix[$i]]);
+        $values_remise = array_keys($request->remise[$keys_remise[$i]]);
+
+
+        for($j=0;$j<count($values_fournisseur);$j++){
+
+            $fournisseur=Fournisseur::find($values_fournisseur[$j]);
+            $fournisseur->nom_fournisseur=$request->fournisseur[$keys_fournisseur[$i]][$values_fournisseur[$j]];
+            $produit=ligne_da_fournisseur::where('id_fournisseur','=',$values_fournisseur[$j])
+            ->where('id_ligne_da','=',$keys_fournisseur[$i])->get()->first();
+            $produit->prix=$request->prix[$keys_prix[$i]][$values_prix[$j]];
+            $produit->remise=$request->remise[$keys_prix[$i]][$values_remise[$j]];
+            $fournisseur->save();
+            $produit->save();
+        }
+       }
+
+    $tab_comparatif = Tab_comparatif::where('id','=',$fournisseur->id_tab_comparatif)->get()->first();
+    $tab_comparatif->date_chef_service = NULL;
+    $tab_comparatif->save();
+
+
+    $dm=DB::table('ligne_das')->join('da_models','da_models.id','=','ligne_das.id_da')->where('da_models.id',$fournisseur->id_tab_comparatif)->get();
+        $user = DB::table('users')->where("id", '=',$dm[0]->id_acheteur)->get()->first();
+        $emetteur = DB::table('users')->where("id", '=',$dm[0]->id_emetteur)->get()->first();
+        $destinaire = DB::table('users')->where("type", "=","manager")->where("departement", "=",$emetteur->departement)->get()->first();
+       Mail::to($destinaire->email)->send(new Tab_comparatif_mail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
+        return back()->with('success', "you're demand is registered");
+
 }
 
 }

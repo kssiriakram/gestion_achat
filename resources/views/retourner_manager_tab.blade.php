@@ -26,7 +26,7 @@
    ?>
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
-    <form action="{{env('APP_URL')}}/manager_add_tab" method="post">
+    <form action="{{env('APP_URL')}}/manager_edit_tab" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -86,6 +86,7 @@
                                             @for ($i=0;$i<$fournisseur;$i++)
                                             <th>fournisseur Nº{{ $i+1 }}</th>
                                             <th>prix Nº{{ $i+1 }}</th>
+                                            <th>remise N°{{$i+1}}</th>
                                             @endfor
 
 
@@ -119,8 +120,12 @@
                                             @endif
 
                                             @while($j<$fournisseur)
-                                                 <td>{{ $dm[$i+$j]->nom_fournisseur }}</td>
-                                                 <td>{{ $dm[$i+$j]->prix }} {{$dm[$i+$j]->devise }}</td>
+                                                 <td><input class="form-control"  name="fournisseur[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{ $dm[$i+$j]->nom_fournisseur }}"/></td>
+                                                 <td><input class="form-control"  name="prix[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{$dm[$i+$j]->prix }}"/></td>
+                                                 <td><input class="form-control"  name="remise[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{$dm[$i+$j]->remise}}"/></td>
                                                  <?php $j++; ?>
                                             @endwhile
                                             <?php $i=$i+$j;

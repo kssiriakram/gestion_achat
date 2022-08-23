@@ -30,6 +30,7 @@ Route::post('/logout',[AuthController::class,'logout']);
 Route::get('/retourne_acheteur/{id}', [DaController::class,'get_retourne_acheteur']);
 Route::post('/acheteur_edit_dm', [DaController::class,'acheteur_edit_dm']);
 Route::get('/retourne_manager/{id}', [DaController::class,'get_retourne_manager']);
+Route::post('/manager_edit_tab',[Tab_comparatifController::class,'manager_edit_tab']);
 Route::post('/manager_edit_dm', [DaController::class,'manager_edit_dm']);
 
 
