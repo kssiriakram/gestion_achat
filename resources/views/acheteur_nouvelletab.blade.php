@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 
 
@@ -27,7 +26,7 @@
    ?>
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
-    <form action="{{env('APP_URL')}}/directeur_add_tab" method="post">
+    <form action="{{env('APP_URL')}}/acheteur_edit_tab" method="post">
         @if(Session::has('success'))
         <div class="alert alert-success">{{ Session::get('success') }}</div>
         @endif
@@ -39,7 +38,7 @@
                         @csrf
                         <input type="text" name="id" value="{{ $dm[0]->id_tab_comparatif }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero du tableau comparatif : {{ $dm[0]->id_tab_comparatif }}</label>
+                            <label for="formrow-numero-input" class="form-label">Numero du tableau comparatif : {{ $dm[0]->id_tab_comparatif  }}</label>
                         </div>
 
                         <div class="mb-3">
@@ -64,11 +63,10 @@
 
 
 
-
                         <div class="card">
                             <div class="card-body">
 
-                                <h4 class="card-title">Les detailles du tableau comparatif :</h4>
+                                <h4 class="card-title">Les detailles du  tableau comparatif </h4>
                                 <p class="card-title-desc">
                                 </p>
 
@@ -81,13 +79,13 @@
                                             <th>Ref</th>
                                             <th>C.B</th>
                                             <th>C.Art</th>
+
                                             <th>Jointure</th>
                                             @for ($i=0;$i<$fournisseur;$i++)
                                             <th>fournisseur Nº{{ $i+1 }}</th>
                                             <th>prix Nº{{ $i+1 }}</th>
-                                            <th>remise Nº{{ $i+1 }}</th>
+                                            <th>remise N°{{$i+1}}</th>
                                             @endfor
-                                            <th>fournisseur choisi</th>
 
 
 
@@ -96,7 +94,7 @@
 
 
                                     <tbody>
-                                        <?php $i=0  ; $j=0; $k=0?>
+                                        <?php $i=0  ; $j=0;?>
                                       @while ($i<count($dm))
                                         <tr>
                                             <td></td>
@@ -120,22 +118,22 @@
                                             @endif
 
                                             @while($j<$fournisseur)
-                                                 <td>{{ $dm[$i+$j]->nom_fournisseur }}</td>
-                                                 <td>{{ $dm[$i+$j]->prix }} {{$dm[$i+$j]->devise }}</td>
-                                                 <td>{{ $dm[$i+$j]->remise }} {{$dm[$i+$j]->devise }}</td>
+                                                 <td><input class="form-control"  name="fournisseur[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{ $dm[$i+$j]->nom_fournisseur }}"/></td>
+                                                 <td><input class="form-control"  name="prix[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{$dm[$i+$j]->prix }}"/></td>
+                                                 <td><input class="form-control"  name="remise[{{$dm[$i+$j]->id_ligne_da}}][{{$dm[$i+$j]->id_fournisseur}}]"
+                                                     value="{{$dm[$i+$j]->remise}}"/></td>
                                                  <?php $j++; ?>
                                             @endwhile
-
-                                            <td>{{$fournisseur_souhaite[$k]->nom_fournisseur}}</td>
                                             <?php $i=$i+$j;
-                                            $j=0; $k++; ?>
+                                            $j=0; ?>
 
 
 
 
                                         </tr>
                                         @endwhile
-
 
                                         <tr>
                                             <td>prix total</td>
@@ -152,12 +150,9 @@
                                             <td></td>
                                             <?php $i+=$ligne_da; ?>
                                             @endfor
-                                            <td></td>
+
 
                                         </tr>
-
-
-
 
                                     </tbody>
                                 </table>
@@ -198,29 +193,6 @@
 
 
 
-                        <div>
-                            <div class="mb-3">
-                                <label for="formrow-code-input" class="form-label">Observation</label>
-                                <textarea type="text" class="form-control" id="formrow-email-input" name='observation'></textarea>
-                                <span class="text-danger">@error('observation'){{ $message }}@enderror</span>
-                            </div>
-                        </div>
-
-                        <div>
-                        <label>validation</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="validation" value="yes" id="flexCheckDefault" checked>
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Valider
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                              Refuser
-                            </label>
-                          </div>
-                        </div>
 
 
 
@@ -234,7 +206,6 @@
     <script src="{{ URL::asset('/assets/libs/datatables/datatables.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/jszip/jszip.min.js') }}"></script>
     <script src="{{ URL::asset('/assets/libs/pdfmake/pdfmake.min.js') }}"></script>
-     Datatable init js
     <script >$(document).ready(function() {
         console.log("hyize gu");
 

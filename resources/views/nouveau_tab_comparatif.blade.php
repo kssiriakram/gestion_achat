@@ -74,7 +74,7 @@
                                         <div class="accordion-item" id="produit">
                                             <h2 class="accordion-header" id="2">
                                               <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                Produit Nº{{$i+1}}
+                                                Produit Nº{{$i+1}}  <br><br> designation : {{$id_das[$i]->designation}}
                                               </button>
                                             </h2>
                                         </div>

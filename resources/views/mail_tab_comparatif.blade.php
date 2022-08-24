@@ -11,6 +11,6 @@
     {{$description}}
 
 
-   Veuillez cliquez sur <a href="{{env('APP_URL')}}/#">ce lien </a> pour valider la demande .
+   Veuillez cliquez sur <a href="{{env('APP_URL')}}/manager_nouvelletab/{{$idDA}}">ce lien </a> pour valider la demande .
 
 @endcomponent

@@ -38,7 +38,7 @@
                         @csrf
                         <input type="text" name="id" value="{{ $dm[0]->id_tab_comparatif }}" hidden>
                         <div class="mb-3">
-                            <label for="formrow-numero-input" class="form-label">Numero du tableau comparatif : {{ $dm[0]->id }}</label>
+                            <label for="formrow-numero-input" class="form-label">Numero du tableau comparatif : {{ $dm[0]->id_tab_comparatif  }}</label>
                         </div>
 
                         <div class="mb-3">

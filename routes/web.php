@@ -32,6 +32,8 @@ Route::post('/acheteur_edit_dm', [DaController::class,'acheteur_edit_dm']);
 Route::get('/retourne_manager/{id}', [DaController::class,'get_retourne_manager']);
 Route::post('/manager_edit_tab',[Tab_comparatifController::class,'manager_edit_tab']);
 Route::post('/manager_edit_dm', [DaController::class,'manager_edit_dm']);
+Route::get('/acheteur_nouvelletab/{id}',[Tab_comparatifController::class,'get_nouvelle_tab_acheteur']);
+Route::post('/acheteur_edit_tab',[Tab_comparatifController::class,'acheteur_edit_tab']);
 
 
 Route::get('/manager_nouvelledm/{id}',[DaController::class,'get_nouvelle_dm_manager']);
@@ -88,6 +90,7 @@ Route::middleware(Acheteur::class)->namespace('\App\Http\Controllers\Api')->grou
     //Route::get('/da_manager/{id}',[DaController::class,'get_da_manager']);
     Route::get('/acheteur_encoursdm',[DaController::class,'get_encours_dm_acheteur']);
     Route::get('/retourne_managerstab',[Tab_comparatifController::class,'get_retourne_managers']);
+    Route::get('/acheteur_encourstab',[Tab_comparatifController::class,'get_encours_tab_acheteur']);
 
     });
 

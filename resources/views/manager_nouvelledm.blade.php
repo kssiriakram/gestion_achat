@@ -58,6 +58,10 @@
                             <label for="formrow-numero-input" class="form-label">Emetteur : {{ $emetteur->username}}</label>
                         </div>
 
+                        <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Acheteur : {{ $acheteurs->username }}</label>
+                        </div>
+
 
 
 
@@ -71,13 +75,13 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th>N° DA</th>
+
                                             <th>Designation</th>
                                             <th>Quantité</th>
                                             <th>Référence</th>
                                             <th>Code Budget</th>
                                             <th>Code Article</th>
-                                            <th>Nom de l'acheteur</th>
+
                                             <th>Jointure</th>
                                             <th>fournisseur souhaite</th>
 
@@ -91,7 +95,7 @@
 
 
                                         <tr>
-                                            <td>{{ $dm_ligne->id }}</td>
+                                            
                                             <td>{{ $dm_ligne->designation }}</td>
                                             <td>{{ $dm_ligne->qte }}</td>
                                             <td>{{ $dm_ligne->reference }}</td>
@@ -103,7 +107,7 @@
                                             @endif
 
                                             <td>{{ $dm_ligne->code_NE }}</td>
-                                            <td>{{ $acheteurs->username }}</td>
+
 
                                             @if($dm_ligne->file)
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>

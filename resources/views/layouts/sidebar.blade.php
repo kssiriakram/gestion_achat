@@ -197,7 +197,7 @@
                                             </a>
                                             <ul class="sub-menu mm-show" aria-expanded="true">
                                                 <li>
-                                                    <a href="{{ env('APP_URL') }}/#"
+                                                    <a href="{{ env('APP_URL') }}/acheteur_encourstab"
                                                         key="t-horizontal"> En cours</a>
 
                                                 </li>

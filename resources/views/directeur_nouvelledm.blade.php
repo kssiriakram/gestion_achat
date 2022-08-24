@@ -61,6 +61,10 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="formrow-numero-input" class="form-label">Acheteur : {{ $acheteurs->username }}</label>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="formrow-numero-input" class="form-label">Observation de manager : {{ $dm[0]->commentaire_manager }}</label>
                         </div>
 
@@ -77,15 +81,15 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th>N° DA</th>
+
                                             <th>Designation</th>
                                             <th>Quantité</th>
                                             <th>Référence</th>
                                             <th>Code Budget</th>
                                             <th>Code Article</th>
-                                            <th>Nom de l'acheteur</th>
+
                                             <th>Afficher le fichier</th>
-                                            <th>Observation du manager</th>
+
                                             <th>fournisseur souhaite</th>
 
 
@@ -96,7 +100,7 @@
                                     <tbody>
                                      @foreach ($dm as $dm_ligne )
                                      <tr>
-                                        <td>{{ $dm_ligne->id }}</td>
+
                                         <td>{{ $dm_ligne->designation }}</td>
                                         <td>{{ $dm_ligne->qte }}</td>
                                         <td>{{ $dm_ligne->reference }}</td>
@@ -107,14 +111,14 @@
                                             @endif
 
                                         <td>{{ $dm_ligne->code_NE }}</td>
-                                        <td>{{ $acheteurs->username }}</td>
+
                                         @if($dm_ligne->file)
                                         <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
                                         @else
                                         <td>Aucun fichier</td>
                                         @endif
 
-                                        <td>{{ $dm_ligne->commentaire_manager }}</td>
+                                        
 
                                         @if($dm_ligne->fournisseur)
                                             <td>{{ $dm_ligne->fournisseur }}</td>

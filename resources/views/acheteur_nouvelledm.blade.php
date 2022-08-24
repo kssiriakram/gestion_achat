@@ -90,16 +90,15 @@
 
                                     <thead>
                                         <tr>
-                                            <th>N° DA</th>
+
                                             <th>Designation</th>
                                             <th>Quantité</th>
                                             <th>Référence</th>
                                             <th>Code Budget</th>
                                             <th>Code Article</th>
-                                            <th>Nom de l'acheteur</th>
+
                                             <th>Jointure</th>
-                                           <th>Observation du manager</th>
-                                            <th>Observation du directeur</th>
+
                                             <th>fournisseur souhaite</th>
 
 
@@ -112,7 +111,7 @@
 
 
                                         <tr>
-                                            <td>{{ $dm_ligne->id }}</td>
+                                            
                                             <td>{{ $dm_ligne->designation }}</td>
                                             <td>{{ $dm_ligne->qte }}</td>
                                             <td>{{ $dm_ligne->reference }}</td>
@@ -123,14 +122,13 @@
                                             <td>non determine</td>
                                             @endif
                                             <td>{{ $dm_ligne->code_NE }}</td>
-                                            <td>{{ $acheteurs->username }}</td>
+
                                             @if($dm_ligne->file)
                                             <td><a  class="form-control"   href={{ asset("uploads/".$dm_ligne->file) }}> cliquez ici </a></td>
                                             @else
                                             <td>Aucun fichier</td>
                                             @endif
-                                            <td>{{ $dm_ligne->commentaire_manager }}</td>
-                                            <td>{{ $dm_ligne->commentaire_directeur }}</td>
+
                                             @if($dm_ligne->fournisseur)
                                             <td>{{ $dm_ligne->fournisseur }}</td>
                                             @else
@@ -215,7 +213,7 @@
                               <div class="form-check">
                                 <input class="form-check-input" type="radio"  name="validation" value="no"   id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
-                                  Retourner 
+                                  Retourner
                                 </label>
                               </div>
                             </div>
