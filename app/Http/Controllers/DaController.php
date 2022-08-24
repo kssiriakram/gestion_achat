@@ -358,7 +358,7 @@ class DaController extends Controller
 
     }
 
-   
+
 
 
 
@@ -794,7 +794,7 @@ class DaController extends Controller
         $user= DB::table('users')->where('id',$da->id_acheteur)->get()->first();
 
        // Mail::to($emetteur->email)->send(new DAMail($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id));
-        Mail::to($emetteur->email)->send(new DAMail_acheteur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$da->commentaire_directeur,$da->commentaire_manager,$da->commentaire_acheteur));
+        Mail::to($emetteur->email)->send(new DAMail_acheteur_refus($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$da->commentaire_manager,$da->commentaire_directeur,$request->observation,$da->commentaire_acheteur));
         return back()->with('success', "you're demand is registered");
 
     }

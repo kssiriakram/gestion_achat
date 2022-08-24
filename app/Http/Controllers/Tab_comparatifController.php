@@ -404,8 +404,8 @@ $liste_fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$i
     if($request->validation=="yes"){
        /* $user= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
         $destinaire = DB::table('users')->where("id", "=",$da->id_directeur)->get()->first();
-        Mail::to($destinaire->email)->send(new Tab_comparatif_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));
-     return back()->with('success', "you're demand is registered");*/
+        Mail::to($destinaire->email)->send(new Tab_comparatif_manager($user->username, $user->societe, $user->type,$user->email,"", "demande d'achat" , $request->id,$request->observation));*/
+     return back()->with('success', "you're demand is registered");
     }
     else{
         $destinaire= DB::table('users')->where("type", "=","manager")->where("departement", "=",$departement)->get()->first();
