@@ -75,7 +75,7 @@
                                 <table id="datatable-buttons" class="table table-bordered dt-responsive nowrap w-100">
                                     <thead>
                                         <tr>
-
+                                            <th></th>
                                             <th>Designation</th>
                                             <th>Qte</th>
                                             <th>Ref</th>
@@ -99,7 +99,7 @@
                                         <?php $i=0  ; $j=0;?>
                                       @while ($i<count($dm))
                                         <tr>
-
+                                            <td></td>
                                             <td>{{ $dm[$i]->designation }}</td>
                                             <td>{{ $dm[$i]->qte }}</td>
                                             <td>{{ $dm[$i]->reference }}</td>
@@ -136,6 +136,25 @@
 
                                         </tr>
                                         @endwhile
+
+                                        <tr>
+                                            <td>prix total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                            @for ($i=0;$i<count($tab);)
+                                            <td></td>
+                                            <td>{{ $tab[$i]->prix_total }} {{$dm[$i]->devise }} </td>
+                                            <td></td>
+                                            <?php $i+=$ligne_da; ?>
+                                            @endfor
+
+
+                                        </tr>
 
                                     </tbody>
                                 </table>

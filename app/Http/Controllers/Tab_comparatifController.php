@@ -106,7 +106,7 @@ class Tab_comparatifController extends Controller
         }
         $k++;
         $j=$k;
-           $res=$fournisseur->save();
+           $fournisseur->save();
         }
 
 
@@ -442,7 +442,10 @@ $liste_fournisseur = DB::table('fournisseurs')->where('id_tab_comparatif','=',$i
 
 
 function get_retourne_tab_manager($id){
-    $dm=DB::table('tab_comparatifs')->where('id',$id)->get();
+    $dm=DB::table('da_models')->join('ligne_das','da_models.id','=','ligne_das.id_da')
+    ->join('tab_comparatifs','tab_comparatifs.id','=','da_models.id')
+    ->join('fournisseurs','tab_comparatifs.id','=','fournisseurs.id_tab_comparatif')
+    ->where('da_models.id',$id)->get();
 
 
     $e = DB::table('da_models')->where('id',$id)->get();
@@ -528,6 +531,31 @@ function manager_edit_tab(Request $request){
             $produit->save();
         }
        }
+
+       $ids =DB::table('ligne_da_fournisseurs')
+       ->join('ligne_das','ligne_da_fournisseurs.id_ligne_da','=','ligne_das.id')
+       ->where('ligne_das.id_da',$request->id)->get();
+
+       $j=0;
+       $k=0;
+       $fournisseurs = Fournisseur::where('id_tab_comparatif',$request->id)->get();
+
+       for($i=0;$i<count($fournisseurs);$i++){
+        $fournisseur = Fournisseur::where('id',$fournisseurs[$i]->id)->get()->first();
+        $fournisseur->prix_total=0;
+
+        while($j<count($ids)){
+        $ligne_da = ligne_da::where('id',$ids[$j]->id)->get()->first();
+        $produit = ligne_da_fournisseur::where('id_ligne_da',$ids[$j]->id)->
+        where('id_fournisseur',$fournisseurs[$i]->id)->get()->first();
+
+        $fournisseur->prix_total +=$produit->prix*$ligne_da->qte - $produit->remise;
+        $j=$j+count($fournisseurs);
+    }
+    $k++;
+    $j=$k;
+       $fournisseur->save();
+    }
 
     $tab_comparatif = Tab_comparatif::where('id','=',$fournisseur->id_tab_comparatif)->get()->first();
     $tab_comparatif->date_chef_service = NULL;
